@@ -38,3 +38,8 @@ T.test('Nacho Chips: Popcorn partly used up, upgrade -> starts fresh at +50 Mult
     T.set_hand({ '2S', '3H', '7C', '5D', '9D' })
     T.eq(T.play({ '2S' }).mult, 1 + 50)
 end)
+
+T.test('Nacho Chips JokerDisplay: shows +50 at start', function()
+    T.start_run({ jokers = { 'bplus_popcorn_plus' }, hands = 5, ante = 3 })
+    T.eq(T.joker_display('bplus_popcorn_plus').text, '+50')
+end)
