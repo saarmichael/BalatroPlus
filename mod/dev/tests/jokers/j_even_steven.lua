@@ -1,5 +1,10 @@
 local T = BPlus.test
 
+local function jd_select(specs)
+    G.hand:unhighlight_all()
+    for _, c in ipairs(T.hand_cards(specs)) do G.hand:add_to_highlighted(c, true) end
+end
+
 T.test('Steven the Even: 10s and 4s -> +8 Mult each (vanilla: +4)', function()
     T.start_run({ jokers = { 'bplus_even_steven_plus' }, ante = 3 })
     T.select_blind()
@@ -35,4 +40,19 @@ T.test('Steven the Even: vanilla not forced keeps vanilla numbers', function()
     local r = T.play({ '10S', '10H', '4S', '4H' })
     T.eq(r.chips, 20 + 10 + 10 + 4 + 4)
     T.eq(r.mult, 2 + 4 + 4 + 4 + 4)
+end)
+
+T.test('Steven the Even JokerDisplay: "+" shows the "+" numbers; vanilla forced to "+" shows them too; "+" forced to base shows vanilla numbers', function()
+    T.start_run({ ante = 4, jokers = { 'bplus_even_steven_plus', 'even_steven' } })
+    T.select_blind()
+    T.set_hand({ '8S','8H','KD','QC','JC' })
+    jd_select({ '8S','8H' })
+    local d = T.joker_display('bplus_even_steven_plus')
+    T.eq(d.text, '+' .. (8 * 2))
+    T.eq(d.reminder, '(10,8,6,4,2)')
+    T.eq(T.joker_display('even_steven').text, '+' .. (4 * 2))
+    T.force_behavior('even_steven', 'plus')
+    T.eq(T.joker_display('even_steven').text, '+' .. (8 * 2))
+    T.force_behavior('bplus_even_steven_plus', 'base')
+    T.eq(T.joker_display('bplus_even_steven_plus').text, '+' .. (4 * 2))
 end)
