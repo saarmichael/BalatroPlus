@@ -28,6 +28,23 @@ BPlus.Joker({
         return { vars = { card.ability.extra.sell_mult * sell_sum(card) } }
     end,
 
+    joker_display_def = function(JokerDisplay)
+        return {
+            text = {
+                { text = '+' },
+                { ref_table = 'card.joker_display_values', ref_value = 'mult', retrigger_type = 'mult' },
+            },
+            text_config = { colour = G.C.MULT },
+            calc_function = function(card)
+                local total = 0
+                for _, j in ipairs(G.jokers and G.jokers.cards or {}) do
+                    if j ~= card and j.area == G.jokers then total = total + j.sell_cost end
+                end
+                card.joker_display_values.mult = card.ability.extra.sell_mult * total
+            end,
+        }
+    end,
+
     calculate = function(self, card, context)
         if context.joker_main then
             local mult = card.ability.extra.sell_mult * sell_sum(card)

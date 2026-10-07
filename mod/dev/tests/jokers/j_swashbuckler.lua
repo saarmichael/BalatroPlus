@@ -32,3 +32,15 @@ T.test('Buccaneer: "+" joker forced to "base" behaves as vanilla Swashbuckler', 
     T.set_hand({ '2S', '3H', '7C', '5D', '9D' })
     T.eq(T.play({ '2S' }).mult, 1 + 3)
 end)
+
+T.test('Buccaneer JokerDisplay: others sell for $2 + $1 + $3 -> +12; vanilla forced to "+" shows +12; "+" forced to base shows vanilla +6', function()
+    T.start_run({ jokers = { 'bplus_swashbuckler_plus', 'swashbuckler', 'joker', 'golden' }, hands = 5, ante = 3 })
+    local others = T.joker(2).sell_cost + 1 + 3 -- vanilla Swashbuckler (sell $2), Joker ($1), Golden Joker ($3)
+    T.eq(others, 2 + 1 + 3)
+    T.eq(T.joker_display('bplus_swashbuckler_plus').text, '+' .. 2 * (2 + 1 + 3))
+    T.force_behavior('swashbuckler', 'plus')
+    T.eq(T.joker_display('swashbuckler').text, '+' .. (2 * (T.joker(1).sell_cost + 1 + 3)))
+    T.force_behavior('bplus_swashbuckler_plus', 'base')
+    T.wait_frames(5) -- vanilla recomputes ability.mult in Card:update
+    T.eq(T.joker_display('bplus_swashbuckler_plus').text, '+' .. (2 + 1 + 3))
+end)
