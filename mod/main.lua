@@ -13,6 +13,7 @@ BPlus.load('src/core.lua')
 BPlus.balance = BPlus.load('src/balance.lua')
 BPlus.load('src/upgrade.lua')
 BPlus.load('src/behavior.lua')
+BPlus.load('src/plus_art.lua')
 
 SMODS.Atlas({ key = 'placeholder', path = 'placeholder.png', px = 71, py = 95 })
 
