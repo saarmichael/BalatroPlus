@@ -77,6 +77,19 @@ M5 Salesman is the `j_ring_master` "+" row (`j_bplus_ring_master_plus`).
 
 **D15. Not built now:** "one version per joker" enforcement (brief: later) and JokerDisplay support (separate pass).
 
+**D16. Accepted deviations from tickets (B6, reviewed by orchestrator).**
+- Buccaneer (Swashbuckler+): computes the sell-value sum live in `calculate`/`loc_vars` instead of storing
+  `extra.mult` every frame; `mult = 0` dropped from config. Same behaviour, no stored state.
+- Never Misprint: seed `bplus_misprint` instead of the ticket's `bplus_never_misprint` (orchestrator's batch
+  hint said `bplus_<name>`). Harmless; plain text "+10 to +50 Mult".
+- El Santo (Luchador+): `selling_self` not guarded by `not context.blueprint` (vanilla isn't either; setting the
+  flag is idempotent). Selling while the current Boss is already disabled arms the flag for the next Boss.
+- Lich (Mr. Bones+): the "saved" test loses at 40% of required chips instead of 30% (exact 30% isn't reachable
+  with a natural hand); the 20% test still checks the game-over side of the 25% line.
+- Tonkotsu (Ramen+): destroy check uses a 1e-9 float tolerance.
+
 ## Questions from agents
 
 (none yet)
+
+**Q-B9-1 (OPEN)** j_burglar / behaviour switching (shared `mod/src/behavior.lua`): vanilla Burglar's `setting_blind` code reads `self.ability.extra` and `self.ability.name` lazily INSIDE a `G.E_MANAGER:add_event` closure (`ease_hands_played(self.ability.extra)`). `BPlus.with_center` restores the card's real `ability` as soon as `calculate_joker` returns, so when the event runs later, a Cat Burglar forced to 'base' (what The Rust does) passes its own table `{hands=5}` to `ease_hands_played` and the game crashes (`common_events.lua:161: attempt to compare table with number`, found with `T.force_behavior(1, 'base')` on `bplus_burglar_plus`). Any vanilla joker that defers reads of `self.ability` into events is affected (Burglar for sure; probably Certificate/Marble-style ones too). Cat Burglar's own code is fine (reads values into locals before the event) and the vanilla-forced-to-'plus' direction works. Options: (a) keep the view alive until the event queue drains (hard), (b) in `with_center`, wrap events added during the call so they run inside the same swap, (c) accept and have The Rust skip these. I removed the "forced to base" test for Cat Burglar so the suite doesn't crash; needs a decision for The Rust (M10) on Cat Burglar.
