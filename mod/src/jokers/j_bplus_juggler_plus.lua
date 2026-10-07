@@ -13,6 +13,10 @@ BPlus.Joker({
         return { vars = { card.ability.extra.h_size } }
     end,
 
+    joker_display_def = function(JokerDisplay)
+        return {} -- vanilla Juggler shows nothing either
+    end,
+
     add_to_deck = function(self, card, from_debuff)
         G.hand:change_size(card.ability.extra.h_size)
     end,
