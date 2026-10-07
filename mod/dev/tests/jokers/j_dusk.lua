@@ -33,3 +33,19 @@ T.test('Twilight: Dusk forced to "+" with Oops! All 6s -> final hand scores 1 + 
     local r = T.play({ '2S', '2H' })
     T.eq(r.chips, 10 + 3 * (2 + 2))
 end)
+
+T.test('Twilight JokerDisplay: (Active!) and scored card triggers 1 + 1 on the final hand, (Inactive) and 1 otherwise', function()
+    T.start_run({ jokers = { 'bplus_dusk_plus' }, hands = 1, ante = 3 })
+    T.select_blind()
+    T.set_hand({ '2S', '3H', '9C', '5D', '7D' })
+    local c = G.hand.cards[1]
+    T.eq(T.joker_display('bplus_dusk_plus').reminder, '(Active!)')
+    T.eq(rawget(_G, 'JokerDisplay').calculate_card_triggers(c, { c }, false), 1 + 1)
+    T.eq(rawget(_G, 'JokerDisplay').calculate_card_triggers(c, nil, true), 1)
+    T.start_run({ jokers = { 'bplus_dusk_plus' }, hands = 3, ante = 3 })
+    T.select_blind()
+    T.set_hand({ '2S', '3H', '9C', '5D', '7D' })
+    c = G.hand.cards[1]
+    T.eq(T.joker_display('bplus_dusk_plus').reminder, '(Inactive)')
+    T.eq(rawget(_G, 'JokerDisplay').calculate_card_triggers(c, { c }, false), 1)
+end)
