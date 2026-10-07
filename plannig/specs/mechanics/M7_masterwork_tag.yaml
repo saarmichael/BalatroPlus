@@ -1,0 +1,14 @@
+id: M7
+name: Masterwork Tag
+kind: tag                        # tag_bplus_masterwork, skip tag
+files: [mod/src/mechanics/m7_masterwork_tag.lua]
+behaviour:
+  - Like Foil Tag: on store_joker_modify the next shop joker that is eligible for an upgrade (BPlus.is_eligible) is upgraded to a fresh "+" card; the tag is used up. Ineligible jokers (no "+" version, already "+") are skipped and the tag waits.
+  - Price stays the base price. Free tag (no cost to obtain; given for skipping a blind).
+numbers: []
+edge_cases:
+  - Does not require the card to have no edition (the edition is kept).
+  - If the shop joker was already upgraded by the rate roll, the tag skips it.
+acceptance_tests:
+  - Tag in the run + shop with an eligible joker: it appears as "+" and the tag is consumed
+  - Ineligible joker (no "+" version): tag stays, next eligible one is upgraded
