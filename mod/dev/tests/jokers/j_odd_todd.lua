@@ -1,5 +1,10 @@
 local T = BPlus.test
 
+local function jd_select(specs)
+    G.hand:unhighlight_all()
+    for _, c in ipairs(T.hand_cards(specs)) do G.hand:add_to_highlighted(c, true) end
+end
+
 T.test('Todd the Odd: Aces and 7s -> +67 Chips each (vanilla: +31)', function()
     T.start_run({ jokers = { 'bplus_odd_todd_plus' }, ante = 3 })
     T.select_blind()
@@ -35,4 +40,19 @@ T.test('Todd the Odd: vanilla not forced keeps vanilla numbers', function()
     local r = T.play({ 'AS', 'AH', '7S', '7H' })
     T.eq(r.chips, 20 + 11 + 11 + 7 + 7 + 31 * 4)
     T.eq(r.mult, 2)
+end)
+
+T.test('Todd the Odd JokerDisplay: "+" shows the "+" numbers; vanilla forced to "+" shows them too; "+" forced to base shows vanilla numbers', function()
+    T.start_run({ ante = 4, jokers = { 'bplus_odd_todd_plus', 'odd_todd' } })
+    T.select_blind()
+    T.set_hand({ '9S','9H','KD','QC','JC' })
+    jd_select({ '9S','9H' })
+    local d = T.joker_display('bplus_odd_todd_plus')
+    T.eq(d.text, '+' .. (67 * 2))
+    T.eq(d.reminder, '(Ace,9,7,5,3)')
+    T.eq(T.joker_display('odd_todd').text, '+' .. (31 * 2))
+    T.force_behavior('odd_todd', 'plus')
+    T.eq(T.joker_display('odd_todd').text, '+' .. (67 * 2))
+    T.force_behavior('bplus_odd_todd_plus', 'base')
+    T.eq(T.joker_display('bplus_odd_todd_plus').text, '+' .. (31 * 2))
 end)
