@@ -13,6 +13,20 @@ BPlus.Joker({
     blueprint_compat = true, eternal_compat = true, perishable_compat = true,
     bplus = { vanilla_key = 'j_vagabond', state_transfer = {}, carpenter_compat = true },
 
+    joker_display_def = function(JokerDisplay)
+        return {
+            text = {
+                { text = '+' },
+                { ref_table = 'card.joker_display_values', ref_value = 'count', retrigger_type = 'mult' },
+            },
+            text_config = { colour = G.C.SECONDARY_SET.Tarot },
+            calc_function = function(card)
+                card.joker_display_values.active = G.GAME.dollars <= card.ability.extra.dollars
+                card.joker_display_values.count = card.joker_display_values.active and 1 or 0
+            end,
+        }
+    end,
+
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.dollars } }
     end,
