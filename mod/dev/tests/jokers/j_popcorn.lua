@@ -1,0 +1,40 @@
+local T = BPlus.test
+
+local function round()
+    T.select_blind()
+    T.win_blind()
+    T.cash_out()
+end
+
+T.test('Nacho Chips: first round -> +50 Mult, next round +45', function()
+    T.start_run({ jokers = { 'bplus_popcorn_plus' }, hands = 5, ante = 3 })
+    T.select_blind()
+    T.set_hand({ '2S', '3H', '7C', '5D', '9D' })
+    T.eq(T.play({ '2S' }).mult, 1 + 50)
+    T.win_blind(); T.cash_out(); T.leave_shop()
+    T.eq(T.joker(1).ability.extra.mult, 50 - 5)
+    T.select_blind()
+    T.set_hand({ '2S', '3H', '7C', '5D', '9D' })
+    T.eq(T.play({ '2S' }).mult, 1 + 45)
+end)
+
+T.test('Nacho Chips: destroyed at the end of round 10 (50 / 5 = 10)', function()
+    T.start_run({ jokers = { 'bplus_popcorn_plus' }, hands = 5, ante = 3 })
+    T.eq(T.joker(1).ability.extra.mult / T.joker(1).ability.extra.mult_mod, 10)
+    T.joker(1).ability.extra.mult = 5   -- as if 9 rounds were played
+    T.select_blind(); T.win_blind()
+    T.falsy(T.joker(1), 'eaten')
+end)
+
+T.test('Nacho Chips: Popcorn partly used up, upgrade -> starts fresh at +50 Mult', function()
+    T.start_run({ jokers = { 'popcorn' }, hands = 5, ante = 3 })
+    T.select_blind(); T.win_blind()
+    T.eq(T.joker(1).ability.mult, 20 - 4, 'vanilla value')
+    T.cash_out()
+    local card = T.upgrade('popcorn')
+    T.eq(card.ability.extra.mult, 50, 'reset')
+    T.leave_shop()
+    T.select_blind()
+    T.set_hand({ '2S', '3H', '7C', '5D', '9D' })
+    T.eq(T.play({ '2S' }).mult, 1 + 50)
+end)
