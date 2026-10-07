@@ -23,3 +23,12 @@ T.test('Fever Dream: open a Booster Pack with full slots -> nothing created', fu
     T.eq(G.consumeables.cards[1].ability.set, 'Planet')
     T.eq(G.consumeables.cards[2].ability.set, 'Planet')
 end)
+
+T.test('Fever Dream JokerDisplay: shows nothing (guaranteed, no odds)', function()
+    T.start_run({ dollars = 6, jokers = { 'bplus_hallucination_plus', 'hallucination' } })
+    T.eq(T.joker_display('bplus_hallucination_plus').extra[1], nil)
+    T.force_behavior('hallucination', 'plus')
+    T.eq(T.joker_display('hallucination').extra[1], nil)
+    T.force_behavior('bplus_hallucination_plus', 'base')
+    T.eq(T.joker_display('bplus_hallucination_plus').extra[1], '(1 in 2)')
+end)

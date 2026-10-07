@@ -13,6 +13,10 @@ BPlus.Joker({
     blueprint_compat = true, eternal_compat = true, perishable_compat = true,
     bplus = { vanilla_key = 'j_hallucination', state_transfer = {}, carpenter_compat = true },
 
+    joker_display_def = function(JokerDisplay)
+        return {}
+    end,
+
     calculate = function(self, card, context)
         if context.open_booster
             and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
