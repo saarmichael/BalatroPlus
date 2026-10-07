@@ -62,3 +62,16 @@ T.test('Express Bus: forced to base gains +1 per hand and keeps its value', func
     T.force_behavior(1, nil)
     T.eq(no_face().mult, 2 + 3 + 2)
 end)
+
+T.test('Express Bus JokerDisplay: +0 -> after 2 hands +4; forced behaviours keep the stored mult', function()
+    T.start_run({ jokers = { 'bplus_ride_the_bus_plus', 'ride_the_bus' }, hands = 5, ante = 3 })
+    T.select_blind()
+    T.eq(T.joker_display('bplus_ride_the_bus_plus').text, '+0')
+    no_face(); no_face()
+    T.eq(T.joker_display('bplus_ride_the_bus_plus').text, '+' .. (2 + 2))
+    T.eq(T.joker_display('ride_the_bus').text, '+' .. (1 + 1))
+    T.force_behavior('ride_the_bus', 'plus')
+    T.eq(T.joker_display('ride_the_bus').text, '+' .. (1 + 1)) -- stored value kept, shown through the "+" definition
+    T.force_behavior('bplus_ride_the_bus_plus', 'base')
+    T.eq(T.joker_display('bplus_ride_the_bus_plus').text, '+' .. (2 + 2)) -- stored value kept, vanilla definition
+end)
