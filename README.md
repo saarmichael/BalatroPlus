@@ -13,6 +13,9 @@ mod/                    <- the actual mod; symlinked into Balatro's Mods folder
   src/dev/              dev toolkit, loaded only when dev_mode = true
   dev/scenario.lua      default test scenario (applied to new runs when enabled)
   dev/scenarios/        named test scenarios
+  dev/tests/            automated in-game tests
+docs/testing.md         testing guide + API
+CLAUDE.md               instructions for AI agents working in this repo
 dev.sh                  dev helper (run the game, logs, checks, send commands to the game)
 .luarc.json             Lua language server config (Steamodded + vanilla source as libraries)
 ```
@@ -34,15 +37,22 @@ code --install-extension sumneko.lua
 
 ```bash
 ./dev.sh run       # launch Balatro with Lovely; log streams to the terminal
-./dev.sh start     # launch in the background (./dev.sh stop to quit)
+./dev.sh start     # launch in the background and wait until ready (stop / restart too)
 ./dev.sh log       # our lines + errors from the latest Lovely log
 ./dev.sh check     # syntax check + language-server diagnostics
+./dev.sh test      # automated in-game tests (see docs/testing.md)
 ```
 
 Edit files in `mod/`, then restart the game to pick up code changes (in game: hold **M**, or Alt+F5).
 Scenario files are re-read on every new run, so they don't need a restart.
 
-## Testing toolkit (dev mode)
+## Automated tests
+
+`./dev.sh test [filter]` runs the tests in `mod/dev/tests/` inside the real game, on a separate test profile (profile 3).
+It restarts the game when mod code changed and exits non-zero on failure.
+See [docs/testing.md](docs/testing.md) for how to write tests and the full API.
+
+## Manual testing toolkit (dev mode)
 
 Enabled by `dev_mode = true` in `mod/config.lua`. Turn it off for releases.
 

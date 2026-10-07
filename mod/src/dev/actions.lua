@@ -24,6 +24,13 @@ local function resolve_keys(list)
     return out
 end
 
+-- 'hook' -> 'bl_hook'
+function dev.resolve_blind(key)
+    if G.P_BLINDS[key] then return key end
+    if G.P_BLINDS['bl_' .. key] then return 'bl_' .. key end
+    error(('unknown blind: %s'):format(tostring(key)), 2)
+end
+
 local function resolve_edition(edition)
     if not edition or G.P_CENTERS[edition] then return edition end
     if G.P_CENTERS['e_' .. edition] then return 'e_' .. edition end
@@ -137,6 +144,22 @@ function dev.win_blind()
     G.STATE_COMPLETE = true
     end_round()
     return true
+end
+
+-- Scoring ----------------------------------------------------------------------
+
+-- evaluate_play computes the whole score synchronously (events only animate it), so the
+-- final chips/mult are readable right after it returns, before SMODS resets them.
+local evaluate_play_ref = G.FUNCS.evaluate_play
+G.FUNCS.evaluate_play = function(e)
+    local ret = evaluate_play_ref(e)
+    dev.last_hand = {
+        name = SMODS.last_hand and SMODS.last_hand.scoring_name,
+        chips = SMODS.get_scoring_parameter('chips'),
+        mult = SMODS.get_scoring_parameter('mult'),
+        score = SMODS.last_hand_score,
+    }
+    return ret
 end
 
 -- Snapshot -------------------------------------------------------------------

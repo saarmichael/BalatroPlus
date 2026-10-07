@@ -40,7 +40,7 @@ function dev.inspect(value, depth, indent)
     return '{\n' .. table.concat(lines, ',\n') .. '\n' .. indent .. '}'
 end
 
-for _, file in ipairs({ 'actions', 'scenario', 'remote', 'console' }) do
+for _, file in ipairs({ 'actions', 'scenario', 'remote', 'console', 'test/init' }) do
     BPlus.load('src/dev/' .. file .. '.lua')
 end
 
@@ -49,6 +49,7 @@ function Game:update(dt)
     update_ref(self, dt)
     dev.tick(dt)
     dev.remote_tick(dt)
+    BPlus.test.tick()
 end
 
 dev.log('Dev toolkit loaded')

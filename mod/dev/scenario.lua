@@ -15,6 +15,7 @@ return {
     -- deck = 'b_red',            -- only applied by dev.new_run (not the menu)
     -- stake = 1,                 -- 1 White .. 8 Gold; only applied by dev.new_run
     -- ante = 1,
+    -- boss = 'hook',             -- force the first boss blind ('hook' == 'bl_hook')
     dollars = 50,
     infinite_money = true,        -- true = topped up to $1000 whenever below; or a number floor
     free_rerolls = true,

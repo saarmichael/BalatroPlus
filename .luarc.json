@@ -12,12 +12,17 @@
   ],
   "diagnostics.globals": [
     "BPlus",
-    "SMODS",
     "G",
+    "NFS",
+    "SMODS",
     "love"
   ],
   "diagnostics.disable": [
+    "discard-returns",
     "duplicate-set-field",
-    "lowercase-global"
+    "inject-field",
+    "lowercase-global",
+    "missing-parameter",
+    "need-check-nil"
   ]
 }

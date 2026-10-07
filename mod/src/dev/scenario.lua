@@ -19,6 +19,7 @@ end
 -- Resolve every key up front so a typo errors here instead of crashing mid-run-start.
 function dev.validate_scenario(s)
     if s.deck then dev.resolve_key(s.deck) end
+    if s.boss then dev.resolve_blind(s.boss) end
     for _, field in ipairs({ 'jokers', 'consumables', 'vouchers', 'shop_queue', 'shop_pool' }) do
         for _, spec in ipairs(s[field] or {}) do dev.resolve_key(type(spec) == 'table' and spec.key or spec) end
     end
@@ -61,6 +62,9 @@ function dev.apply_scenario(s)
         G.GAME.round_resets.ante = s.ante
         G.GAME.round_resets.blind_ante = s.ante
     end
+    -- Steamodded rolls the boss during start_run (vanilla's G.FORCE_BOSS is not consulted), and the
+    -- blind-select screen is built on the next frame, so overwriting the choice here is in time.
+    if s.boss then G.GAME.round_resets.blind_choices.Boss = dev.resolve_blind(s.boss) end
     if s.shop_queue then dev.queue_shop(s.shop_queue) end
     if s.shop_pool then dev.set_shop_pool(s.shop_pool) end
 
