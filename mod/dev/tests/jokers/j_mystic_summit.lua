@@ -1,0 +1,27 @@
+local T = BPlus.test
+
+T.test('Mystic Zenith: use all discards, then play -> +35 Mult', function()
+    T.start_run({ jokers = { 'bplus_mystic_summit_plus' }, hands = 5, discards = 1, ante = 3 })
+    T.select_blind()
+    T.set_hand({ '2S', '3H', '7C', '5D', '9D' })
+    T.discard({ '3H' })
+    T.set_hand({ '2S', '3H', '7C', '5D', '9D' })
+    T.eq(T.play({ '2S' }).mult, 1 + 35)
+end)
+
+T.test('Mystic Zenith: play with 1 discard left -> +0 Mult', function()
+    T.start_run({ jokers = { 'bplus_mystic_summit_plus' }, hands = 5, discards = 1, ante = 3 })
+    T.select_blind()
+    T.set_hand({ '2S', '3H', '7C', '5D', '9D' })
+    T.eq(T.play({ '2S' }).mult, 1 + 0)
+end)
+
+T.test('Mystic Zenith: vanilla Mystic Summit forced to "+" gives +35 (vanilla +15)', function()
+    T.start_run({ jokers = { 'mystic_summit' }, hands = 5, discards = 0, ante = 3 })
+    T.select_blind()
+    T.set_hand({ '2S', '3H', '7C', '5D', '9D' })
+    T.eq(T.play({ '2S' }).mult, 1 + 15)
+    T.force_behavior('mystic_summit', 'plus')
+    T.set_hand({ '2S', '3H', '7C', '5D', '9D' })
+    T.eq(T.play({ '2S' }).mult, 1 + 35)
+end)
