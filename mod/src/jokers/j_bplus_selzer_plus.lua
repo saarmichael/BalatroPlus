@@ -17,6 +17,36 @@ BPlus.Joker({
     blueprint_compat = true, eternal_compat = false, perishable_compat = true,
     bplus = { vanilla_key = 'j_selzer', state_transfer = { ['extra'] = 'extra.hands_left' }, carpenter_compat = false },
 
+    joker_display_def = function(JokerDisplay)
+        return {
+            reminder_text = {
+                { text = '(' },
+                { ref_table = 'card.ability.extra', ref_value = 'hands_left' },
+                { text = '/' },
+                { ref_table = 'card.joker_display_values', ref_value = 'start_count' },
+                { text = ')' },
+            },
+            calc_function = function(card)
+                card.joker_display_values.start_count = card.joker_display_values.start_count
+                    or card.ability.extra.hands_left
+            end,
+            style_function = function(card, text, reminder_text, extra)
+                local children = reminder_text and reminder_text.children
+                if not children then return end
+                local colour = (card.ability.extra.hands_left == 1) and G.C.RED or G.C.UI.TEXT_INACTIVE
+                for i = 2, 4 do
+                    local child = children[i]
+                    if child then child.config.colour = colour end
+                end
+            end,
+            retrigger_function = function(playing_card, scoring_hand, held_in_hand, joker_card)
+                if held_in_hand then return 0 end
+                return JokerDisplay.in_scoring(playing_card, scoring_hand)
+                    and joker_card.ability.extra.retriggers * JokerDisplay.calculate_joker_triggers(joker_card) or 0
+            end,
+        }
+    end,
+
     loc_vars = function(self, info_queue, card)
         local num, den = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, 'bplus_fizzy_bubbelech')
         return { vars = { num, den, card.ability.extra.hands_left } }

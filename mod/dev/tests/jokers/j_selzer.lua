@@ -34,3 +34,14 @@ T.test('Fizzy Bubbelech: Carpenter-style forcing is ignored (carpenter_compat = 
     T.start_run({ jokers = { 'selzer' } })
     T.errors(function() T.force_behavior('selzer', 'plus') end)
 end)
+
+T.test('Fizzy Bubbelech JokerDisplay: (10/10) at start, (9/10) after a hand; scored card triggers 1 + 1 times', function()
+    T.start_run({ jokers = { 'bplus_selzer_plus' }, hands = 5, ante = 3 })
+    T.select_blind()
+    T.set_hand({ '2S', '3H', '9C', '5D', '7D' })
+    local c = G.hand.cards[1]
+    T.eq(T.joker_display('bplus_selzer_plus').reminder, '(10/10)')
+    T.eq(rawget(_G, 'JokerDisplay').calculate_card_triggers(c, { c }, false), 1 + 1)
+    T.play({ '2S' })
+    T.eq(T.joker_display('bplus_selzer_plus').reminder, '(9/10)')
+end)
