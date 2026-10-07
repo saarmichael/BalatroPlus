@@ -18,6 +18,28 @@ BPlus.Joker({
         return { vars = { card.ability.extra.rounds_needed, card.ability.extra.rounds } }
     end,
 
+    joker_display_def = function(JokerDisplay)
+        return {
+            reminder_text = {
+                { text = '(' },
+                { ref_table = 'card.joker_display_values', ref_value = 'active' },
+                { text = ')' },
+            },
+            calc_function = function(card)
+                local e = card.ability.extra
+                card.joker_display_values.is_active = e.rounds >= e.rounds_needed
+                card.joker_display_values.active = card.joker_display_values.is_active and localize('jdis_active')
+                    or (e.rounds .. '/' .. e.rounds_needed)
+            end,
+            style_function = function(card, text, reminder_text, extra)
+                if reminder_text and reminder_text.children and reminder_text.children[2] then
+                    reminder_text.children[2].config.colour = card.joker_display_values.is_active and G.C.GREEN
+                        or G.C.UI.TEXT_INACTIVE
+                end
+            end,
+        }
+    end,
+
     calculate = function(self, card, context)
         local e = card.ability.extra
         if context.end_of_round and context.main_eval and not context.blueprint then
