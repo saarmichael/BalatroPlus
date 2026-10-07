@@ -14,6 +14,14 @@ BPlus.Joker({
     blueprint_compat = true, eternal_compat = true, perishable_compat = true,
     bplus = { vanilla_key = 'j_mime', state_transfer = {}, carpenter_compat = true },
 
+    joker_display_def = function(JokerDisplay)
+        return {
+            retrigger_function = function(playing_card, scoring_hand, held_in_hand, joker_card)
+                return held_in_hand and joker_card.ability.extra.retriggers * JokerDisplay.calculate_joker_triggers(joker_card) or 0
+            end,
+        }
+    end,
+
     loc_vars = function(self, info_queue, card)
         local num, den = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, 'bplus_marcel_marceau')
         return { vars = { num, den } }

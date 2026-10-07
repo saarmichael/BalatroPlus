@@ -47,3 +47,13 @@ T.test('Mime (vanilla): held Steel triggers 1 + 1 times = X1.5 * 1.5', function(
     local r = T.play({ '2S' })
     T.near(r.mult, 1 * 1.5 * 1.5, 1e-6)
 end)
+
+T.test('Marcel Marceau JokerDisplay: held card triggers 1 + 1 = 2 times, played card 1 time; no text', function()
+    T.start_run({ jokers = { 'bplus_mime_plus' }, ante = 3 })
+    T.select_blind()
+    T.set_hand({ '2S', '3H', '9C', '5D', '7D' })
+    local c = G.hand.cards[1]
+    T.eq(rawget(_G, 'JokerDisplay').calculate_card_triggers(c, nil, true), 1 + 1)
+    T.eq(rawget(_G, 'JokerDisplay').calculate_card_triggers(c, { c }, false), 1)
+    T.eq(T.joker_display('bplus_mime_plus').text, '')
+end)
