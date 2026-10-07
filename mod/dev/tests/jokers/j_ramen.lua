@@ -35,3 +35,12 @@ T.test('Tonkotsu: Ramen partly used up, upgrade -> starts fresh at X3', function
     T.set_hand({ '2S', '3H', '7C', '5D', '9D' })
     T.near(T.play({ '2S' }).mult, 1 * 3, 1e-6)
 end)
+
+T.test('Tonkotsu JokerDisplay: X3 at start, X2.95 after discarding 5 cards', function()
+    T.start_run({ jokers = { 'bplus_ramen_plus' }, hands = 5, discards = 5, ante = 3 })
+    T.select_blind()
+    T.eq(T.joker_display('bplus_ramen_plus').text, 'X3')
+    T.set_hand({ '2S', '3H', '7C', '5D', '9D', 'KD' })
+    T.discard({ '2S', '3H', '7C', '5D', '9D' })
+    T.eq(T.joker_display('bplus_ramen_plus').text, 'X2.95')
+end)
