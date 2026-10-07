@@ -18,6 +18,10 @@ BPlus.Joker({
         return { vars = { card.ability.extra.sell_gain } }
     end,
 
+    joker_display_def = function(JokerDisplay)
+        return {}
+    end,
+
     calculate = function(self, card, context)
         if context.end_of_round and context.main_eval and not context.blueprint then
             for _, area in ipairs({ G.jokers, G.consumeables }) do
