@@ -1,0 +1,17 @@
+# Ticket: M9 Veteran Deck (new Back). Decision D11.
+id: M9
+name: "Veteran Deck"
+file: mod/src/mechanics/M9_veteran_deck.lua
+behaviour: >
+  SMODS.Back. At every end of round (main eval) each joker's ability.bplus_veteran_rounds is incremented. When it
+  reaches balance.veteran_deck.rounds and the joker is eligible, BPlus.upgrade_card upgrades it.
+numbers:
+  - balance.veteran_deck.rounds
+edge_cases:
+  - "each joker has its own count (a joker bought later is upgraded later)"
+  - "ineligible jokers are left alone"
+acceptance_tests:
+  - "Joker held 6 rounds becomes Joker+ exactly at round 6 (not at 5)"
+  - "joker bought in round 2 upgrades two rounds after the first one"
+  - "ineligible joker (Four Fingers) is never changed"
+  - "Ride the Bus value kept, + rate afterwards"
