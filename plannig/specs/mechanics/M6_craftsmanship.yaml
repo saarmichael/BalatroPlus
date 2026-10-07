@@ -1,0 +1,18 @@
+id: M6
+name: Craftsmanship / Masterwork
+kind: voucher pair               # v_bplus_craftsmanship, v_bplus_masterwork (requires Craftsmanship)
+files: [mod/src/mechanics/m6_craftsmanship.lua]
+behaviour:
+  - Craftsmanship ($10): upgraded jokers can appear in the shop at balance.craftsmanship.upgrade_rate, at their base price.
+  - Masterwork ($10, requires Craftsmanship): rate becomes balance.masterwork.upgrade_rate (replaces Craftsmanship's, doubling it). Like Hone / Glow Up.
+  - Rates add with Salesman (see M5 shared helper). Vouchers only change the rate; the helper does the upgrade.
+numbers: [balance.craftsmanship.upgrade_rate, balance.craftsmanship.cost, balance.masterwork.upgrade_rate, balance.masterwork.cost]
+edge_cases:
+  - Masterwork needs Craftsmanship redeemed (SMODS requires).
+  - Rate is read live, so the next reroll after redeeming already uses it.
+acceptance_tests:
+  - Craftsmanship redeemed: BPlus.shop_upgrade.rate() == craftsmanship rate; a shop joker with forced roll comes out as "+" at the base price
+  - Masterwork replaces Craftsmanship's rate (not added)
+  - Without any source the rate is 0 and no joker is upgraded
+  - Masterwork is not offered without Craftsmanship (requires)
+  - Vouchers cost balance cost
