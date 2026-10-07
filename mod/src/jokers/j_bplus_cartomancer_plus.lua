@@ -34,6 +34,10 @@ BPlus.Joker({
     blueprint_compat = true, eternal_compat = true, perishable_compat = true,
     bplus = { vanilla_key = 'j_cartomancer', state_transfer = {}, carpenter_compat = true },
 
+    joker_display_def = function(JokerDisplay)
+        return {}
+    end,
+
     calculate = function(self, card, context)
         local room = #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit
         if context.setting_blind and not (context.blueprint_card or card).getting_sliced and room then

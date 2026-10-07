@@ -32,3 +32,12 @@ T.test('Clairvoyant: vanilla Cartomancer forced to "+" also makes a Tarot on win
     T.win_blind()
     T.eq(#G.consumeables.cards, 1 + 1)
 end)
+
+T.test('Clairvoyant JokerDisplay: shows nothing (vanilla definition is empty)', function()
+    T.start_run({ dollars = 6, jokers = { 'bplus_cartomancer_plus', 'cartomancer' } })
+    T.eq(T.joker_display('bplus_cartomancer_plus').text, '')
+    T.force_behavior('cartomancer', 'plus')
+    T.eq(T.joker_display('cartomancer').text, '')
+    T.force_behavior('bplus_cartomancer_plus', 'base')
+    T.eq(T.joker_display('bplus_cartomancer_plus').text, '')
+end)
