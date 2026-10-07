@@ -14,6 +14,31 @@ BPlus.Joker({
     blueprint_compat = false, eternal_compat = true, perishable_compat = true,
     bplus = { vanilla_key = 'j_sixth_sense', state_transfer = {}, carpenter_compat = true },
 
+    joker_display_def = function(JokerDisplay)
+        return {
+            text = {
+                { text = '+' },
+                { ref_table = 'card.joker_display_values', ref_value = 'count', retrigger_type = 'mult' },
+            },
+            reminder_text = {
+                { text = '(6)', scale = 0.35 },
+            },
+            calc_function = function(card)
+                local _, _, scoring_hand = JokerDisplay.evaluate_hand()
+                local is_six = #scoring_hand == 1 and scoring_hand[1]:get_id() == 6
+                card.joker_display_values.active = G.GAME.current_round.hands_played == 0
+                card.joker_display_values.count = is_six and 1 or 0
+            end,
+            style_function = function(card, text, reminder_text, extra)
+                if text and text.children[1] and text.children[2] then
+                    local c = card.joker_display_values.active and G.C.SECONDARY_SET.Spectral or G.C.UI.TEXT_INACTIVE
+                    text.children[1].config.colour = c
+                    text.children[2].config.colour = c
+                end
+            end,
+        }
+    end,
+
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.cards } }
     end,
