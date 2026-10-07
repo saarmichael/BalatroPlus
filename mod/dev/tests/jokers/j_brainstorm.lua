@@ -42,7 +42,7 @@ T.test('Hive Mind: copies the retriggers of two Hacks (2 originals + 2 copies)',
     T.eq(r.mult, 2)
 end)
 
-T.test('Hive Mind: real Carpenter right of a vanilla Brainstorm -> Brainstorm copies two jokers', function()
+T.test('Hive Mind: real Carpenter left of a vanilla Brainstorm -> Brainstorm copies two jokers', function()
     T.start_run({ jokers = { 'bplus_joker_plus', 'joker', 'bplus_carpenter', 'brainstorm' }, ante = 3 })
     T.select_blind()
     T.eq(pair2().mult, 2 + 20 + 4 + 20 + 4)
