@@ -1,5 +1,10 @@
 local T = BPlus.test
 
+local function jd_select(specs)
+    G.hand:unhighlight_all()
+    for _, c in ipairs(T.hand_cards(specs)) do G.hand:add_to_highlighted(c, true) end
+end
+
 T.test('Hugging Face: 2 face cards -> +10 + 10 Mult (vanilla: +5 + 5)', function()
     T.start_run({ jokers = { 'bplus_smiley_plus' }, ante = 3 })
     T.select_blind()
@@ -35,4 +40,19 @@ T.test('Hugging Face: vanilla not forced keeps vanilla numbers', function()
     local r = T.play({ 'KS', 'KH' })
     T.eq(r.chips, 10 + 10 + 10)
     T.eq(r.mult, 2 + 5 + 5)
+end)
+
+T.test('Hugging Face JokerDisplay: "+" shows the "+" numbers; vanilla forced to "+" shows them too; "+" forced to base shows vanilla numbers', function()
+    T.start_run({ ante = 4, jokers = { 'bplus_smiley_plus', 'smiley' } })
+    T.select_blind()
+    T.set_hand({ 'KS','KH','2D','3C','5H' })
+    jd_select({ 'KS','KH' })
+    local d = T.joker_display('bplus_smiley_plus')
+    T.eq(d.text, '+' .. (10 * 2))
+    T.eq(d.reminder, '(Face Cards)')
+    T.eq(T.joker_display('smiley').text, '+' .. (5 * 2))
+    T.force_behavior('smiley', 'plus')
+    T.eq(T.joker_display('smiley').text, '+' .. (10 * 2))
+    T.force_behavior('bplus_smiley_plus', 'base')
+    T.eq(T.joker_display('bplus_smiley_plus').text, '+' .. (5 * 2))
 end)
