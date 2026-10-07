@@ -27,6 +27,22 @@ BPlus.Joker({
         return { vars = { per, 1 + per * steel_count() } }
     end,
 
+    joker_display_def = function(JokerDisplay)
+        return {
+            text = {
+                {
+                    border_nodes = {
+                        { text = 'X' },
+                        { ref_table = 'card.joker_display_values', ref_value = 'x_mult', retrigger_type = 'exp' },
+                    },
+                },
+            },
+            calc_function = function(card)
+                card.joker_display_values.x_mult = 1 + card.ability.extra.Xmult_per * steel_count()
+            end,
+        }
+    end,
+
     calculate = function(self, card, context)
         if context.joker_main then
             local n = steel_count()
