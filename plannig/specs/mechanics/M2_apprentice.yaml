@@ -1,0 +1,17 @@
+# Ticket: M2 Apprentice (new Joker). Decision D10.
+id: M2
+name: "Apprentice"
+file: mod/src/mechanics/M2_apprentice.lua
+behaviour: >
+  Uncommon, $6 (balance.apprentice), blueprint_compat=false, eternal_compat=false. Counts rounds at end_of_round
+  (main eval, not blueprint). Active after balance.apprentice.rounds rounds. Selling it while active upgrades one
+  random eligible joker (never itself). None eligible: message, nothing happens. Selling it while not active does
+  nothing. No + version, never eligible.
+numbers:
+  - balance.apprentice.rounds / rarity / cost
+acceptance_tests:
+  - "counter shows 0/3, 1/3, 2/3 and activates at 3 rounds"
+  - "sold before active: nothing is upgraded"
+  - "sold when active: the only eligible joker is upgraded"
+  - "sold when active with no eligible joker: nothing changes, no error"
+  - "is not eligible for upgrade itself"
