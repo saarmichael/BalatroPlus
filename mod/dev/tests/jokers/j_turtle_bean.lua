@@ -42,3 +42,10 @@ T.test('Magic Bean: ignores forced behaviour (carpenter_compat = false)', functi
     T.start_run({ jokers = { 'turtle_bean' } })
     T.errors(function() T.force_behavior('turtle_bean', 'plus') end)
 end)
+
+T.test('Magic Bean JokerDisplay: (5/5) at start, (4/5) after 2 rounds', function()
+    T.start_run({ jokers = { 'bplus_turtle_bean_plus' } })
+    T.eq(T.joker_display('bplus_turtle_bean_plus').reminder, '(5/5)')
+    G.jokers.cards[1].ability.extra.h_size = 4
+    T.eq(T.joker_display('bplus_turtle_bean_plus').reminder, '(4/5)')
+end)
