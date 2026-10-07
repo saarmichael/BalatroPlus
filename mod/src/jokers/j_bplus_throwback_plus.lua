@@ -18,6 +18,22 @@ BPlus.Joker({
         return { vars = { card.ability.extra.Xmult_per, 1 + card.ability.extra.Xmult_per * skips } }
     end,
 
+    joker_display_def = function(JokerDisplay)
+        return {
+            text = {
+                {
+                    border_nodes = {
+                        { text = 'X' },
+                        { ref_table = 'card.joker_display_values', ref_value = 'x_mult', retrigger_type = 'exp' },
+                    },
+                },
+            },
+            calc_function = function(card)
+                card.joker_display_values.x_mult = 1 + card.ability.extra.Xmult_per * (G.GAME.skips or 0)
+            end,
+        }
+    end,
+
     calculate = function(self, card, context)
         if context.skip_blind and not context.blueprint then
             -- read the value now: the event runs after a Carpenter/Rust view swap has ended
