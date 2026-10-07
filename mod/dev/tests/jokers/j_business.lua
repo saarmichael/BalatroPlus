@@ -1,0 +1,26 @@
+local T = BPlus.test
+
+T.test('Executive Card: with Oops! All 6s, score 2 face cards -> +$3 + $3 (vanilla: +$2 + $2)', function()
+    T.start_run({ ante = 3, dollars = 0, jokers = { 'bplus_business_plus', 'oops' } })
+    T.select_blind()
+    T.set_hand({ 'KS', 'KH' })
+    local r = T.play({ 'KS', 'KH' })
+    T.eq(r.dollars, 3 + 3)
+end)
+
+T.test('Executive Card: score a 7 -> $0', function()
+    T.start_run({ ante = 3, dollars = 0, jokers = { 'bplus_business_plus', 'oops' } })
+    T.select_blind()
+    T.set_hand({ '7S' })
+    local r = T.play({ '7S' })
+    T.eq(r.dollars, 0)
+end)
+
+T.test('Executive Card: vanilla Business Card forced to "+" with Oops! -> $3 + $3', function()
+    T.start_run({ ante = 3, dollars = 0, jokers = { 'business', 'oops' } })
+    T.force_behavior('business', 'plus')
+    T.select_blind()
+    T.set_hand({ 'KS', 'KH' })
+    local r = T.play({ 'KS', 'KH' })
+    T.eq(r.dollars, 3 + 3)
+end)
