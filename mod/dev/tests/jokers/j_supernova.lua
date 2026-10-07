@@ -1,0 +1,38 @@
+local T = BPlus.test
+
+local function pair()
+    T.set_hand({ '2S', '2H', '5D', '7C', '9S' })
+    return T.play({ '2S', '2H' })
+end
+
+T.test('Hypernova: play a Pair for the 3rd time this run -> +2 * 3 = 6 Mult (vanilla: +3)', function()
+    T.start_run({ jokers = { 'bplus_supernova_plus' }, hands = 5, ante = 3 })
+    T.select_blind()
+    T.eq(pair().mult, 2 + 2 * 1)
+    T.eq(pair().mult, 2 + 2 * 2)
+    T.eq(pair().mult, 2 + 2 * 3)
+end)
+
+T.test('Hypernova: first Flush of the run -> +2 * 1 = 2 Mult', function()
+    T.start_run({ jokers = { 'bplus_supernova_plus' }, ante = 3 })
+    T.select_blind()
+    T.set_hand({ '2H', '5H', '7H', '9H', 'JH' })
+    local r = T.play({ '2H', '5H', '7H', '9H', 'JH' })
+    T.eq(r.hand, 'Flush')
+    T.eq(r.mult, 4 + 2 * 1)
+end)
+
+T.test('Hypernova: vanilla Supernova on the 3rd Pair -> +3 Mult', function()
+    T.start_run({ jokers = { 'supernova' }, hands = 5, ante = 3 })
+    T.select_blind()
+    pair(); pair()
+    T.eq(pair().mult, 2 + 1 * 3)
+end)
+
+T.test('Hypernova: vanilla Supernova forced to "+" on the 3rd Pair -> +6 Mult', function()
+    T.start_run({ jokers = { 'supernova' }, hands = 5, ante = 3 })
+    T.force_behavior('supernova', 'plus')
+    T.select_blind()
+    pair(); pair()
+    T.eq(pair().mult, 2 + 2 * 3)
+end)
