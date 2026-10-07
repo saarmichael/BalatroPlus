@@ -1,5 +1,10 @@
 local T = BPlus.test
 
+local function jd_select(specs)
+    G.hand:unhighlight_all()
+    for _, c in ipairs(T.hand_cards(specs)) do G.hand:add_to_highlighted(c, true) end
+end
+
 T.test('Nightmare: 2 face cards -> +60 + 60 Chips (vanilla: +30 + 30)', function()
     T.start_run({ jokers = { 'bplus_scary_face_plus' }, ante = 3 })
     T.select_blind()
@@ -43,4 +48,19 @@ T.test('Nightmare: vanilla not forced keeps vanilla numbers', function()
     local r = T.play({ 'KS', 'KH' })
     T.eq(r.chips, 10 + 10 + 10 + 30 + 30)
     T.eq(r.mult, 2)
+end)
+
+T.test('Nightmare JokerDisplay: "+" shows the "+" numbers; vanilla forced to "+" shows them too; "+" forced to base shows vanilla numbers', function()
+    T.start_run({ ante = 4, jokers = { 'bplus_scary_face_plus', 'scary_face' } })
+    T.select_blind()
+    T.set_hand({ 'KS','KH','2D','3C','5H' })
+    jd_select({ 'KS','KH' })
+    local d = T.joker_display('bplus_scary_face_plus')
+    T.eq(d.text, '+' .. (60 * 2))
+    T.eq(d.reminder, '(Face Cards)')
+    T.eq(T.joker_display('scary_face').text, '+' .. (30 * 2))
+    T.force_behavior('scary_face', 'plus')
+    T.eq(T.joker_display('scary_face').text, '+' .. (60 * 2))
+    T.force_behavior('bplus_scary_face_plus', 'base')
+    T.eq(T.joker_display('bplus_scary_face_plus').text, '+' .. (30 * 2))
 end)
