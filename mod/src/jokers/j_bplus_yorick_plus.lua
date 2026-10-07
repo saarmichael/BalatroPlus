@@ -23,6 +23,26 @@ BPlus.Joker({
         return { vars = { e.Xmult_mod, e.discards, e.discards_left, e.Xmult } }
     end,
 
+    joker_display_def = function(JokerDisplay)
+        return {
+            text = {
+                {
+                    border_nodes = {
+                        { text = 'X' },
+                        { ref_table = 'card.ability.extra', ref_value = 'Xmult', retrigger_type = 'exp' },
+                    },
+                },
+            },
+            reminder_text = {
+                { text = '(' },
+                { ref_table = 'card.ability.extra', ref_value = 'discards_left' },
+                { text = '/' },
+                { ref_table = 'card.ability.extra', ref_value = 'discards' },
+                { text = ')' },
+            },
+        }
+    end,
+
     calculate = function(self, card, context)
         if context.discard and not context.blueprint then
             local e = card.ability.extra
