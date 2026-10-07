@@ -26,8 +26,21 @@ function BPlus.Joker(def)
     if def.rarity == nil then def.rarity = vanilla.rarity end
     if def.cost == nil then def.cost = vanilla.cost end
     if def.atlas == nil then
-        def.atlas = 'placeholder'
-        def.pos = def.pos or { x = 0, y = 0 }
+        -- Use the vanilla joker's own sprite (D19); the "+" look comes from the overlay (plus_art.lua).
+        def.atlas = vanilla.atlas or 'Joker'
+        def.prefix_config = def.prefix_config or {}
+        if def.prefix_config.atlas == nil then def.prefix_config.atlas = false end -- vanilla atlas key: no 'bplus_' prefix
+        def.pos = def.pos or vanilla.pos or { x = 0, y = 0 }
+        if def.soul_pos == nil then def.soul_pos = vanilla.soul_pos end
+        -- Vanilla sizes these by joker name (set_ability/load); our name differs, so use pixel_size.
+        if def.pixel_size == nil and def.display_size == nil then
+            local n = vanilla.name
+            if n == 'Half Joker' then def.pixel_size = { h = 95 / 1.7 }
+            elseif n == 'Photograph' then def.pixel_size = { h = 95 / 1.2 }
+            elseif n == 'Square Joker' then def.pixel_size = { h = 71 }
+            elseif n == 'Wee Joker' then def.display_size = { w = 71 * 0.7, h = 95 * 0.7 } -- shrinks T only, like vanilla
+            else def.pixel_size = vanilla.pixel_size; def.display_size = vanilla.display_size end
+        end
     end
     if def.unlocked == nil then def.unlocked = true end
     if def.discovered == nil then def.discovered = false end
