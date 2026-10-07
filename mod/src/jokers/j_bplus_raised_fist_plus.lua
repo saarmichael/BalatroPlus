@@ -17,6 +17,28 @@ BPlus.Joker({
         return { vars = { card.ability.extra.rank_mult } }
     end,
 
+    joker_display_def = function(JokerDisplay)
+        return {
+            text = {
+                { text = '+' },
+                { ref_table = 'card.joker_display_values', ref_value = 'mult', retrigger_type = 'mult' },
+            },
+            text_config = { colour = G.C.MULT },
+            calc_function = function(card)
+                local temp_mult, temp_id, temp_card, retriggers = 15, 15, nil, 1
+                for i = 1, #G.hand.cards do
+                    local c = G.hand.cards[i]
+                    if not c.highlighted and temp_id >= c.base.id and not SMODS.has_no_rank(c) then
+                        retriggers = JokerDisplay.calculate_card_triggers(c, nil, true)
+                        temp_mult, temp_id, temp_card = c.base.nominal, c.base.id, c
+                    end
+                end
+                if not temp_card or temp_card.debuff or temp_card.facing == 'back' then temp_mult = 0 end
+                card.joker_display_values.mult = (temp_mult < 15 and temp_mult * card.ability.extra.rank_mult * retriggers or 0)
+            end,
+        }
+    end,
+
     calculate = function(self, card, context)
         if context.individual and context.cardarea == G.hand and not context.end_of_round then
             -- same selection as vanilla: lowest id wins, ties go to the last such card; Stone cards skipped
