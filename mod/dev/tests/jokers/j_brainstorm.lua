@@ -33,3 +33,17 @@ T.test('Hive Mind: Hive Mind forced to base copies only the leftmost joker', fun
     T.force_behavior(3, 'base')
     T.eq(pair2().mult, 2 + 20 + 4 + 20)
 end)
+
+T.test('Hive Mind: copies the retriggers of two Hacks (2 originals + 2 copies)', function()
+    T.start_run({ jokers = { 'hack', 'hack', 'bplus_brainstorm_plus' }, ante = 3 })
+    T.select_blind()
+    local r = pair2()
+    T.eq(r.chips, 10 + 2 * 5 + 2 * 5)
+    T.eq(r.mult, 2)
+end)
+
+T.test('Hive Mind: real Carpenter right of a vanilla Brainstorm -> Brainstorm copies two jokers', function()
+    T.start_run({ jokers = { 'bplus_joker_plus', 'joker', 'bplus_carpenter', 'brainstorm' }, ante = 3 })
+    T.select_blind()
+    T.eq(pair2().mult, 2 + 20 + 4 + 20 + 4)
+end)
