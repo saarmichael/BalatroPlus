@@ -17,6 +17,27 @@ BPlus.Joker({
     blueprint_compat = true, eternal_compat = false, perishable_compat = true,
     bplus = { vanilla_key = 'j_luchador', state_transfer = {}, carpenter_compat = true },
 
+    joker_display_def = function(JokerDisplay)
+        return {
+            reminder_text = {
+                { text = '(' , colour = G.C.UI.TEXT_INACTIVE },
+                { ref_table = 'card.joker_display_values', ref_value = 'active_text' },
+                { text = ')' , colour = G.C.UI.TEXT_INACTIVE },
+            },
+            calc_function = function(card)
+                card.joker_display_values.is_active = (G.GAME.blind and G.GAME.blind.get_type and
+                    (not G.GAME.blind.disabled) and (G.GAME.blind:get_type() == 'Boss')) and true or false
+                card.joker_display_values.active_text = localize(card.joker_display_values.is_active and 'jdis_active' or 'jdis_inactive')
+            end,
+            style_function = function(card, text, reminder_text, extra)
+                if reminder_text and reminder_text.children and reminder_text.children[2] then
+                    reminder_text.children[2].config.colour = card.joker_display_values.is_active and G.C.GREEN or
+                        G.C.UI.TEXT_INACTIVE
+                end
+            end,
+        }
+    end,
+
     calculate = function(self, card, context)
         if context.selling_self then
             local blind = G.GAME.blind
