@@ -17,6 +17,19 @@ BPlus.Joker({
         return { vars = { card.ability.extra.chips_per, card.ability.extra.chips_per * math.max(0, G.GAME.dollars or 0) } }
     end,
 
+    joker_display_def = function(JokerDisplay)
+        return {
+            text = {
+                { text = '+' },
+                { ref_table = 'card.joker_display_values', ref_value = 'chips', retrigger_type = 'mult' },
+            },
+            text_config = { colour = G.C.CHIPS },
+            calc_function = function(card)
+                card.joker_display_values.chips = card.ability.extra.chips_per * math.max(0, G.GAME.dollars or 0)
+            end,
+        }
+    end,
+
     calculate = function(self, card, context)
         if context.joker_main then
             local money = (G.GAME.dollars + (G.GAME.dollar_buffer or 0))
