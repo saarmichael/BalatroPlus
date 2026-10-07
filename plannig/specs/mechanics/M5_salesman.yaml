@@ -1,0 +1,26 @@
+# Mechanic ticket M5 Salesman (also the j_ring_master joker ticket: plannig/specs/jokers/j_ring_master.yaml)
+id: M5
+name: Salesman
+kind: joker                      # j_bplus_ring_master_plus, "+" of Showman
+files: [mod/src/jokers/j_bplus_ring_master_plus.lua, mod/src/mechanics/shop_upgrade.lua]
+behaviour:
+  - Showman effect: SMODS.showman() also returns true while Salesman is held and behaving as itself (wrap SMODS.showman; use BPlus.find_behaving for both j_ring_master and j_bplus_ring_master_plus so Carpenter/The Rust work).
+  - Shop upgrade rate: while a Salesman is held and behaving as Salesman (not debuffed), the shared shop helper adds balance.salesman.upgrade_rate. Works without any voucher.
+  - A shop joker that comes out upgraded is a FRESH "+" card (no state transfer), price stays base (BPlus.Joker uses vanilla cost).
+numbers: [balance.salesman.upgrade_rate]
+shared_helper: |
+  mod/src/mechanics/shop_upgrade.lua: BPlus.shop_upgrade.rate() = salesman (if held) + (masterwork.upgrade_rate if v_bplus_masterwork redeemed, else craftsmanship.upgrade_rate if v_bplus_craftsmanship redeemed).
+  BPlus.shop_upgrade.maybe(card): if eligible and roll < rate then BPlus.upgrade_card(card, {fresh=true, silent=true}). Hooked into create_shop_card_ui (every shop joker passes through it, incl. rerolls, tag-created and dev-forced ones).
+  Roll: pseudorandom('bplus_shop_upgrade'..ante) < rate. Tests may set BPlus.shop_upgrade.force = true/false to force the roll.
+edge_cases:
+  - Rate 0 consumes no RNG.
+  - Debuffed Salesman gives neither Showman nor the rate (find_behaving skips debuffed).
+  - Not Blueprint compatible. Eternal and Perishable compatible.
+  - Under The Rust Salesman behaves as Showman (no rate); next to Carpenter a vanilla Showman behaves as Salesman (rate on).
+acceptance_tests:
+  - Holding Salesman, a joker you already hold can appear in the shop (Showman effect)
+  - Salesman without vouchers: shop jokers upgrade at balance.salesman.upgrade_rate (rate value + forced roll; plus a statistical bound check)
+  - Salesman with Craftsmanship: rate = salesman + craftsmanship (sum)
+  - Salesman with Masterwork: rate = salesman + masterwork
+  - Fresh upgraded shop joker has "+" starting values, base price
+  - Carpenter-style forced behaviour: vanilla Showman forced 'plus' enables the rate; "+" forced 'base' does not

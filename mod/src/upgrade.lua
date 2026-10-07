@@ -61,6 +61,8 @@ end
 -- Permanently turns a vanilla joker into its "+" version, in place. Keeps position, edition and
 -- stickers; copies the fields in the "+" joker's bplus.state_transfer. Does nothing (returns false)
 -- for jokers without an upgrade or already upgraded. `opts.silent` skips the juice + message.
+-- `opts.fresh` skips the state transfer: the card becomes a brand-new "+" joker with its own starting
+-- values (shop and pack upgrades, which turn a just-created joker into its "+" version).
 function BPlus.upgrade_card(card, opts)
     if not BPlus.is_eligible(card) then return false end
     opts = opts or {}
@@ -70,8 +72,10 @@ function BPlus.upgrade_card(card, opts)
     BPlus.reset_behavior(card)
 
     local moved = {}
-    for src, dst in pairs(plus.bplus.state_transfer) do
-        moved[dst] = BPlus.copy(BPlus.get_path(card.ability, src))
+    if not opts.fresh then
+        for src, dst in pairs(plus.bplus.state_transfer) do
+            moved[dst] = BPlus.copy(BPlus.get_path(card.ability, src))
+        end
     end
     local edition = card.edition and copy_table(card.edition)
     local stickers = {}
