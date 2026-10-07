@@ -59,3 +59,12 @@ T.test('Midas Touch: Midas Mask forced to "+" -> a scoring 7 becomes Gold', func
     for _, c in ipairs(G.playing_cards) do if is_gold(c) then golds = golds + 1 end end
     T.eq(golds, 1)
 end)
+
+T.test('Midas Touch JokerDisplay: shows nothing, like vanilla (also forced to base / plus)', function()
+    T.start_run({ jokers = { 'bplus_midas_mask_plus', 'midas_mask' } })
+    T.eq(T.joker_display('bplus_midas_mask_plus').text, '')
+    T.force_behavior('midas_mask', 'plus')
+    T.eq(T.joker_display('midas_mask').text, '')
+    T.force_behavior('bplus_midas_mask_plus', 'base')
+    T.eq(T.joker_display('bplus_midas_mask_plus').text, '')
+end)
