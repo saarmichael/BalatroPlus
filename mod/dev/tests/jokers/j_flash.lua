@@ -1,0 +1,53 @@
+local T = BPlus.test
+
+local function rerolls(n)
+    for _ = 1, n do T.reroll() end
+end
+
+local function start(joker)
+    T.start_run({ jokers = { joker }, dollars = 100, free_rerolls = true, ante = 3 })
+    T.to_shop()
+end
+
+T.test('Cheat Sheet: reroll 3 times -> +4 + 4 + 4 = 12 Mult (vanilla: 2 + 2 + 2)', function()
+    start('bplus_flash_plus')
+    rerolls(3)
+    T.eq(T.joker(1).ability.extra.mult, 4 + 4 + 4)
+    T.leave_shop()
+    T.select_blind()
+    T.eq(T.play({ 1 }).mult, 1 + 12)
+end)
+
+T.test('Cheat Sheet: vanilla Flash Card gains +2 per reroll', function()
+    start('flash')
+    rerolls(3)
+    T.eq(T.joker(1).ability.mult, 2 + 2 + 2)
+end)
+
+T.test("Cheat Sheet: Flash Card at +6 Mult, upgrade -> keeps +6 Mult, later gains use the '+' rate", function()
+    T.start_run({ jokers = { { key = 'flash', edition = 'foil' } }, dollars = 100, free_rerolls = true, ante = 3 })
+    T.to_shop()
+    rerolls(3)
+    T.eq(T.joker(1).ability.mult, 6, 'vanilla value')
+    local card = T.upgrade('flash')
+    T.eq(card.ability.extra.mult, 6, 'carried over')
+    T.truthy(card.edition and card.edition.foil, 'foil kept')
+    rerolls(1)
+    T.eq(card.ability.extra.mult, 6 + 4)
+end)
+
+T.test('Cheat Sheet: vanilla Flash Card forced to "+" gains +4 and keeps its stored value', function()
+    start('flash')
+    rerolls(1)
+    T.force_behavior('flash', 'plus')
+    rerolls(1)
+    T.eq(T.joker(1).ability.mult, 2 + 4)
+end)
+
+T.test('Cheat Sheet: forced to base gains +2 and keeps its value', function()
+    start('bplus_flash_plus')
+    rerolls(1)
+    T.force_behavior(1, 'base')
+    rerolls(1)
+    T.eq(T.joker(1).ability.extra.mult, 4 + 2)
+end)
