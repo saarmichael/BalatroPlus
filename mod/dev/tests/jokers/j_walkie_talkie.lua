@@ -1,5 +1,10 @@
 local T = BPlus.test
 
+local function jd_select(specs)
+    G.hand:unhighlight_all()
+    for _, c in ipairs(T.hand_cards(specs)) do G.hand:add_to_highlighted(c, true) end
+end
+
 T.test('Ham Radio: scoring a 10 -> +100 Chips and +4 Mult', function()
     T.start_run({ jokers = { 'bplus_walkie_talkie_plus' }, ante = 3 })
     T.select_blind()
@@ -63,4 +68,19 @@ T.test('Ham Radio: on a 4, vanilla not forced keeps vanilla numbers', function()
     local r = T.play({ '4S' })
     T.eq(r.chips, 5 + 4 + 10)
     T.eq(r.mult, 1 + 4)
+end)
+
+T.test('Ham Radio JokerDisplay: "+" shows the "+" numbers; vanilla forced to "+" shows them too; "+" forced to base shows vanilla numbers', function()
+    T.start_run({ ante = 4, jokers = { 'bplus_walkie_talkie_plus', 'walkie_talkie' } })
+    T.select_blind()
+    T.set_hand({ '4S','4H','KD','QC','JC' })
+    jd_select({ '4S','4H' })
+    local d = T.joker_display('bplus_walkie_talkie_plus')
+    T.eq(d.text, '+' .. (10 * 2) .. ' +' .. (40 * 2))
+    T.eq(d.reminder, '(10,4)')
+    T.eq(T.joker_display('walkie_talkie').text, '+' .. (10 * 2) .. ' +' .. (4 * 2))
+    T.force_behavior('walkie_talkie', 'plus')
+    T.eq(T.joker_display('walkie_talkie').text, '+' .. (10 * 2) .. ' +' .. (40 * 2))
+    T.force_behavior('bplus_walkie_talkie_plus', 'base')
+    T.eq(T.joker_display('bplus_walkie_talkie_plus').text, '+' .. (10 * 2) .. ' +' .. (4 * 2))
 end)
