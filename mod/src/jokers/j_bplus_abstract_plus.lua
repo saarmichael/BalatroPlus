@@ -18,6 +18,19 @@ BPlus.Joker({
         return { vars = { card.ability.extra.mult, n * card.ability.extra.mult } }
     end,
 
+    joker_display_def = function(JokerDisplay)
+        return {
+            text = {
+                { text = '+' },
+                { ref_table = 'card.joker_display_values', ref_value = 'mult', retrigger_type = 'mult' },
+            },
+            text_config = { colour = G.C.MULT },
+            calc_function = function(card)
+                card.joker_display_values.mult = (G.jokers and G.jokers.cards and #G.jokers.cards or 0) * card.ability.extra.mult
+            end,
+        }
+    end,
+
     calculate = function(self, card, context)
         if context.joker_main then
             return { mult = #G.jokers.cards * card.ability.extra.mult }

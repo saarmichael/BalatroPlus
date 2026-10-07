@@ -24,3 +24,13 @@ T.test('Abstract Abstract Joker: vanilla Abstract Joker forced to "+" gives +10 
     T.set_hand({ '2S', '3H', '7C', '5D', '9D' })
     T.eq(T.play({ '2S' }).mult, 1 + 10 * 2)
 end)
+
+T.test('Abstract Abstract Joker JokerDisplay: 2 jokers -> +20; vanilla forced to "+" shows +20; "+" forced to base shows +6', function()
+    T.start_run({ jokers = { 'bplus_abstract_plus', 'abstract' }, hands = 5, ante = 3 })
+    T.eq(T.joker_display('bplus_abstract_plus').text, '+' .. 10 * 2)
+    T.eq(T.joker_display('abstract').text, '+' .. 3 * 2)
+    T.force_behavior('abstract', 'plus')
+    T.eq(T.joker_display('abstract').text, '+' .. 10 * 2)
+    T.force_behavior('bplus_abstract_plus', 'base')
+    T.eq(T.joker_display('bplus_abstract_plus').text, '+' .. 3 * 2)
+end)
