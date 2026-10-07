@@ -25,3 +25,13 @@ T.test('Defibrillator: Hanging Chad forced to "+" -> first card scores 4 times',
     local r = T.play({ '9S', '9H' })
     T.eq(r.chips, 10 + 9 * (1 + 3) + 9)
 end)
+
+T.test('Defibrillator JokerDisplay: first scored card triggers 1 + 3 = 4 times, second once', function()
+    T.start_run({ jokers = { 'bplus_hanging_chad_plus' }, ante = 3 })
+    T.select_blind()
+    T.set_hand({ '9S', '9H', '4C', '5D', '2D' })
+    local a, b = G.hand.cards[1], G.hand.cards[2]
+    T.eq(rawget(_G, 'JokerDisplay').calculate_card_triggers(a, { a, b }, false), 1 + 3)
+    T.eq(rawget(_G, 'JokerDisplay').calculate_card_triggers(b, { a, b }, false), 1)
+    T.eq(T.joker_display('bplus_hanging_chad_plus').text, '')
+end)
