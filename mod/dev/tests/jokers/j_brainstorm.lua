@@ -47,3 +47,13 @@ T.test('Hive Mind: real Carpenter left of a vanilla Brainstorm -> Brainstorm cop
     T.select_blind()
     T.eq(pair2().mult, 2 + 20 + 4 + 20 + 4)
 end)
+
+T.test('Hive Mind JokerDisplay: copies the display of the first compatible of the 2 leftmost Jokers', function()
+    T.start_run({ jokers = { 'juggler', 'joker', 'bplus_brainstorm_plus', 'brainstorm' } })
+    T.eq(T.joker_display('bplus_brainstorm_plus').text, '+4')
+    T.eq(T.joker_display('brainstorm').reminder, '(incompatible)')
+    T.force_behavior('brainstorm', 'plus')
+    T.eq(T.joker_display('brainstorm').text, '+4')
+    T.force_behavior('bplus_brainstorm_plus', 'base')
+    T.eq(T.joker_display('bplus_brainstorm_plus').reminder, '(incompatible)')
+end)

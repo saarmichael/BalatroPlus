@@ -41,6 +41,30 @@ BPlus.Joker({
         end
     end,
 
+    joker_display_def = function(JokerDisplay)
+        return {
+            reminder_text = {
+                { text = '(' },
+                { ref_table = 'card.joker_display_values', ref_value = 'blueprint_compat', colour = G.C.RED },
+                { text = ')' },
+            },
+            calc_function = function(card)
+                local copied_joker, copied_debuff = JokerDisplay.calculate_blueprint_copy(card)
+                card.joker_display_values.blueprint_compat = localize('k_incompatible')
+                JokerDisplay.copy_display(card, copied_joker, copied_debuff)
+            end,
+            -- copies two jokers, but JokerDisplay can mirror only one: show the first compatible target
+            get_blueprint_joker = function(card)
+                local first
+                for _, other in ipairs(targets(card)) do
+                    first = first or other
+                    if other ~= card and other.config.center.blueprint_compat then return other end
+                end
+                return first
+            end,
+        }
+    end,
+
     calculate = function(self, card, context)
         local rets = {}
         for _, other in ipairs(targets(card)) do
