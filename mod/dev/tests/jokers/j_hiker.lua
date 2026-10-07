@@ -51,3 +51,12 @@ T.test('Jogger: Hiker forced to "+" -> +10 per score; Jogger forced to base -> +
     T.play({ '5S' })
     T.eq(c.ability.perma_bonus, 10 + 5)
 end)
+
+T.test('Jogger JokerDisplay: shows nothing, like vanilla (also forced to base / plus)', function()
+    T.start_run({ jokers = { 'bplus_hiker_plus', 'hiker' } })
+    T.eq(T.joker_display('bplus_hiker_plus').text, '')
+    T.force_behavior('hiker', 'plus')
+    T.eq(T.joker_display('hiker').text, '')
+    T.force_behavior('bplus_hiker_plus', 'base')
+    T.eq(T.joker_display('bplus_hiker_plus').text, '')
+end)
