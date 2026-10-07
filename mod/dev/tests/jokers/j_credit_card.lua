@@ -43,3 +43,12 @@ T.test('Sam Altman: Credit Card forced to "+" -> -$100, back -> -$20, sold while
     T.sell('credit_card')
     T.eq(G.GAME.bankrupt_at, 0)
 end)
+
+T.test('Sam Altman JokerDisplay: shows nothing, also for vanilla forced to "+" and "+" forced to base', function()
+    T.start_run({ jokers = { 'bplus_credit_card_plus', 'credit_card' } })
+    T.eq(T.joker_display('bplus_credit_card_plus').text, '')
+    T.force_behavior('credit_card', 'plus')
+    T.eq(T.joker_display('credit_card').text, '')
+    T.force_behavior('bplus_credit_card_plus', 'base')
+    T.eq(T.joker_display('bplus_credit_card_plus').text, '')
+end)

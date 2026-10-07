@@ -13,6 +13,10 @@ BPlus.Joker({
         return { vars = { card.ability.extra.debt } }
     end,
 
+    joker_display_def = function(JokerDisplay)
+        return {}
+    end,
+
     add_to_deck = function(self, card, from_debuff)
         G.GAME.bankrupt_at = G.GAME.bankrupt_at - card.ability.extra.debt
     end,
