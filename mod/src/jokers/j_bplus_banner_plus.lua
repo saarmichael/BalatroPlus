@@ -17,6 +17,19 @@ BPlus.Joker({
         return { vars = { card.ability.extra.chips_per } }
     end,
 
+    joker_display_def = function(JokerDisplay)
+        return {
+            text = {
+                { text = '+' },
+                { ref_table = 'card.joker_display_values', ref_value = 'chips', retrigger_type = 'mult' },
+            },
+            text_config = { colour = G.C.CHIPS },
+            calc_function = function(card)
+                card.joker_display_values.chips = card.ability.extra.chips_per * (G.GAME.current_round.discards_left or 0)
+            end,
+        }
+    end,
+
     calculate = function(self, card, context)
         if context.joker_main and G.GAME.current_round.discards_left > 0 then
             return { chips = card.ability.extra.chips_per * G.GAME.current_round.discards_left }
