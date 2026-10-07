@@ -1,0 +1,23 @@
+{
+  "$schema": "https://raw.githubusercontent.com/LuaLS/vscode-lua/master/setting/schema.json",
+  "runtime.version": "LuaJIT",
+  "workspace.library": [
+    "/Users/michaelsaar/Library/Application Support/Balatro/Mods/smods/lsp_def",
+    "/Users/michaelsaar/Library/Application Support/Steam/steamapps/common/Balatro/Balatro.app/Contents/Resources/Balatro.love"
+  ],
+  "workspace.checkThirdParty": false,
+  "workspace.ignoreDir": [
+    ".git",
+    ".vscode"
+  ],
+  "diagnostics.globals": [
+    "BPlus",
+    "SMODS",
+    "G",
+    "love"
+  ],
+  "diagnostics.disable": [
+    "duplicate-set-field",
+    "lowercase-global"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "id": "BalatroPlus",
+  "name": "Balatro Plus",
+  "display_name": "Balatro+",
+  "author": ["Michael Saar"],
+  "description": "Every Joker gets a basic and an upgraded version.",
+  "prefix": "bplus",
+  "main_file": "main.lua",
+  "version": "0.0.1",
+  "priority": 0,
+  "badge_colour": "8E44AD",
+  "dependencies": ["Steamodded (>=1.0.0~BETA-1814a)"],
+  "conflicts": []
+}
