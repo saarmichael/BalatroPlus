@@ -35,16 +35,3 @@ BPlus.Joker({
         end
     end,
 })
-
--- When The Rust makes this joker behave as vanilla Swashbuckler, vanilla's per-frame update (which
--- is keyed on the ability name) must run on that shape so ability.mult stays current.
-local update_ref = Card.update
-function Card:update(dt)
-    ---@diagnostic disable-next-line: undefined-field
-    if self.ability and self.ability.bplus_behaving == 'j_swashbuckler' and not self.bplus_in_alt
-        and G.jokers and self.area == G.jokers then
-        BPlus.with_center(self, 'j_swashbuckler', function() update_ref(self, dt) end)
-        return
-    end
-    return update_ref(self, dt)
-end

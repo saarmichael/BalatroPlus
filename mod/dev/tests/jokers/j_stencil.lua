@@ -50,3 +50,10 @@ T.test('Joker Mold: vanilla Stencil forced to "+" gives X1.5 * (4 + 1)', functio
     T.select_blind()
     T.eq(play_one().mult, 1 * 1.5 * (4 + 1))
 end)
+
+T.test('Joker Mold: forced to base scores the vanilla Stencil X(4 + 1) = X5', function()
+    T.start_run({ jokers = { 'bplus_stencil_plus' }, ante = 3 })
+    T.force_behavior(1, 'base')
+    T.select_blind()
+    T.eq(play_one().mult, 1 * (4 + 1))
+end)

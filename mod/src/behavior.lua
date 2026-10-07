@@ -229,7 +229,7 @@ local function wrap(name)
         return ref(self, ...)
     end
 end
-for _, name in ipairs({ 'calculate_dollar_bonus', 'add_to_deck', 'remove_from_deck', 'generate_UIBox_ability_table' }) do
+for _, name in ipairs({ 'calculate_dollar_bonus', 'add_to_deck', 'remove_from_deck', 'generate_UIBox_ability_table', 'update' }) do
     wrap(name)
 end
 

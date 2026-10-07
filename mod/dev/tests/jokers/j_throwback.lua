@@ -24,3 +24,9 @@ T.test('Nostalgic Joker: Throwback forced to "+" scores X(1 + 1 * 2) = X3', func
     T.force_behavior('throwback', 'plus')
     near(boss_hit(2).mult, 1 * (1 + 1 * 2))
 end)
+
+T.test('Nostalgic Joker: forced to base scores the vanilla X(1 + 0.25 * 2) = X1.5', function()
+    T.start_run({ jokers = { 'bplus_throwback_plus' }, boss = 'club' })
+    T.force_behavior(1, 'base')
+    near(boss_hit(2).mult, 1 * (1 + 0.25 * 2))
+end)
