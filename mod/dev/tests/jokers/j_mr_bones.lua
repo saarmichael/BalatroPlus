@@ -53,3 +53,18 @@ T.test('Lich: vanilla Mr. Bones forced to "+" is destroyed or kept on the roll, 
     local r = lose_with(TWO_PAIR, { 'KS', 'KH', 'QC', 'QD' })
     T.eq(r.state, 'ROUND_EVAL')
 end)
+
+T.test('Lich JokerDisplay: (Inactive) at 0 chips, (Active) at 40% of the blind; forced behaviours agree', function()
+    T.start_run({ jokers = { 'bplus_mr_bones_plus', 'mr_bones' }, hands = 5, ante = 3 })
+    T.select_blind()
+    T.eq(T.joker_display('bplus_mr_bones_plus').reminder, '(Inactive)')
+    T.set_hand({ 'KS', 'KH', 'QC', 'QD', '2S' })
+    T.play({ 'KS', 'KH', 'QC', 'QD' }) -- 120 chips of 300 at ante 3? see ratio below
+    local ratio = G.GAME.chips / G.GAME.blind.chips
+    local want = ratio >= 0.25 and '(Active)' or '(Inactive)'
+    T.eq(T.joker_display('bplus_mr_bones_plus').reminder, want)
+    T.force_behavior('mr_bones', 'plus')
+    T.eq(T.joker_display('mr_bones').reminder, want)
+    T.force_behavior('bplus_mr_bones_plus', 'base')
+    T.eq(T.joker_display('bplus_mr_bones_plus').reminder, want)
+end)

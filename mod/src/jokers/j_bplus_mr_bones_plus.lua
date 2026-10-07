@@ -22,6 +22,27 @@ BPlus.Joker({
         return { vars = { num, den } }
     end,
 
+    joker_display_def = function(JokerDisplay)
+        return {
+            reminder_text = {
+                { text = '(' },
+                { ref_table = 'card.joker_display_values', ref_value = 'active_text' },
+                { text = ')' },
+            },
+            calc_function = function(card)
+                local ratio = (G.GAME.chips or 0) / ((G.GAME.blind or {}).chips or 1)
+                card.joker_display_values.is_active = ratio >= 0.25 and (G.GAME.chips or 0) > 0
+                card.joker_display_values.active_text = localize(card.joker_display_values.is_active and 'jdis_active' or 'jdis_inactive')
+            end,
+            style_function = function(card, text, reminder_text, extra)
+                if reminder_text and reminder_text.children and reminder_text.children[2] then
+                    reminder_text.children[2].config.colour = card.joker_display_values.is_active and G.C.GREEN or
+                        G.C.UI.TEXT_INACTIVE
+                end
+            end,
+        }
+    end,
+
     calculate = function(self, card, context)
         if context.end_of_round and context.main_eval and context.game_over
             and G.GAME.chips / G.GAME.blind.chips >= 0.25 then
