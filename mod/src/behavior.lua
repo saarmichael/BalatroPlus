@@ -188,6 +188,8 @@ function BPlus.sync_behavior(card)
     card.ability.bplus_behaving = want
     if was_added then card:add_to_deck(true) end
     card.bplus_syncing = nil
+    -- the display must be rebuilt from the other behaviour's definition
+    if card.joker_display_values and card.update_joker_display then card:update_joker_display(true, true, 'bplus_behavior') end
 end
 
 -- Back to the card's own behaviour and shape (used before a permanent upgrade).
@@ -233,9 +235,25 @@ for _, name in ipairs({ 'calculate_dollar_bonus', 'add_to_deck', 'remove_from_de
     wrap(name)
 end
 
+-- JokerDisplay (optional mod): its definition lookup and refs all go through card.config.center /
+-- card.ability, so running its per-card entry points under the swap makes a joker display what it
+-- currently behaves as (D20). Installed lazily because JokerDisplay may load after this file.
+local jd_installed = false
+local function install_jokerdisplay()
+    ---@diagnostic disable: undefined-field
+    if jd_installed or not (rawget(_G, 'JokerDisplay') and Card.update_joker_display and Card.calculate_joker_display
+        and Card.initialize_joker_display) then return end
+    jd_installed = true
+    wrap('initialize_joker_display')
+    wrap('calculate_joker_display')
+    wrap('update_joker_display')
+end
+install_jokerdisplay()
+
 local update_ref = Game.update
 function Game:update(dt)
     update_ref(self, dt)
+    install_jokerdisplay()
     if G.STAGE == G.STAGES.RUN and G.jokers then
         for _, card in ipairs(G.jokers.cards) do BPlus.sync_behavior(card) end
     end

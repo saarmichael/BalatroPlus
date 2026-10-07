@@ -387,6 +387,38 @@ end
 -- Make an owned joker behave as its "+" version ('plus', what Carpenter does), as its vanilla
 -- version ('base', what The Rust does), or normally again (nil). Overrides every mechanic.
 -- Use it to test a joker's alternate behaviour without depending on Carpenter / The Rust.
+-- T.joker_display(k): what JokerDisplay shows for an owned joker, as strings. Forces a full rebuild of the
+-- display, then reads the rendered nodes. Returns { text = '+20', reminder = '(Round)', extra = { '(1 in 4)' },
+-- values = card.joker_display_values }. `live = true` skips the forced rebuild and reads what the game's own
+-- updates produced (use after T.wait_frames to test automatic refresh). Fails if JokerDisplay isn't installed.
+function T.joker_display(key_or_index, live)
+    ---@diagnostic disable: undefined-global
+    local card = require_card({ 'jokers' }, key_or_index, 'joker_display')
+    if not (JokerDisplay and card.update_joker_display) then T.fail('joker_display: JokerDisplay is not installed') end
+    if not live then card:update_joker_display(true, true, 'test') end
+    local box = card.children.joker_display or card.children.joker_display_small
+    if not box then T.fail('joker_display: card has no display box') end
+    local function read(node)
+        if node.UIT == G.UIT.T then
+            if node.config.ref_table and node.config.ref_value then
+                return JokerDisplay.text_format(node.config.ref_table[node.config.ref_value], node)
+            end
+            return tostring(node.config.text or '')
+        end
+        local out = {}
+        for _, child in ipairs(node.children or {}) do out[#out + 1] = read(child) end
+        return table.concat(out)
+    end
+    local extra = {}
+    for _, row in ipairs(box.extra and box.extra.children or {}) do extra[#extra + 1] = read(row) end
+    return {
+        text = box.text and read(box.text) or '',
+        reminder = box.reminder_text and read(box.reminder_text) or '',
+        extra = extra,
+        values = card.joker_display_values,
+    }
+end
+
 function T.force_behavior(key_or_index, mode)
     local card = require_card({ 'jokers' }, key_or_index, 'force_behavior')
     card.bplus_forced = mode

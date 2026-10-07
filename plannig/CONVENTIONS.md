@@ -299,3 +299,33 @@ Acceptance tests are automated and run inside the real game with `./dev.sh test`
   (`tools/commit.sh "<message>" <files...>`, which serialises commits between parallel agents). CSV statuses are
   updated by the orchestrator in batches.
 - **Message format:** `joker: <vanilla_key> -> <plus_key>`, followed by the acceptance test results.
+
+## 11. JokerDisplay (D18, D20)
+
+Every "+" joker (and Carpenter / Apprentice) declares `joker_display_def` inside its `BPlus.Joker{}` call.
+It mirrors the vanilla definition in `Mods/JokerDisplay/definitions/display_definitions.lua` for the same joker,
+adapted to the "+" `config.extra` field names (`ref_table = 'card.ability.extra'`, not `'card.ability'`).
+Vanilla jokers with an empty definition (`{}`) get `return {}`.
+
+```lua
+joker_display_def = function(JokerDisplay)
+    return {
+        text = {
+            { text = '+' },
+            { ref_table = 'card.ability.extra', ref_value = 'mult', retrigger_type = 'mult' },
+        },
+        text_config = { colour = G.C.MULT },
+        -- reminder_text = {...}, extra = {{...}}, calc_function = function(card) ... end
+    }
+end,
+```
+
+- Behaviour switching is handled centrally (`behavior.lua`): JokerDisplay's init/calculate/update run under the
+  behaviour swap, and the display rebuilds when the behaviour changes. A vanilla joker next to Carpenter
+  uses the "+" definition and vice versa, so write the definition only against the "+" shape.
+- Numbers in `ref_value`s come from `card.ability.extra.*` (live), or from `calc_function` writing to
+  `card.joker_display_values.*` (derived values). Never hard-code numbers.
+- Use `calc_function` and `card.joker_display_values` for anything that needs a computation; text nodes can only
+  read a field by name.
+- Tests: `T.joker_display(k).text` (docs/testing.md "Testing JokerDisplay"): the "+" joker, vanilla forced to
+  `'plus'`, "+" forced to `'base'`.

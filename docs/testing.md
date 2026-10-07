@@ -119,6 +119,8 @@ affordable, no slot...) and call `T.fail` with a clear message instead of doing 
 | `T.upgrade(k)` | permanent upgrade of an owned joker via `BPlus.upgrade_card`; fails if not eligible; returns the card |
 | `T.force_behavior(k, mode)` | make an owned joker behave as `'plus'` (what Carpenter does), `'base'` (what The Rust does) or normally (`nil`) |
 
+| `T.joker_display(k, live)` | what JokerDisplay shows for an owned joker: `{ text, reminder, extra = {rows}, values }` (strings as rendered, e.g. `text = '+20'`). Forces a rebuild first; `live = true` skips that and reads what the game's own updates produced (call `T.wait_frames(10)` before it to test automatic refresh) |
+
 **Card specs** (hand cards in `set_hand`, `play`, `discard`, `use` targets): rank + suit, `'AS'`,
 `'10H'` (or `'TH'`), `'2C'`; or a table `{ 'KH', enhancement = 'glass', edition = 'foil', seal = 'Red' }`.
 `play`/`discard` also accept 1-based hand indices (left to right after sorting).
@@ -136,6 +138,14 @@ Direct game access is fine for setup and assertions (`G.GAME.hands['Flush'].leve
 `G.FUNCS.*` yourself. The raw button functions have hidden modes that buttons never use. For
 example, `discard_cards_from_highlighted(nil, true)` is The Hook's free discard: no discard spent,
 no redraw.
+
+## Testing JokerDisplay
+
+Every "+" joker declares `joker_display_def` (see CONVENTIONS "JokerDisplay"). Assert it with
+`T.joker_display(k).text` (and `.reminder` / `.extra` when the definition has them). Test the three cases:
+the "+" joker normally, the vanilla joker after `T.force_behavior(k, 'plus')` (must show "+" numbers) and the
+"+" joker after `T.force_behavior(k, 'base')` (vanilla numbers). Stored state (shared via `state_transfer`)
+is kept across forced behaviours, so a growing joker shows its stored value through the other definition.
 
 ## How it works
 
