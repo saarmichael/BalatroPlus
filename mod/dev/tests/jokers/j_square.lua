@@ -69,3 +69,15 @@ T.test('Square Joker Squared: forced to base gains the vanilla rate and keeps it
     gain(1)
     near(T.joker('bplus_square_plus').ability.extra.chips, 0 + 16 + 4 + 16)
 end)
+
+T.test('Square Joker Squared JokerDisplay: +40 stored; vanilla forced to "+" shows its stored +24; "+" forced to base shows +40', function()
+    T.start_run({ jokers = { 'bplus_square_plus', 'square' }, ante = 3 })
+    T.joker(1).ability.extra.chips = 40   -- setup: stored value
+    T.joker(2).ability.extra.chips = 24
+    T.eq(T.joker_display('bplus_square_plus').text, '+40')
+    T.eq(T.joker_display('square').text, '+24')
+    T.force_behavior('square', 'plus')
+    T.eq(T.joker_display('square').text, '+24')
+    T.force_behavior('bplus_square_plus', 'base')
+    T.eq(T.joker_display('bplus_square_plus').text, '+40')
+end)
