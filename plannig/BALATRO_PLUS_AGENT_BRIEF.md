@@ -61,7 +61,6 @@ Each upgraded joker is a **separate joker** with its own key, art, description a
 CONVENTIONS.md            # code + naming conventions (you write this in Phase 0)
 design/
   jokers.csv              # master table, one row per vanilla joker (source of truth for design)
-  patterns.md             # the upgrade pattern library + global balance rules
 specs/
   jokers/<vanilla_key>.yaml   # one implementation ticket per approved row
 src/
@@ -85,7 +84,7 @@ Store complex values (configs, test lists) as JSON strings inside the CSV cells.
 | `vanilla_effect` | Exact description text **from localization source** | +1 Mult per consecutive hand played without a scoring face card |
 | `vanilla_config` | Exact config table **from game source** | `{"extra": 1}` |
 | `upgradable` | `yes` / `no` (no = excluded from Balatro+) | yes |
-| `pattern` | Upgrade pattern from `patterns.md` | Remove downside |
+| `pattern` | Upgrade pattern, see "Upgrade patterns" below | Remove downside |
 | `plus_key` | New key | `j_bplus_ride_the_bus_plus` |
 | `plus_name` | New display name | Express Bus |
 | `plus_effect` | Final player-facing text | Same gain, but a scoring face card halves Mult instead of resetting it |
@@ -124,7 +123,9 @@ Flat Mult · Flat Chips · xMult · Suit-conditional · Hand-type-conditional ·
 
 ---
 
-## Upgrade pattern library (starting set; finalize in `design/patterns.md`)
+## Upgrade patterns
+
+Names used in the `pattern` column. There is no separate pattern library file (dropped 2026-10-07: the human designed every row directly). Rows may combine patterns or use others, e.g. "Bigger number", "Replace effect".
 
 | Pattern | Idea | Example |
 |---|---|---|
@@ -157,7 +158,7 @@ These are guidelines, not hard limits. The human may knowingly break one for a s
 
 - A **normal run produces 1–2 upgrades**, counting Carpenter.
 - Runs with a strong build and **good economy find more**. This works through the shop-based sources: money buys rerolls, and rerolls surface more upgrades.
-- Every number marked *TBD* below is a balance value. Put all of them in one file, `src/balance.lua`, so tuning never requires touching logic. Use the tentative values for now.
+- Every number in the table below is a balance value. Put all of them in one file, `src/balance.lua`, so tuning never requires touching logic. The starting values were chosen by the human on 2026-10-07 (from vanilla reference points) and are expected to be tuned after playtesting.
 
 ### Eligible jokers
 
@@ -177,15 +178,15 @@ A player may never hold a base joker and its "+" version at the same time. It is
 
 | # | Name | Type | Behavior | Tentative numbers |
 |---|---|---|---|---|
-| M1 | **Carpenter** | Joker | Blueprint-style. The joker to its **right** behaves as its upgraded version: Carpenter runs that joker's `plus_calculate` and suppresses its base effect, and the joker shows a "+" badge. This is **not permanent**: if Carpenter moves or leaves, the joker returns to its base behavior. Carpenter does nothing if the joker to its right is missing, ineligible, already upgraded, or has `carpenter_compat: false`. On a growing joker it changes only the growth rate; the stored value is kept (see "Scaling and decaying state"). If that joker is Blueprint or Brainstorm, it behaves as Blueprint+ or Brainstorm+. | Uncommon, cost TBD. `blueprint_compat: false` (tentative) |
-| M2 | **Apprentice** | Joker | Invisible Joker-style. After **3 rounds** it becomes active and shows a round counter. Selling it while active calls `BPlus.upgrade_card` on one random eligible joker. If there is no eligible joker, it shows a message and nothing happens. | 3 rounds; rarity and cost TBD |
-| M3 | Tarot (name TBD) | Tarot | **1 in X** chance to upgrade one random eligible joker. On failure, show "Nope!" like Wheel of Fortune. It must use the standard probability system, so that Oops! All 6s improves the odds. | X = 8 (tune within 6–10) |
-| M4 | Spectral (name TBD) | Spectral | Hex-style. Upgrades one random eligible joker and destroys all other non-Eternal jokers. | — |
-| M5 | **Salesman** | Joker (the "+" row for Showman, `j_bplus_ring_master_plus`) | Same as Showman. In addition, upgraded jokers appear in the shop **more often**. This applies to every joker the shop offers, not only to jokers you already hold. Salesman works **on its own**: without Craftsmanship it lets upgraded jokers appear at a base rate, and Craftsmanship/Masterwork raise that rate further (decided 2026-10-07). A shop joker that appears upgraded is a **fresh card**: it starts from its own initial values. Designed by the human (2026-10-07, replaces the earlier Showman+ design); do not redesign it. | Base rate and stacking with M6 TBD |
-| M6 | **Craftsmanship / Masterwork** | Voucher pair | Craftsmanship lets upgraded jokers appear in the shop, at the same price as their base version. Masterwork (requires Craftsmanship) makes them appear more often. This works like Hone/Glow Up for editions. | Rates TBD; price = base price (decided) |
-| M7 | **Masterwork Tag** | Skip tag | Like Foil Tag: the next eligible joker in the shop appears upgraded. | Free or discounted: TBD |
-| M8 | **Workshop Pack** | Booster pack | Choose 1 of 2 jokers. Each one has a chance to be upgraded. | Chance, price and sizes TBD |
-| M9 | **Veteran Deck** | Deck | A joker upgrades automatically (`BPlus.upgrade_card`) after being held for **N rounds**. Each joker tracks its own count. | N TBD |
+| M1 | **Carpenter** | Joker | Blueprint-style. The joker to its **right** behaves as its upgraded version: Carpenter runs that joker's `plus_calculate` and suppresses its base effect, and the joker shows a "+" badge. This is **not permanent**: if Carpenter moves or leaves, the joker returns to its base behavior. Carpenter does nothing if the joker to its right is missing, ineligible, already upgraded, or has `carpenter_compat: false`. On a growing joker it changes only the growth rate; the stored value is kept (see "Scaling and decaying state"). If that joker is Blueprint or Brainstorm, it behaves as Blueprint+ or Brainstorm+. | Uncommon, $8. `blueprint_compat: false` (tentative) |
+| M2 | **Apprentice** | Joker | Invisible Joker-style. After **3 rounds** it becomes active and shows a round counter. Selling it while active calls `BPlus.upgrade_card` on one random eligible joker. If there is no eligible joker, it shows a message and nothing happens. | 3 rounds; Uncommon, $6 |
+| M3 | **Wheel of Fortune** (changed vanilla Tarot, no new Tarot) | Tarot | Vanilla: 1 in 4 chance to give a random edition-less joker Foil, Holographic or Polychrome. Balatro+ adds **upgrade** as a fourth possible outcome of a success, the same way the three editions are possible outcomes. On success, pick the outcome first, then a random joker valid for it (edition: no edition yet; upgrade: eligible). Only outcomes with a valid joker can be picked. The card can be used if either kind of joker exists. Same "Nope!" on failure; Oops! All 6s improves the 1 in 4 as in vanilla. Implement by taking ownership of `c_wheel_of_fortune` (smods `take_ownership`) and update its description. | Outcome shares on success: upgrade 25% (decided); the editions keep their vanilla proportions in the rest: Foil 37.5%, Holo 26.25%, Polychrome 11.25% (vanilla: 50 / 35 / 15) |
+| M4 | **Apotheosis** | Spectral | Hex-style. Upgrades one random eligible joker and destroys all other non-Eternal jokers. | — |
+| M5 | **Salesman** | Joker (the "+" row for Showman, `j_bplus_ring_master_plus`) | Same as Showman. In addition, upgraded jokers appear in the shop **more often**. This applies to every joker the shop offers, not only to jokers you already hold. Salesman works **on its own**: without Craftsmanship it lets upgraded jokers appear at a base rate, and Craftsmanship/Masterwork raise that rate further (decided 2026-10-07). A shop joker that appears upgraded is a **fresh card**: it starts from its own initial values. Designed by the human (2026-10-07, replaces the earlier Showman+ design); do not redesign it. | Upgraded-joker rate 4% of shop jokers (about the vanilla edition rate). Stacks with M6 by adding rates |
+| M6 | **Craftsmanship / Masterwork** | Voucher pair | Craftsmanship lets upgraded jokers appear in the shop, at the same price as their base version. Masterwork (requires Craftsmanship) makes them appear more often. This works like Hone/Glow Up for editions. | Craftsmanship 4%, Masterwork doubles it to 8% (like Hone/Glow Up); rates add with Salesman. Vouchers $10 each. Upgraded jokers cost the base price (decided) |
+| M7 | **Masterwork Tag** | Skip tag | Like Foil Tag: the next eligible joker in the shop appears upgraded. | Free, like Foil Tag |
+| M8 | **Workshop Pack** | Booster pack | Choose 1 of 2 jokers. Each one has a chance to be upgraded. | 1 in 3 chance per joker; same sizes and prices as Buffoon packs: $4 (choose 1 of 2), $6 Jumbo (1 of 4), $8 Mega (2 of 4) |
+| M9 | **Veteran Deck** | Deck | A joker upgrades automatically (`BPlus.upgrade_card`) after being held for **N rounds**. Each joker tracks its own count. | N = 6 rounds |
 | M10 | **The Rust** | Boss blind | For this blind, upgraded jokers act as their **base** versions (they run `base_calculate`). This includes jokers currently upgraded by Carpenter. Jokers with `carpenter_compat: false` are not affected; on growing jokers only the growth rate changes, the stored value is kept. | — |
 
 Ideas that were considered and **rejected**: Smith (merging duplicate jokers), Anvil (sacrifice one joker to upgrade another), and a standalone "Personal Shopper" joker (replaced by Salesman). Do not implement them.
@@ -216,13 +217,14 @@ Ideas that were considered and **rejected**: Smith (merging duplicate jokers), A
    - a proposed archetype tag for every joker.
 6. **Stop and wait** for the human to confirm the archetypes.
 
-### Phase 1 — Pattern library
+### Phase 1 — Upgradable list (done)
 
-1. Finalize `design/patterns.md`, using the starting set above plus any new patterns that the archetypes suggest.
-2. Propose the `upgradable: no` list, for example the legendaries, or jokers whose upgrade would be degenerate.
+1. Propose the `upgradable: no` list, for example the legendaries, or jokers whose upgrade would be degenerate.
    - **Blueprint and Brainstorm must be `upgradable: yes`.** Carpenter relies on them having "+" versions.
    - **Showman's row is pre-designed** (see M5 Salesman).
-3. Get the human's sign-off on both.
+2. Get the human's sign-off.
+
+The pattern library file originally planned here was dropped (2026-10-07).
 
 ### Phase 2 — Design in batches
 
@@ -271,7 +273,7 @@ Start this once the Phase 3 pilot is done. It can run in parallel with Phase 4.
 1. Turn each mechanic M1–M10 into a ticket in `specs/mechanics/<id>_<name>.yaml`. Use the same idea as the joker tickets: behavior, numbers (referencing `balance.lua`), edge cases and acceptance tests.
 2. Get the tickets approved.
 3. Implement in this order:
-   1. M3 tarot and M4 spectral. They are the simplest, and they are useful as debug tools for testing every later ticket.
+   1. M3 Wheel of Fortune change and M4 Apotheosis. They are the simplest, and they are useful as debug tools for testing every later ticket.
    2. M2 Apprentice.
    3. M1 Carpenter.
    4. M5 Salesman.
@@ -290,9 +292,9 @@ Every row blocked on one of these still gets a ticket, marked BLOCKED, and is li
 
 **Q4 — The Rust on shrinking jokers.** Decided 2026-10-07: The Rust does not affect them; see "Scaling and decaying state (decided)".
 
-**Q2 — Do the mechanic jokers have "+" versions?** This applies to Carpenter and Apprentice. Until it is decided, set both to `upgradable: no`.
+**Q2 — Do the mechanic jokers have "+" versions?** Decided 2026-10-07: **no**. Carpenter and Apprentice have no "+" version and are never eligible for an upgrade.
 
-**Q3 — Balance numbers.** All *TBD* values in the mechanics table are open. Use the tentative values and keep every number in `balance.lua`.
+**Q3 — Balance numbers.** Decided 2026-10-07: starting values are in the mechanics table. Keep every number in `balance.lua` so it can be tuned. M3 is a change to Wheel of Fortune, not a new Tarot; M4 is named Apotheosis.
 
 ---
 
