@@ -1,0 +1,49 @@
+local T = BPlus.test
+
+local HAND = { 'KS', 'QH', '7D', '2C', '3C', '4C', '5C', '6C' }
+
+T.test('Chase Card: first discard is 1 card -> card destroyed, +$6 (vanilla: +$3)', function()
+    T.start_run({ dollars = 0, jokers = { 'bplus_trading_plus' } })
+    T.select_blind()
+    T.set_hand(HAND)
+    local before = #G.playing_cards
+    T.discard({ 'KS' })
+    T.eq(G.GAME.dollars, 6)
+    T.eq(#G.playing_cards, before - 1)
+end)
+
+T.test('Chase Card: vanilla Trading Card pays $3', function()
+    T.start_run({ dollars = 0, jokers = { 'trading' } })
+    T.select_blind()
+    T.set_hand(HAND)
+    T.discard({ 'KS' })
+    T.eq(G.GAME.dollars, 3)
+end)
+
+T.test('Chase Card: first discard is 2 cards -> nothing', function()
+    T.start_run({ dollars = 0, jokers = { 'bplus_trading_plus' } })
+    T.select_blind()
+    T.set_hand(HAND)
+    local before = #G.playing_cards
+    T.discard({ 'KS', 'QH' })
+    T.eq(G.GAME.dollars, 0)
+    T.eq(#G.playing_cards, before)
+end)
+
+T.test('Chase Card: second discard of 1 card -> nothing', function()
+    T.start_run({ dollars = 0, jokers = { 'bplus_trading_plus' } })
+    T.select_blind()
+    T.set_hand(HAND)
+    T.discard({ 'KS', 'QH' })
+    T.discard({ 1 })
+    T.eq(G.GAME.dollars, 0)
+end)
+
+T.test('Chase Card: Trading Card forced to "+" pays $6', function()
+    T.start_run({ dollars = 0, jokers = { 'trading' } })
+    T.force_behavior('trading', 'plus')
+    T.select_blind()
+    T.set_hand(HAND)
+    T.discard({ 'KS' })
+    T.eq(G.GAME.dollars, 6)
+end)
