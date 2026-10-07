@@ -72,6 +72,27 @@ local function shared_paths(own_center, center)
     return out
 end
 
+-- Cards currently swapped by with_center, outermost first. Events queued during a swap run their func
+-- under the same swaps later: vanilla code often reads `self.ability` inside a deferred event
+-- (e.g. Burglar's ease_hands_played(self.ability.extra)), after the swap would otherwise be undone.
+local alt_frames = {}
+
+local add_event_ref = EventManager.add_event
+function EventManager:add_event(event, queue, front)
+    if #alt_frames > 0 and type(event) == 'table' and event.func then
+        local frames, func = { unpack(alt_frames) }, event.func
+        event.func = function(...)
+            local args = { ... }
+            local function run(i)
+                if i > #frames then return func(unpack(args)) end
+                return BPlus.with_center(frames[i].card, frames[i].center, function() return run(i + 1) end)
+            end
+            return run(1)
+        end
+    end
+    return add_event_ref(self, event, queue, front)
+end
+
 function BPlus.with_center(card, center, fn)
     if card.bplus_in_alt then return fn() end
     if type(center) == 'string' then center = G.P_CENTERS[center] end
@@ -90,7 +111,9 @@ function BPlus.with_center(card, center, fn)
 
     setmetatable(view, { __index = own })
     card.ability, card.config.center, card.bplus_in_alt = view, center, center.key
+    alt_frames[#alt_frames + 1] = { card = card, center = center }
     local res = { pcall(fn) }
+    alt_frames[#alt_frames] = nil
     card.ability, card.config.center, card.bplus_in_alt = own, own_center, nil
     -- never leave the metatable on: the view lives inside `own`, and copy_table follows metatables
     setmetatable(view, nil)
