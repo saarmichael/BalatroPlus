@@ -24,3 +24,12 @@ T.test('Free Range Egg: Egg after 2 rounds (+3 + 3), upgrade -> keeps sell value
     T.to_shop()
     T.eq(sell_value(card), base + 3 + 3 + 5)
 end)
+
+T.test('Free Range Egg JokerDisplay: reminder shows the current sell value', function()
+    T.start_run({ jokers = { 'bplus_egg_plus' } })
+    local egg = T.joker(1)
+    T.eq(T.joker_display('bplus_egg_plus').reminder, '($' .. egg.sell_cost .. ')')
+    local base = egg.sell_cost
+    T.to_shop()
+    T.eq(T.joker_display('bplus_egg_plus').reminder, '($' .. (base + 5) .. ')')
+end)

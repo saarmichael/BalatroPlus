@@ -14,6 +14,18 @@ BPlus.Joker({
         return { vars = { card.ability.extra.sell_gain } }
     end,
 
+    joker_display_def = function(JokerDisplay)
+        return {
+            reminder_text = {
+                { text = '(' },
+                { text = '$', colour = G.C.GOLD },
+                { ref_table = 'card', ref_value = 'sell_cost', colour = G.C.GOLD },
+                { text = ')' },
+            },
+            reminder_text_config = { scale = 0.35 },
+        }
+    end,
+
     calculate = function(self, card, context)
         if context.end_of_round and context.main_eval and not context.blueprint then
             SMODS.scale_card(card, {
