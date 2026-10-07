@@ -20,6 +20,10 @@ BPlus.Joker({
         return { vars = { num, den } }
     end,
 
+    joker_display_def = function(JokerDisplay)
+        return {} -- vanilla Perkeo shows nothing either
+    end,
+
     calculate = function(self, card, context)
         if context.ending_shop then
             local held = {}

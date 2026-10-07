@@ -48,3 +48,12 @@ T.test('Perkeo+: vanilla Perkeo makes exactly 1 copy; forced to "+" with Oops ma
     T.leave_shop()
     T.eq(neg_count(), 2)
 end)
+
+T.test('Perkeo+ JokerDisplay: shows nothing, like vanilla (also forced to base / plus)', function()
+    T.start_run({ jokers = { 'bplus_perkeo_plus', 'perkeo' } })
+    T.eq(T.joker_display('bplus_perkeo_plus').text, '')
+    T.force_behavior('perkeo', 'plus')
+    T.eq(T.joker_display('perkeo').text, '')
+    T.force_behavior('bplus_perkeo_plus', 'base')
+    T.eq(T.joker_display('bplus_perkeo_plus').text, '')
+end)
