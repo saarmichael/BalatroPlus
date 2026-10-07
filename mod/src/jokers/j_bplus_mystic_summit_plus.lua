@@ -17,6 +17,20 @@ BPlus.Joker({
         return { vars = { card.ability.extra.mult, card.ability.extra.d_remaining } }
     end,
 
+    joker_display_def = function(JokerDisplay)
+        return {
+            text = {
+                { text = '+' },
+                { ref_table = 'card.joker_display_values', ref_value = 'mult', retrigger_type = 'mult' },
+            },
+            text_config = { colour = G.C.MULT },
+            calc_function = function(card)
+                card.joker_display_values.mult = card.ability.extra.mult *
+                    (G.GAME.current_round.discards_left == card.ability.extra.d_remaining and 1 or 0)
+            end,
+        }
+    end,
+
     calculate = function(self, card, context)
         if context.joker_main and G.GAME.current_round.discards_left == card.ability.extra.d_remaining then
             return { mult = card.ability.extra.mult }
