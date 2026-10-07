@@ -43,3 +43,13 @@ T.test('Astronaut: vanilla Space Joker forced to "+" with Oops! levels Pair', fu
     T.play({ 'KS', 'KH' })
     T.eq(G.GAME.hands['Pair'].level, 1 + 1)
 end)
+
+T.test('Astronaut JokerDisplay: (1 in 2); vanilla shows (1 in 4); behaviours switch', function()
+    T.start_run({ dollars = 6, jokers = { 'bplus_space_plus', 'space' } })
+    T.eq(T.joker_display('bplus_space_plus').extra[1], '(1 in 2)')
+    T.eq(T.joker_display('space').extra[1], '(1 in 4)')
+    T.force_behavior('space', 'plus')
+    T.eq(T.joker_display('space').extra[1], '(1 in 2)')
+    T.force_behavior('bplus_space_plus', 'base')
+    T.eq(T.joker_display('bplus_space_plus').extra[1], '(1 in 4)')
+end)
