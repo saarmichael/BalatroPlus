@@ -13,6 +13,39 @@ BPlus.Joker({
     blueprint_compat = true, eternal_compat = true, perishable_compat = true,
     bplus = { vanilla_key = 'j_business', state_transfer = {}, carpenter_compat = true },
 
+    joker_display_def = function(JokerDisplay)
+        return {
+            text = {
+                { ref_table = 'card.joker_display_values', ref_value = 'count', retrigger_type = 'mult' },
+                { text = 'x', scale = 0.35 },
+                { text = '$', colour = G.C.GOLD },
+                { ref_table = 'card.ability.extra', ref_value = 'dollars', colour = G.C.GOLD },
+            },
+            extra = {
+                {
+                    { text = '(' },
+                    { ref_table = 'card.joker_display_values', ref_value = 'odds' },
+                    { text = ')' },
+                },
+            },
+            extra_config = { colour = G.C.GREEN, scale = 0.3 },
+            calc_function = function(card)
+                local count = 0
+                local text, _, scoring_hand = JokerDisplay.evaluate_hand()
+                if text ~= 'Unknown' then
+                    for _, scoring_card in pairs(scoring_hand) do
+                        if scoring_card:is_face() then
+                            count = count + JokerDisplay.calculate_card_triggers(scoring_card, scoring_hand)
+                        end
+                    end
+                end
+                card.joker_display_values.count = count
+                local numerator, denominator = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, 'bplus_executive_card')
+                card.joker_display_values.odds = localize { type = 'variable', key = 'jdis_odds', vars = { numerator, denominator } }
+            end,
+        }
+    end,
+
     loc_vars = function(self, info_queue, card)
         local num, den = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, 'bplus_executive_card')
         return { vars = { num, den, card.ability.extra.dollars } }
