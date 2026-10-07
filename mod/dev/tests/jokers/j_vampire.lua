@@ -79,3 +79,15 @@ T.test('Dracula: forced to base gains the vanilla rate and keeps its value', fun
     gain(1)
     near(T.joker('bplus_vampire_plus').ability.extra.Xmult, 1 + 0.2 + 0.1 + 0.2)
 end)
+
+T.test('Dracula JokerDisplay: X2.5 stored; vanilla forced to "+" shows its stored X1.5; "+" forced to base shows X2.5', function()
+    T.start_run({ jokers = { 'bplus_vampire_plus', 'vampire' }, ante = 3 })
+    T.joker(1).ability.extra.Xmult = 2.5   -- setup: stored value
+    T.joker(2).ability.x_mult = 1.5
+    T.eq(T.joker_display('bplus_vampire_plus').text, 'X2.5')
+    T.eq(T.joker_display('vampire').text, 'X1.5')
+    T.force_behavior('vampire', 'plus')
+    T.eq(T.joker_display('vampire').text, 'X1.5')   -- stored value kept, shown through the "+" definition
+    T.force_behavior('bplus_vampire_plus', 'base')
+    T.eq(T.joker_display('bplus_vampire_plus').text, 'X2.5')   -- stored value kept, vanilla definition
+end)
