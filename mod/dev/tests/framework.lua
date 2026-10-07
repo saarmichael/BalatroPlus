@@ -95,8 +95,13 @@ end)
 
 T.test('skip blind grants a tag', function()
     T.start_run()
+    -- the offered tag is seeded; force one that stays in G.GAME.tags (immediate tags are consumed at once)
+    G.GAME.round_resets.blind_tags.Small = 'tag_d_six'
+    local container = G.blind_select_opts.small:get_UIE_by_ID('tag_container')
+    container.config.ref_table = Tag('tag_d_six', nil, 'Small')
     local tag = T.skip_blind()
     T.truthy(tag, 'a tag was added')
+    T.eq(tag.key, 'tag_d_six')
     T.eq(G.GAME.blind_on_deck, 'Big')
 end)
 
