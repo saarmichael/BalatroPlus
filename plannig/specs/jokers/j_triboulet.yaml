@@ -18,6 +18,7 @@ state_transfer: []
 blueprint_compat: true
 eternal_compat: true
 perishable_compat: true
+carpenter_compat: true
 impl_notes: "Same as vanilla Triboulet: context.individual + G.play, get_id() is 13, 12 or 11 -> xmult = extra.Xmult."
 acceptance_tests:
   - "Score a Jack -> X2 (vanilla: nothing)"

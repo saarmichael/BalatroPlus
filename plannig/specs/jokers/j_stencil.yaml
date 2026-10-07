@@ -18,6 +18,7 @@ state_transfer: []
 blueprint_compat: true
 eternal_compat: true
 perishable_compat: true
+carpenter_compat: true
 impl_notes: "Same as vanilla, scaled: N = (G.jokers.config.card_limit - #G.jokers.cards) + number of held Joker Stencils/Joker Molds (itself included). Score X(extra.Xmult_per * N) in context.joker_main, only when at least one slot is actually empty (vanilla condition). Vanilla recomputes in Card:update; loc_vars shows Currently X value."
 acceptance_tests:
   - "5 slots, Joker Mold alone -> X1.5 * (4 + 1) = X7.5 (vanilla Stencil: X5)"

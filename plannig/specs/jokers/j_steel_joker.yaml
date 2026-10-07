@@ -18,6 +18,7 @@ state_transfer: []
 blueprint_compat: true
 eternal_compat: true
 perishable_compat: true
+carpenter_compat: true
 impl_notes: "Count Steel cards (config.center == G.P_CENTERS.m_steel) in G.playing_cards, like vanilla steel_tally. context.joker_main, when count > 0 -> xmult = 1 + extra.Xmult_per * count."
 acceptance_tests:
   - "3 Steel cards in deck -> X(1 + 0.4 * 3) = X2.2 (vanilla: X1.6)"

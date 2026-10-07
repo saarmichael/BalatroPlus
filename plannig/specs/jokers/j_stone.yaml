@@ -18,6 +18,7 @@ state_transfer: []
 blueprint_compat: true
 eternal_compat: true
 perishable_compat: true
+carpenter_compat: true
 impl_notes: "Count Stone cards (config.center == G.P_CENTERS.m_stone) in G.playing_cards, like vanilla stone_tally. context.joker_main when count > 0 -> chips = extra.chips_per * count."
 acceptance_tests:
   - "3 Stone cards in deck -> +50 * 3 = 150 Chips (vanilla: 25 * 3)"

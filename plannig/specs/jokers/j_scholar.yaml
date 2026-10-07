@@ -18,6 +18,7 @@ state_transfer: []
 blueprint_compat: true
 eternal_compat: true
 perishable_compat: true
+carpenter_compat: true
 impl_notes: "context.individual + cardarea G.play, get_id() == 14 -> { chips = extra.chips, mult = extra.mult }."
 acceptance_tests:
   - "Score 2 Aces -> +40 + 40 Chips and +10 + 10 Mult (vanilla: +20 Chips, +4 Mult each)"

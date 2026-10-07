@@ -1,7 +1,5 @@
 # Implementation ticket for j_madness -> j_bplus_madness_plus.
 # Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
-# BLOCKED on Q1 (see Open questions in BALATRO_PLUS_AGENT_BRIEF.md).
-# The design is written down so it isn't forgotten. Do not implement until it is unblocked.
 vanilla_key: "j_madness"
 vanilla_name: "Madness"
 vanilla_rarity: "Uncommon"
@@ -16,14 +14,17 @@ plus_effect: "When Small Blind or Big Blind is selected, gain X0.75 Mult and des
 plus_config: {"extra": {"Xmult": 1, "Xmult_mod": 0.75}}
 plus_rarity: "Uncommon"
 plus_cost: 7
-state_transfer: "TBD (Q1)"
+state_transfer:
+  - "x_mult -> extra.Xmult"
 blueprint_compat: true
 eternal_compat: true
 perishable_compat: false
-impl_notes: "Same as vanilla Madness: context.setting_blind (not blueprint), not a Boss Blind -> extra.Xmult += extra.Xmult_mod, then destroy a random other joker that is not Eternal and not already being destroyed (seed 'bplus_lunacy'). Gains even if there is nothing to destroy, like vanilla. Score extra.Xmult in context.joker_main when > 1. Blocked on Q1: vanilla keeps the built-up XMult in ability.x_mult; under any answer except 'reset', state_transfer will be 'x_mult -> extra.Xmult'."
+carpenter_compat: true
+impl_notes: "Same as vanilla Madness: context.setting_blind (not blueprint), not a Boss Blind -> extra.Xmult += extra.Xmult_mod, then destroy a random other joker that is not Eternal and not already being destroyed (seed 'bplus_lunacy'). Gains even if there is nothing to destroy, like vanilla. Score extra.Xmult in context.joker_main when > 1. Upgrade (growing): the built-up value carries over via state_transfer and the '+' rate applies from then on. Carpenter: plus_calculate works on the card's stored value; only the gain changes."
 acceptance_tests:
   - "Select Small Blind with 2 other jokers -> X1 + 0.75 = X1.75, one other joker destroyed (vanilla: X1.5)"
   - "Select Boss Blind -> no gain, nothing destroyed"
   - "Only Eternal jokers besides it -> gains, nothing destroyed"
-status: "blocked"
+  - "Madness at X1.5, upgrade -> Lunacy keeps X1.5, next gain +0.75: X(1.5 + 0.75)"
+status: "approved"
 art_status: "none"

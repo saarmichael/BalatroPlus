@@ -18,6 +18,7 @@ state_transfer: []
 blueprint_compat: true
 eternal_compat: true
 perishable_compat: true
+carpenter_compat: true
 impl_notes: "Blind selected: same as vanilla Cartomancer (context.setting_blind, not getting_sliced, free consumable slot -> 1 Tarot, seed 'bplus_clairvoyant'). Blind defeated: context.end_of_round and context.main_eval (once per round, also after a Boss Blind) with a free slot -> 1 Tarot."
 acceptance_tests:
   - "Select Blind -> 1 Tarot"

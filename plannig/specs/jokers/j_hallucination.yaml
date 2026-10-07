@@ -18,6 +18,7 @@ state_transfer: []
 blueprint_compat: true
 eternal_compat: true
 perishable_compat: true
+carpenter_compat: true
 impl_notes: "Same as vanilla Hallucination (context.open_booster, needs a free consumable slot) but always creates the Tarot: no roll, so Oops! All 6s doesn't matter and the description has no '1 in X'."
 acceptance_tests:
   - "Open a Booster Pack with a free slot -> 1 Tarot created"

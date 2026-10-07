@@ -18,6 +18,7 @@ state_transfer: []
 blueprint_compat: true
 eternal_compat: true
 perishable_compat: true
+carpenter_compat: true
 impl_notes: "Same as vanilla: context.individual + cardarea G.hand (held-in-hand, so Mime retriggers it). Lowest by base.id (ties -> last such card), value = base.nominal (Ace 11, faces 10), Stone cards skipped, debuffed card shows Debuffed message. Return h_mult = extra.rank_mult * nominal."
 acceptance_tests:
   - "Hold a 3 and a King -> +4 * 3 = 12 Mult"

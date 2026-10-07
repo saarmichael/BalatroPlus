@@ -18,6 +18,7 @@ state_transfer: []
 blueprint_compat: true
 eternal_compat: true
 perishable_compat: true
+carpenter_compat: true
 impl_notes: "context.individual + cardarea G.play, other_card:is_face() -> mult = extra.mult."
 acceptance_tests:
   - "Score 2 face cards -> +10 + 10 Mult (vanilla: +5 + 5)"

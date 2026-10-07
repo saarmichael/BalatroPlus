@@ -1,7 +1,5 @@
 # Implementation ticket for j_yorick -> j_bplus_yorick_plus.
 # Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
-# BLOCKED on Q1 (see Open questions in BALATRO_PLUS_AGENT_BRIEF.md).
-# The design is written down so it isn't forgotten. Do not implement until it is unblocked.
 vanilla_key: "j_yorick"
 vanilla_name: "Yorick"
 vanilla_rarity: "Legendary"
@@ -13,15 +11,19 @@ pattern: "Faster scaling"
 plus_key: "j_bplus_yorick_plus"
 plus_name: "Yorick+"
 plus_effect: "This Joker gains X1 Mult every 14 cards discarded"
-plus_config: {"extra": {"xmult": 1, "discards": 14, "discards_left": 14}}
+plus_config: {"extra": {"Xmult": 1, "Xmult_mod": 1, "discards": 14, "discards_left": 14}}
 plus_rarity: "Legendary"
 plus_cost: 20
-state_transfer: "TBD (Q1)"
+state_transfer:
+  - "x_mult -> extra.Xmult"
+  - "yorick_discards -> extra.discards_left"
 blueprint_compat: true
 eternal_compat: true
 perishable_compat: true
-impl_notes: "Same as vanilla Yorick with extra.discards = 14: context.discard (not blueprint): discards_left -= 1; at 0 reset to extra.discards and extra.xmult += 1. Score in context.joker_main when > 1. Blocked on Q1: vanilla keeps ability.extra.xmult and ability.yorick_discards (counter)."
+carpenter_compat: true
+impl_notes: "Like vanilla Yorick with a 14-card period: context.discard (not blueprint): first normalise extra.discards_left = ((extra.discards_left - 1) % extra.discards) + 1, then if it is <= 1: reset to extra.discards and extra.Xmult += extra.Xmult_mod, else extra.discards_left -= 1. Score extra.Xmult in context.joker_main when > 1. Upgrade (growing): XMult carries over; the counter is copied as is and normalised to the new period by the step above (17 of 23 remaining -> 3 of 14). Carpenter: same rule both ways, the counter is normalised to whichever period is active (23 when Carpenter leaves). Vanilla keeps them in ability.x_mult and ability.yorick_discards."
 acceptance_tests:
   - "Discard 14 cards -> X2; 28 cards -> X3 (vanilla needs 23 per step)"
-status: "blocked"
+  - "Yorick at X2 with 17 of 23 remaining, upgrade -> Yorick+ at X2 with ((17 - 1) % 14) + 1 = 3 of 14 remaining; 3 more discards -> X3"
+status: "approved"
 art_status: "none"

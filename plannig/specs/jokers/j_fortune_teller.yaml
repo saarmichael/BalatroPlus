@@ -18,6 +18,7 @@ state_transfer: []
 blueprint_compat: true
 eternal_compat: true
 perishable_compat: true
+carpenter_compat: true
 impl_notes: "context.joker_main when G.GAME.consumeable_usage_total.tarot > 0 -> mult = extra.mult_per * that count. Also show the +N message when a Tarot is used (context.using_consumeable, not blueprint), like vanilla. Reads a run-wide count, nothing is stored on the card, so not blocked on Q1."
 acceptance_tests:
   - "Used 3 Tarot cards this run -> +2 * 3 = 6 Mult (vanilla: +3)"

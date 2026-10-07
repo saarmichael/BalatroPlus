@@ -18,6 +18,7 @@ state_transfer: []
 blueprint_compat: false
 eternal_compat: true
 perishable_compat: true
+carpenter_compat: true
 impl_notes: "Same as vanilla Sixth Sense (context.destroying_card, #full_hand == 1, get_id() == 6, hands_played == 0, not blueprint): the 6 is destroyed even with no room, as in vanilla; create Spectral cards (seed 'bplus_second_sixth_sense'). Room: create min(extra.cards, free consumable slots) cards, where free = card_limit - (#G.consumeables.cards + G.GAME.consumeable_buffer), using consumeable_buffer like vanilla (same pattern as vanilla Riff-Raff uses for jokers). Nothing if no free slot."
 acceptance_tests:
   - "First hand a single 6, 2 free slots -> 6 destroyed, 2 Spectral cards created (vanilla: 1)"

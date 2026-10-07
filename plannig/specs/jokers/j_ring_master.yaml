@@ -18,6 +18,7 @@ state_transfer: []
 blueprint_compat: false
 eternal_compat: true
 perishable_compat: true
+carpenter_compat: true
 impl_notes: "Brief M5. Showman part: smods decides duplicates in SMODS.showman(card_key) (smods/src/utils.lua), which only looks for j_ring_master; wrap it so it also returns true when Salesman is held. Upgrade part: raises the chance that a shop joker spawns as its '+' version, using the same shop-upgrade roll as M6 Craftsmanship (implement in Phase 5 with/after M6). Works alone: without Craftsmanship it gives a base rate; with Craftsmanship/Masterwork the rates stack. Base rate and stacking rule live in src/balance.lua (TBD, Q3). Not Blueprint-compatible (vanilla Showman isn't)."
 acceptance_tests:
   - "Holding Salesman, a joker you already hold can appear in the shop (Showman effect)"

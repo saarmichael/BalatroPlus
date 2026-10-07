@@ -12,7 +12,7 @@ Some questions are still open on purpose; see "Open questions" at the end. **Nev
 > 1. **Update `plannig/CONVENTIONS.md`.**
 >    - §4 ("Shop pool") and §6 still say the mechanic is not designed. Bring them in line with the "Upgrade mechanics" section below.
 >    - Add the `base_calculate` / `plus_calculate` split from the Architecture section.
-> 2. **Check scaling rows.** Rows for scaling jokers now wait on Q1, including the Ride the Bus example in CONVENTIONS.md. Mark them `blocked`; don't pick an answer.
+> 2. **Check scaling rows.** Q1 was decided later the same day; see "Scaling and decaying state (decided)" below.
 > 3. **Map the new paths** the same way as the existing ones:
 >    - `src/balance.lua` → `mod/src/balance.lua`
 >    - `specs/mechanics/` → `plannig/specs/mechanics/`
@@ -93,6 +93,7 @@ Store complex values (configs, test lists) as JSON strings inside the CSV cells.
 | `plus_rarity` / `plus_cost` | Rarity and shop cost. Both always equal the vanilla values | Common / 6 |
 | `state_transfer` | Fields copied from the vanilla card on upgrade | `["mult"]` |
 | `blueprint_compat` / `eternal_compat` / `perishable_compat` | Booleans | true / true / false |
+| `carpenter_compat` | Boolean: can Carpenter (M1) and The Rust (M10) switch this joker between base and "+" behavior? `false` for shrinking jokers, Egg and Seltzer | true |
 | `impl_notes` | Hooks/contexts used, gotchas, interactions | `context.before` for the face check; `context.joker_main` for scoring |
 | `acceptance_tests` | Concrete scenarios that prove it works | `["3 hands without face cards -> +3 Mult", "then a scoring face card -> Mult becomes 1"]` |
 | `status` | `draft` → `approved` → `implemented` → `tested`, or `blocked` (waiting on an open question) | approved |
@@ -100,12 +101,22 @@ Store complex values (configs, test lists) as JSON strings inside the CSV cells.
 
 `state_transfer` and `acceptance_tests` are mandatory for every approved row. If a joker has no persistent state, write `[]`.
 
-**Exception: scaling jokers.** This means any joker whose value accumulates during a run. How their state behaves on upgrade is an open question (Q1).
-- Design everything else in the row as usual.
-- Write `TBD (Q1)` in `state_transfer`.
-- Set `status: blocked`.
+### Scaling and decaying state (decided 2026-10-07, was Q1)
 
-Do not pick an answer yourself.
+What happens to a value a joker has built up when it is upgraded:
+
+| Joker kind | Permanent upgrade (`BPlus.upgrade_card`) | Carpenter / The Rust (temporary) |
+|---|---|---|
+| **Growing** (value goes up during the run, e.g. Ride the Bus, Constellation, Rocket, Egg) | **Carry over**: keep the current value; the "+" growth rate applies from then on. `state_transfer` copies the value. | Only the **growth rate** changes while Carpenter is next to it. The stored value is never reset or recomputed. |
+| **Shrinking** (value goes down until the joker is used up, e.g. Ice Cream, Popcorn, Ramen, Turtle Bean) | **Reset**: the "+" joker starts from its own starting values. `state_transfer` is `[]`. | **Not Carpenter-compatible**: Carpenter does nothing on them (`carpenter_compat: false`). |
+
+Details:
+- Values that reset on their own (Hit the Road per round, Campfire per Boss) follow the growing rule: carry over, and Carpenter changes only the growth.
+- Counters toward the next step change their period, not their progress: Yorick at 17 of 23 remaining becomes 3 of 14 remaining (`((remaining - 1) % new_period) + 1`). The same rule applies both ways when Carpenter moves on or off.
+- Egg is not Carpenter-compatible. On a permanent upgrade its sell value carries over (the game keeps `extra_value` by itself).
+- Seltzer is an explicit exception: its remaining hands carry over on a permanent upgrade (decided in batch 6), and it is not Carpenter-compatible.
+- `carpenter_compat` (CSV column) is `false` for jokers Carpenter must skip (shrinking jokers, Egg, Seltzer); Carpenter treats them like an ineligible joker.
+- **The Rust** mirrors Carpenter: it does not affect shrinking jokers, and in general skips every joker with `carpenter_compat: false`. On growing jokers it only changes the growth rate back to the base rate for that blind.
 
 ### Archetype tags (starting set; refine in Phase 1)
 
@@ -166,7 +177,7 @@ A player may never hold a base joker and its "+" version at the same time. It is
 
 | # | Name | Type | Behavior | Tentative numbers |
 |---|---|---|---|---|
-| M1 | **Carpenter** | Joker | Blueprint-style. The joker to its **right** behaves as its upgraded version: Carpenter runs that joker's `plus_calculate` and suppresses its base effect, and the joker shows a "+" badge. This is **not permanent**: if Carpenter moves or leaves, the joker returns to its base behavior. Carpenter does nothing if the joker to its right is missing, ineligible or already upgraded. If that joker is Blueprint or Brainstorm, it behaves as Blueprint+ or Brainstorm+. | Uncommon, cost TBD. `blueprint_compat: false` (tentative) |
+| M1 | **Carpenter** | Joker | Blueprint-style. The joker to its **right** behaves as its upgraded version: Carpenter runs that joker's `plus_calculate` and suppresses its base effect, and the joker shows a "+" badge. This is **not permanent**: if Carpenter moves or leaves, the joker returns to its base behavior. Carpenter does nothing if the joker to its right is missing, ineligible, already upgraded, or has `carpenter_compat: false`. On a growing joker it changes only the growth rate; the stored value is kept (see "Scaling and decaying state"). If that joker is Blueprint or Brainstorm, it behaves as Blueprint+ or Brainstorm+. | Uncommon, cost TBD. `blueprint_compat: false` (tentative) |
 | M2 | **Apprentice** | Joker | Invisible Joker-style. After **3 rounds** it becomes active and shows a round counter. Selling it while active calls `BPlus.upgrade_card` on one random eligible joker. If there is no eligible joker, it shows a message and nothing happens. | 3 rounds; rarity and cost TBD |
 | M3 | Tarot (name TBD) | Tarot | **1 in X** chance to upgrade one random eligible joker. On failure, show "Nope!" like Wheel of Fortune. It must use the standard probability system, so that Oops! All 6s improves the odds. | X = 8 (tune within 6–10) |
 | M4 | Spectral (name TBD) | Spectral | Hex-style. Upgrades one random eligible joker and destroys all other non-Eternal jokers. | — |
@@ -175,7 +186,7 @@ A player may never hold a base joker and its "+" version at the same time. It is
 | M7 | **Masterwork Tag** | Skip tag | Like Foil Tag: the next eligible joker in the shop appears upgraded. | Free or discounted: TBD |
 | M8 | **Workshop Pack** | Booster pack | Choose 1 of 2 jokers. Each one has a chance to be upgraded. | Chance, price and sizes TBD |
 | M9 | **Veteran Deck** | Deck | A joker upgrades automatically (`BPlus.upgrade_card`) after being held for **N rounds**. Each joker tracks its own count. | N TBD |
-| M10 | **The Rust** | Boss blind | For this blind, upgraded jokers act as their **base** versions (they run `base_calculate`). This includes jokers currently upgraded by Carpenter. | — |
+| M10 | **The Rust** | Boss blind | For this blind, upgraded jokers act as their **base** versions (they run `base_calculate`). This includes jokers currently upgraded by Carpenter. Jokers with `carpenter_compat: false` are not affected; on growing jokers only the growth rate changes, the stored value is kept. | — |
 
 Ideas that were considered and **rejected**: Smith (merging duplicate jokers), Anvil (sacrifice one joker to upgrade another), and a standalone "Personal Shopper" joker (replaced by Salesman). Do not implement them.
 
@@ -234,7 +245,6 @@ For each archetype batch (15–20 rows):
    - an economy joker,
    - a Blueprint-compatible joker with an unusual context.
 2. Also build the shared `BPlus.upgrade_card(card)` function and `upgrade_map.lua`, and the `base_calculate` / `plus_calculate` structure from the Architecture section. Prove that both behaviors can be invoked from outside the card, because Carpenter and The Rust depend on this.
-   - Do not pick a scaling joker whose state behavior is still `TBD (Q1)`. Pick a non-scaling joker with persistent state instead (e.g. one that counts rounds).
 3. Update `CONVENTIONS.md` with anything the pilot taught you.
 4. Report back before scaling up.
 
@@ -268,7 +278,7 @@ Start this once the Phase 3 pilot is done. It can run in parallel with Phase 4.
    5. M6 vouchers, M7 tag and M8 pack.
    6. M9 Veteran Deck.
    7. M10 The Rust.
-4. **Any mechanic that interacts with a scaling joker** (Carpenter, every permanent upgrade): test it only with non-scaling jokers until Q1 is decided. Leave a note in the ticket.
+4. **Any mechanic that interacts with a scaling joker** (Carpenter, The Rust, every permanent upgrade): test it with at least one growing joker (value carried over, only the rate changes) and one shrinking joker (reset on upgrade, skipped by Carpenter).
 
 ---
 
@@ -276,14 +286,9 @@ Start this once the Phase 3 pilot is done. It can run in parallel with Phase 4.
 
 Every row blocked on one of these still gets a ticket, marked BLOCKED, and is listed in `plannig/specs/jokers/BLOCKED.md`. Both are generated by `tools/export_specs.py`. When a question is decided, start from that list.
 
-**Q1 — Scaling state on upgrade.** When a scaling joker is upgraded, where does its value start? For example, Green Joker at +10 Mult gets upgraded to a version that gains +2 per hand. The candidates are:
-- **Reset**: the value starts over.
-- **Carry over**: it keeps +10, and the new rate applies from now on.
-- **Recompute**: it becomes +20, as if it had always been upgraded.
+**Q1 — Scaling state on upgrade.** Decided 2026-10-07; see "Scaling and decaying state (decided)" in the Row schema section.
 
-The same question applies when Carpenter moves on or off a scaling joker. Until this is decided:
-- scaling joker rows stay `blocked` with `state_transfer: TBD (Q1)`;
-- the pilot avoids scaling jokers.
+**Q4 — The Rust on shrinking jokers.** Decided 2026-10-07: The Rust does not affect them; see "Scaling and decaying state (decided)".
 
 **Q2 — Do the mechanic jokers have "+" versions?** This applies to Carpenter and Apprentice. Until it is decided, set both to `upgradable: no`.
 

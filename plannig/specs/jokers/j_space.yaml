@@ -18,6 +18,7 @@ state_transfer: []
 blueprint_compat: true
 eternal_compat: true
 perishable_compat: true
+carpenter_compat: true
 impl_notes: "Same as vanilla Space Joker: context.before, SMODS.pseudorandom_probability(card, 'bplus_astronaut', 1, extra.odds) -> level_up_hand for context.scoring_name with the 'Level Up!' message."
 acceptance_tests:
   - "With Oops! All 6s (2 in 2): play a Pair -> Pair goes up 1 level every time"

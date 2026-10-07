@@ -18,6 +18,7 @@ state_transfer: []
 blueprint_compat: true
 eternal_compat: true
 perishable_compat: true
+carpenter_compat: true
 impl_notes: "context.joker_main when G.GAME.skips > 0 -> xmult = 1 + extra.Xmult_per * G.GAME.skips (same as vanilla Throwback). Reads a run-wide count, nothing stored on the card, so not blocked on Q1. Show the 'skip' message on context.skip_blind like vanilla."
 acceptance_tests:
   - "Skipped 2 Blinds this run -> X(1 + 1 * 2) = X3 (vanilla: X1.5)"

@@ -18,6 +18,7 @@ state_transfer: []
 blueprint_compat: true
 eternal_compat: true
 perishable_compat: true
+carpenter_compat: true
 impl_notes: "context.joker_main. Count held cards with is_suit('Clubs', nil, true) or is_suit('Spades', nil, true) (flush_calc=true, like vanilla, so debuffed cards still count). Trigger when black * 2 > total (strict majority) OR total == 0 (vanilla triggers on an empty hand; keeps the upgrade never worse)."
 acceptance_tests:
   - "Hold 5 Spades/Clubs + 3 Hearts -> X4"

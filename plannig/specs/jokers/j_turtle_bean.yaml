@@ -1,7 +1,5 @@
 # Implementation ticket for j_turtle_bean -> j_bplus_turtle_bean_plus.
 # Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
-# BLOCKED on Q1 (see Open questions in BALATRO_PLUS_AGENT_BRIEF.md).
-# The design is written down so it isn't forgotten. Do not implement until it is unblocked.
 vanilla_key: "j_turtle_bean"
 vanilla_name: "Turtle Bean"
 vanilla_rarity: "Uncommon"
@@ -16,13 +14,15 @@ plus_effect: "+5 hand size, reduces by 1 every 2 rounds"
 plus_config: {"extra": {"h_size": 5, "h_mod": 1, "every": 2, "rounds": 0}}
 plus_rarity: "Uncommon"
 plus_cost: 6
-state_transfer: "TBD (Q1)"
+state_transfer: []
 blueprint_compat: false
 eternal_compat: false
 perishable_compat: true
-impl_notes: "Like vanilla Turtle Bean: add_to_deck G.hand:change_size(extra.h_size), remove_from_deck the reverse. End of round (main_eval, not blueprint): extra.rounds += 1; when extra.rounds % extra.every == 0: if extra.h_size - extra.h_mod <= 0 destroy ('Eaten!'), else extra.h_size -= extra.h_mod and G.hand:change_size(-extra.h_mod). Blocked on Q1 (decaying value): vanilla keeps the current bonus in ability.extra.h_size, which the upgrade replaces with the new config. On upgrade set_ability runs remove_from_deck on the vanilla joker, then add_to_deck on the new one, so only the difference stays applied."
+carpenter_compat: false
+impl_notes: "Like vanilla Turtle Bean: add_to_deck G.hand:change_size(extra.h_size), remove_from_deck the reverse. End of round (main_eval, not blueprint): extra.rounds += 1; when extra.rounds % extra.every == 0: if extra.h_size - extra.h_mod <= 0 destroy ('Eaten!'), else extra.h_size -= extra.h_mod and G.hand:change_size(-extra.h_mod). Upgrade (shrinking): resets, the '+' joker starts from its own starting values (state_transfer []). carpenter_compat false: Carpenter skips it."
 acceptance_tests:
   - "Round 1: +5 hand size; after 2 rounds: +4; after 4 rounds: +3"
   - "Destroyed after 10 rounds (5 * 2)"
-status: "blocked"
+  - "Turtle Bean partly used up, upgrade -> Magic Bean starts fresh at +5 hand size"
+status: "approved"
 art_status: "none"

@@ -79,7 +79,7 @@ SMODS.Joker {
     blueprint_compat = true, eternal_compat = true, perishable_compat = false,  -- always set all three
     unlocked = true, discovered = false,
     atlas = 'placeholder', pos = { x = 0, y = 0 },
-    bplus = { vanilla_key = 'j_ride_the_bus', state_transfer = { ['mult'] = 'extra.mult' } },
+    bplus = { vanilla_key = 'j_ride_the_bus', state_transfer = { ['mult'] = 'extra.mult' }, carpenter_compat = true },
 
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.mult_gain, card.ability.extra.mult } }
@@ -161,7 +161,7 @@ if SMODS.pseudorandom_probability(card, 'bplus_<name>', 1, card.ability.extra.od
 
 ## 6. Upgrades and state transfer
 
-The upgrade *mechanic* (what triggers an upgrade) is **not designed yet**. Nothing here may decide it. What is fixed is the **one shared helper** it will call:
+The upgrade mechanics are designed in the brief ("Upgrade mechanics", M1–M10). Every permanent upgrade goes through **one shared helper**:
 
 ```lua
 -- mod/src/upgrade.lua
@@ -187,6 +187,13 @@ BPlus.upgrade_card(card)   -- returns true if upgraded
 - `"mult -> extra.mult"` means copy `ability.mult` into `ability.extra.mult`. It is needed whenever vanilla kept state outside `extra`, which many vanilla jokers do (check `vanilla_config` and the source).
 - Use `[]` when there is no persistent state.
 - In Lua the declaration is a map: `state_transfer = { ['mult'] = 'extra.mult' }`.
+
+**What to transfer** (decided, see "Scaling and decaying state" in the brief):
+- **Growing jokers:** copy the built-up value (`"x_mult -> extra.Xmult"`, `"mult -> extra.mult"`, `"extra.chips"`, ...). The "+" growth rate applies from then on.
+- **Shrinking jokers:** `[]`. The "+" joker starts from its own starting values.
+- **Counters toward a step** (Yorick): copy the counter as is. The "+" joker normalises it to its own period in its own logic, `((remaining - 1) % period) + 1`, so the upgrade itself stays a plain path copy.
+
+**Carpenter.** Each "+" joker declares `bplus.carpenter_compat` (from the CSV column, default `true`). Carpenter and The Rust skip jokers with `false`. On a growing joker Carpenter only changes the growth rate: `plus_calculate` must work on the base card's stored value without resetting it.
 
 **Rules:**
 - **No per-joker upgrade code.** If a joker needs more than a path copy, the row is not ready: send it back to `draft`.

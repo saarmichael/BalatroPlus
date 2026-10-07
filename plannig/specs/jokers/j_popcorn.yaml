@@ -1,7 +1,5 @@
 # Implementation ticket for j_popcorn -> j_bplus_popcorn_plus.
 # Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
-# BLOCKED on Q1 (see Open questions in BALATRO_PLUS_AGENT_BRIEF.md).
-# The design is written down so it isn't forgotten. Do not implement until it is unblocked.
 vanilla_key: "j_popcorn"
 vanilla_name: "Popcorn"
 vanilla_rarity: "Common"
@@ -16,13 +14,15 @@ plus_effect: "+50 Mult, -5 Mult per round played"
 plus_config: {"extra": {"mult": 50, "mult_mod": 5}}
 plus_rarity: "Common"
 plus_cost: 5
-state_transfer: "TBD (Q1)"
+state_transfer: []
 blueprint_compat: true
 eternal_compat: false
 perishable_compat: true
-impl_notes: "Same as vanilla Popcorn: context.joker_main -> mult = extra.mult; end of round (main_eval, not blueprint): if extra.mult - extra.mult_mod <= 0 destroy the card ('Eaten!'), else extra.mult -= extra.mult_mod. Blocked on Q1 (decaying value, same question as scaling): vanilla keeps the current Mult in ability.mult."
+carpenter_compat: false
+impl_notes: "Same as vanilla Popcorn: context.joker_main -> mult = extra.mult; end of round (main_eval, not blueprint): if extra.mult - extra.mult_mod <= 0 destroy the card ('Eaten!'), else extra.mult -= extra.mult_mod. Upgrade (shrinking): resets, the '+' joker starts from its own starting values (state_transfer []). carpenter_compat false: Carpenter skips it."
 acceptance_tests:
   - "First round -> +50 Mult, next round +45"
   - "Destroyed at the end of round 10 (50 / 5 = 10)"
-status: "blocked"
+  - "Popcorn partly used up, upgrade -> Nacho Chips starts fresh at +50 Mult"
+status: "approved"
 art_status: "none"

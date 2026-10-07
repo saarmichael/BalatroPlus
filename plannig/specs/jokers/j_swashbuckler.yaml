@@ -18,6 +18,7 @@ state_transfer: []
 blueprint_compat: true
 eternal_compat: true
 perishable_compat: true
+carpenter_compat: true
 impl_notes: "Vanilla recomputes ability.mult in Card:update every frame; do the same into extra.mult = extra.sell_mult * sum(sell_cost of other jokers in G.jokers). Score in context.joker_main when extra.mult > 0. Not persistent state."
 acceptance_tests:
   - "With Joker (sell $1) and Golden Joker (sell $3) -> +2 * (1 + 3) = 8 Mult"

@@ -18,6 +18,7 @@ state_transfer: []
 blueprint_compat: true
 eternal_compat: true
 perishable_compat: true
+carpenter_compat: true
 impl_notes: "context.joker_main and next(context.poker_hands[extra.type]) -> { mult = extra.t_mult }. Same 'contains' rule as vanilla. Vanilla keeps its value in ability.t_mult/t_chips/x_mult; ours lives in extra."
 acceptance_tests:
   - "Play a Two Pair -> +24 Mult (vanilla: +10 Mult)"

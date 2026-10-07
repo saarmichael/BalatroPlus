@@ -18,6 +18,7 @@ state_transfer: []
 blueprint_compat: true
 eternal_compat: true
 perishable_compat: true
+carpenter_compat: true
 impl_notes: "context.joker_main -> #G.jokers.cards * extra.mult (counts itself, same as vanilla). loc_vars shows Currently value."
 acceptance_tests:
   - "3 jokers incl. this one -> +10 * 3 = 30 Mult"

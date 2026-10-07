@@ -18,6 +18,7 @@ state_transfer: []
 blueprint_compat: true
 eternal_compat: true
 perishable_compat: true
+carpenter_compat: true
 impl_notes: "Same as vanilla Reserved Parking: context.individual + cardarea G.hand (not end_of_round), other_card:is_face(), not debuffed (debuffed -> 'Debuffed' message), SMODS.pseudorandom_probability(card, 'bplus_valet_parking', 1, extra.odds) -> dollars = extra.dollars (with dollar_buffer). Held-in-hand effect, so Mime retriggers it."
 acceptance_tests:
   - "With Oops! All 6s: hold 2 face cards and play -> +$3 + $3 (vanilla: +$1 + $1)"

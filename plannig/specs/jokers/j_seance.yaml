@@ -18,6 +18,7 @@ state_transfer: []
 blueprint_compat: true
 eternal_compat: true
 perishable_compat: true
+carpenter_compat: true
 impl_notes: "Same condition as vanilla Seance (context.joker_main, next(context.poker_hands[extra.poker_hand]) - so a Royal Flush counts); create Spectral cards (seed 'bplus_spirit_board'). Room: create min(extra.cards, free consumable slots) cards, where free = card_limit - (#G.consumeables.cards + G.GAME.consumeable_buffer), using consumeable_buffer like vanilla (same pattern as vanilla Riff-Raff uses for jokers). Nothing if no free slot."
 acceptance_tests:
   - "Play a Straight Flush with 2 free slots -> 2 Spectral cards (vanilla: 1)"

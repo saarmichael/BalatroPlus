@@ -18,6 +18,7 @@ state_transfer: []
 blueprint_compat: true
 eternal_compat: true
 perishable_compat: true
+carpenter_compat: true
 impl_notes: "Same as vanilla DNA (context.before, G.GAME.current_round.hands_played == 0 and #context.full_hand == 1), done extra.copies times: copy_card, add_to_deck, raise G.deck.config.card_limit, insert into G.playing_cards, emplace in G.hand; return playing_cards_created so Hologram etc. trigger. Juice until the first hand is played (context.first_hand_drawn), like vanilla."
 acceptance_tests:
   - "First hand is a single King -> 2 Kings added to deck and to hand (deck 52 + 2 = 54)"

@@ -19,6 +19,7 @@ state_transfer:
 blueprint_compat: false
 eternal_compat: false
 perishable_compat: true
+carpenter_compat: true
 impl_notes: "Round counter same as vanilla Invisible Joker (end of round, not blueprint: extra.rounds += 1, 'N/2' then 'Active!'). context.selling_self when active: pick a random other joker that is eligible for an upgrade (brief: upgradable and not yet upgraded; seed 'bplus_phantom'), BPlus.upgrade_card(it), then duplicate it with copy_card like vanilla (removing Negative from the copy), so both are upgraded (brief: duplicates keep the upgrade level). If no other joker is eligible, pick any other joker at random and only duplicate it, like vanilla Invisible Joker. Vanilla keeps the counter in ability.invis_rounds; state_transfer moves it so the countdown isn't lost (a counter, not a scaling value, so not Q1). Depends on BPlus.upgrade_card."
 acceptance_tests:
   - "After 2 rounds, sell with Joker held -> Joker becomes Joker+ and a second Joker+ appears"

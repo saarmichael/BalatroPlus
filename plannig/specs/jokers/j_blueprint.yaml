@@ -18,6 +18,7 @@ state_transfer: []
 blueprint_compat: true
 eternal_compat: true
 perishable_compat: true
+carpenter_compat: true
 impl_notes: "calculate: for the jokers at my position + 1 and + 2, ret_i = SMODS.blueprint_effect(card, that_joker, context); return SMODS.merge_effects({ret_1, ret_2}) (both helpers exist in the installed smods, src/utils.lua). SMODS.blueprint_effect already skips missing/debuffed/non-compatible jokers and guards recursion (context.blueprint count), so Architect next to Blueprint/Brainstorm/Architect chains like vanilla Blueprint does. loc_vars / UI: show compatible/incompatible for both targets. Carpenter turns Blueprint into this joker (brief M1)."
 acceptance_tests:
   - "Architect, Joker+, Joker -> scores +20 + 4 from the copies, plus the originals"

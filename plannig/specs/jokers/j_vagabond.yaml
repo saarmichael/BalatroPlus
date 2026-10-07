@@ -18,6 +18,7 @@ state_transfer: []
 blueprint_compat: true
 eternal_compat: true
 perishable_compat: true
+carpenter_compat: true
 impl_notes: "Same as vanilla Vagabond: context.joker_main, a free consumable slot, G.GAME.dollars <= extra.dollars -> create 1 Tarot (seed 'bplus_nomad'). '$6 or less' is 'under $7'."
 acceptance_tests:
   - "Play a hand with $6 -> 1 Tarot (vanilla needs $4 or less)"

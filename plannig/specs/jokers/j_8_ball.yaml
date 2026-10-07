@@ -18,6 +18,7 @@ state_transfer: []
 blueprint_compat: true
 eternal_compat: true
 perishable_compat: true
+carpenter_compat: true
 impl_notes: "context.individual + G.play, other_card:get_id() == 8, and a free consumable slot (#G.consumeables.cards + G.GAME.consumeable_buffer < card_limit, like vanilla). One roll decides both outcomes so they can't both happen: p = num/den from SMODS.get_probability_vars(card, 1, extra.odds, 'bplus_magic_8_ball', true) (so Oops! All 6s counts); any = min(1, 2 * p); u = pseudorandom('bplus_magic_8_ball'); u < any/2 -> Tarot, any/2 <= u < any -> Spectral. Tarot and Spectral stay equally likely even when Oops! pushes the total to 1. Add the result to SMODS.post_prob the way SMODS.pseudorandom_probability does, so 'probability rolled' effects still see it. Create with create_card('Tarot' / 'Spectral', G.consumeables, nil, nil, nil, nil, nil, '8ba'), using consumeable_buffer."
 acceptance_tests:
   - "Seeded run, score many 8s with free slots -> Tarots and Spectrals both appear, never two cards from one 8"

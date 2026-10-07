@@ -1,7 +1,5 @@
 # Implementation ticket for j_trousers -> j_bplus_trousers_plus.
 # Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
-# BLOCKED on Q1 (see Open questions in BALATRO_PLUS_AGENT_BRIEF.md).
-# The design is written down so it isn't forgotten. Do not implement until it is unblocked.
 vanilla_key: "j_trousers"
 vanilla_name: "Spare Trousers"
 vanilla_rarity: "Uncommon"
@@ -16,14 +14,17 @@ plus_effect: "This Joker gains +4 Mult if played hand contains a Two Pair"
 plus_config: {"extra": {"mult_gain": 4, "mult": 0}}
 plus_rarity: "Uncommon"
 plus_cost: 6
-state_transfer: "TBD (Q1)"
+state_transfer:
+  - "mult -> extra.mult"
 blueprint_compat: true
 eternal_compat: true
 perishable_compat: false
-impl_notes: "Same as vanilla Spare Trousers: context.before (not blueprint), next(context.poker_hands['Two Pair']) -> extra.mult += extra.mult_gain (a Full House contains a Two Pair). Score in context.joker_main. Blocked on Q1: what happens to the Mult the vanilla joker built up. Vanilla keeps it in ability.mult; under any answer except 'reset', state_transfer will be 'mult -> extra.mult'."
+carpenter_compat: true
+impl_notes: "Same as vanilla Spare Trousers: context.before (not blueprint), next(context.poker_hands['Two Pair']) -> extra.mult += extra.mult_gain (a Full House contains a Two Pair). Score in context.joker_main. Upgrade (growing): the built-up value carries over via state_transfer and the '+' rate applies from then on. Carpenter: plus_calculate works on the card's stored value; only the gain changes."
 acceptance_tests:
   - "Play 2 Two Pairs -> +4 + 4 = 8 Mult (vanilla: 2 + 2)"
   - "Play a Full House -> gains +4"
   - "Play a Pair -> no gain"
-status: "blocked"
+  - "Spare Trousers at +6 Mult, upgrade -> Three-Piece Suit keeps +6 Mult, later gains use the '+' rate"
+status: "approved"
 art_status: "none"

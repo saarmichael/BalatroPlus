@@ -18,6 +18,7 @@ state_transfer: []
 blueprint_compat: true
 eternal_compat: true
 perishable_compat: true
+carpenter_compat: true
 impl_notes: "context.joker_main -> chips = extra.chips. add_to_deck: G.hand:change_size(-extra.h_size); remove_from_deck: +extra.h_size. On upgrade set_ability runs remove_from_deck on Stuntman (+2) then add_to_deck on Daredevil (-1), so hand size ends at base - 1."
 acceptance_tests:
   - "Play any hand -> +350 Chips (vanilla: +250)"

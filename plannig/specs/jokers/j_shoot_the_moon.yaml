@@ -18,6 +18,7 @@ state_transfer: []
 blueprint_compat: true
 eternal_compat: true
 perishable_compat: true
+carpenter_compat: true
 impl_notes: "Same as vanilla Shoot the Moon: context.individual + cardarea G.hand (not end_of_round), get_id() == 12, debuffed -> 'Debuffed' message, else h_mult = extra.mult. Held-in-hand effect, so Mime retriggers it."
 acceptance_tests:
   - "Hold 2 Queens -> +21 + 21 Mult (vanilla: +13 + 13)"

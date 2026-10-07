@@ -18,6 +18,7 @@ state_transfer: []
 blueprint_compat: true
 eternal_compat: true
 perishable_compat: true
+carpenter_compat: true
 impl_notes: "Same condition as vanilla Superposition (context.joker_main: a scoring Ace and next(context.poker_hands['Straight'])); create Tarot cards (seed 'bplus_superduperposition'). Room: create min(extra.cards, free consumable slots) cards, where free = card_limit - (#G.consumeables.cards + G.GAME.consumeable_buffer), using consumeable_buffer like vanilla (same pattern as vanilla Riff-Raff uses for jokers). Nothing if no free slot."
 acceptance_tests:
   - "Play A-2-3-4-5 Straight with 2 free slots -> 2 Tarots (vanilla: 1)"

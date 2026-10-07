@@ -18,6 +18,7 @@ state_transfer: []
 blueprint_compat: true
 eternal_compat: true
 perishable_compat: true
+carpenter_compat: true
 impl_notes: "context.individual + G.play, is_suit('Spades') -> { chips = extra.chips }."
 acceptance_tests:
   - "Play a Pair of Spades -> joker adds +80 + 80 Chips (vanilla: +50 + 50)"

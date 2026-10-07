@@ -18,6 +18,7 @@ state_transfer: []
 blueprint_compat: true
 eternal_compat: true
 perishable_compat: true
+carpenter_compat: true
 impl_notes: "context.joker_main -> chips = extra.chips_per * max(0, G.GAME.dollars + (G.GAME.dollar_buffer or 0)), only when > 0 (same as vanilla)."
 acceptance_tests:
   - "With $20 -> +5 * 20 = 100 Chips (vanilla: 2 * 20)"

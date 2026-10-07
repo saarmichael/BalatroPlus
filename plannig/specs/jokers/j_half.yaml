@@ -18,6 +18,7 @@ state_transfer: []
 blueprint_compat: true
 eternal_compat: true
 perishable_compat: true
+carpenter_compat: true
 impl_notes: "context.joker_main, condition #context.full_hand <= extra.size (full hand, not scoring hand, same as vanilla)."
 acceptance_tests:
   - "Play 4 cards -> +40 Mult"

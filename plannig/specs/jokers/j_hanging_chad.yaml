@@ -18,6 +18,7 @@ state_transfer: []
 blueprint_compat: true
 eternal_compat: true
 perishable_compat: true
+carpenter_compat: true
 impl_notes: "Same as vanilla: context.repetition, cardarea G.play, other_card == context.scoring_hand[1] -> { repetitions = extra.retriggers }."
 acceptance_tests:
   - "Play a Pair -> first scored card scores 1 + 3 = 4 times (vanilla: 1 + 2 = 3), second card once"

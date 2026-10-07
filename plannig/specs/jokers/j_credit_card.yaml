@@ -18,6 +18,7 @@ state_transfer: []
 blueprint_compat: false
 eternal_compat: true
 perishable_compat: true
+carpenter_compat: true
 impl_notes: "add_to_deck: G.GAME.bankrupt_at -= extra.debt; remove_to_deck: += extra.debt (same as vanilla). On upgrade set_ability calls remove_from_deck on the old center (+20) then add_to_deck on the new one (-100), so the totals stay right."
 acceptance_tests:
   - "With $0, buy a $5 joker -> allowed down to -$100 (vanilla: -$20)"

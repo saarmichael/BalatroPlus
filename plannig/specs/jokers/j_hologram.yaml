@@ -1,7 +1,5 @@
 # Implementation ticket for j_hologram -> j_bplus_hologram_plus.
 # Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
-# BLOCKED on Q1 (see Open questions in BALATRO_PLUS_AGENT_BRIEF.md).
-# The design is written down so it isn't forgotten. Do not implement until it is unblocked.
 vanilla_key: "j_hologram"
 vanilla_name: "Hologram"
 vanilla_rarity: "Uncommon"
@@ -16,12 +14,15 @@ plus_effect: "This Joker gains X0.35 Mult every time a playing card is added to 
 plus_config: {"extra": {"Xmult": 1, "Xmult_mod": 0.35}}
 plus_rarity: "Uncommon"
 plus_cost: 7
-state_transfer: "TBD (Q1)"
+state_transfer:
+  - "x_mult -> extra.Xmult"
 blueprint_compat: true
 eternal_compat: true
 perishable_compat: false
-impl_notes: "Same as vanilla Hologram: context.playing_card_added (not blueprint), extra.Xmult += #context.cards * extra.Xmult_mod. Score extra.Xmult in context.joker_main when > 1. Blocked on Q1: vanilla keeps the built-up XMult in ability.x_mult; under any answer except 'reset', state_transfer will be 'x_mult -> extra.Xmult'."
+carpenter_compat: true
+impl_notes: "Same as vanilla Hologram: context.playing_card_added (not blueprint), extra.Xmult += #context.cards * extra.Xmult_mod. Score extra.Xmult in context.joker_main when > 1. Upgrade (growing): the built-up value carries over via state_transfer and the '+' rate applies from then on. Carpenter: plus_calculate works on the card's stored value; only the gain changes."
 acceptance_tests:
   - "Add 2 cards (e.g. Certificate twice) -> X(1 + 0.35 * 2) = X1.7 (vanilla: X1.5)"
-status: "blocked"
+  - "Hologram at X1.5, upgrade -> Holodeck keeps X1.5, next gain +0.35: X(1.5 + 0.35)"
+status: "approved"
 art_status: "none"

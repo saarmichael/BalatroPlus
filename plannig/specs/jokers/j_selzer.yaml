@@ -19,7 +19,8 @@ state_transfer:
 blueprint_compat: true
 eternal_compat: false
 perishable_compat: true
-impl_notes: "Same as vanilla Seltzer: context.repetition, cardarea G.play, every scored card. In context.after (not blueprint) count extra.hands_left down; at 0 the card is destroyed with the 'Drank!' message. Retrigger: context.repetition -> { repetitions = extra.retriggers + (bonus and 1 or 0) }, bonus = SMODS.pseudorandom_probability(card, 'bplus_fizzy_bubbelech', 1, extra.odds), rolled separately for each card. loc_vars via SMODS.get_probability_vars (Oops! All 6s makes it 2 in 2 = always). Vanilla stores the hands left as the bare ability.extra number; state_transfer copies it into extra.hands_left. Vanilla key is spelled 'selzer'; plus key follows it."
+carpenter_compat: false
+impl_notes: "Same as vanilla Seltzer: context.repetition, cardarea G.play, every scored card. In context.after (not blueprint) count extra.hands_left down; at 0 the card is destroyed with the 'Drank!' message. Retrigger: context.repetition -> { repetitions = extra.retriggers + (bonus and 1 or 0) }, bonus = SMODS.pseudorandom_probability(card, 'bplus_fizzy_bubbelech', 1, extra.odds), rolled separately for each card. loc_vars via SMODS.get_probability_vars (Oops! All 6s makes it 2 in 2 = always). Vanilla stores the hands left as the bare ability.extra number; state_transfer copies it into extra.hands_left. Vanilla key is spelled 'selzer'; plus key follows it. carpenter_compat false (human decision): Carpenter and The Rust skip it."
 acceptance_tests:
   - "With Oops! All 6s: each scored card scores 1 + 2 times"
   - "After 10 hands the card is destroyed"

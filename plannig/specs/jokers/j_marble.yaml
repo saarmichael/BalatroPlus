@@ -18,6 +18,7 @@ state_transfer: []
 blueprint_compat: false
 eternal_compat: true
 perishable_compat: true
+carpenter_compat: true
 impl_notes: "Replaces Marble Joker's effect: it no longer adds a Stone card when Blind is selected (human decision, knowingly breaks the 'never worse' guideline). context.before (not blueprint) when G.GAME.current_round.hands_played == 0 and #context.full_hand == 1 -> full_hand[1]:set_ability(G.P_CENTERS.m_stone, nil, true), like vanilla Midas Mask does for Gold. It runs in context.before, the same context as DNA, so the joker order decides: Medusa left of DNA -> card turns to Stone first and DNA copies the Stone card; DNA left of Medusa -> DNA copies the normal card into hand, then the played card turns to Stone. The converted card scores as Stone in that same hand. Any existing enhancement is replaced (as Midas Mask does). blueprint_compat false: a copy would only re-convert the same card, so it does nothing (vanilla Midas Mask is false for the same reason)."
 acceptance_tests:
   - "Select Blind -> no Stone card added (unlike Marble Joker)"

@@ -18,6 +18,7 @@ state_transfer: []
 blueprint_compat: false
 eternal_compat: true
 perishable_compat: true
+carpenter_compat: true
 impl_notes: "Same as vanilla Midas Mask (context.before, not blueprint) but for every card in context.scoring_hand, not only is_face() ones: set_ability(G.P_CENTERS.m_gold, nil, true), juice, 'Gold' message. Existing enhancements (including Stone, Steel, Glass) are replaced, as vanilla does for face cards. This can be worse than Midas Mask (e.g. a scored Steel 7 becomes Gold); the human accepted that. Unscored cards are not changed."
 acceptance_tests:
   - "Play a scoring Pair of 7s -> both become Gold"

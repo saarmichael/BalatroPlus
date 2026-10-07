@@ -18,6 +18,7 @@ state_transfer: []
 blueprint_compat: true
 eternal_compat: true
 perishable_compat: true
+carpenter_compat: true
 impl_notes: "Same as vanilla Golden Ticket: context.individual + G.play, other_card is Gold (config.center == G.P_CENTERS.m_gold) -> dollars = extra.dollars (with dollar_buffer)."
 acceptance_tests:
   - "Score 2 Gold cards -> +$5 + $5 (vanilla: +$4 + $4)"

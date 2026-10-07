@@ -18,6 +18,7 @@ state_transfer: []
 blueprint_compat: false
 eternal_compat: true
 perishable_compat: true
+carpenter_compat: true
 impl_notes: "calc_dollar_bonus returns extra.dollars."
 acceptance_tests:
   - "End round -> +$8 (vanilla: +$4)"

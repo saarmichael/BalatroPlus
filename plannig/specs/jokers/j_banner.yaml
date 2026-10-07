@@ -18,6 +18,7 @@ state_transfer: []
 blueprint_compat: true
 eternal_compat: true
 perishable_compat: true
+carpenter_compat: true
 impl_notes: "context.joker_main when G.GAME.current_round.discards_left > 0 -> chips = extra.chips_per * discards_left (same as vanilla)."
 acceptance_tests:
   - "Play with 3 discards left -> +60 * 3 = 180 Chips (vanilla: 30 * 3)"

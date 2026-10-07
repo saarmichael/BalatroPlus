@@ -18,6 +18,7 @@ state_transfer: []
 blueprint_compat: false
 eternal_compat: false
 perishable_compat: true
+carpenter_compat: true
 impl_notes: "Same as vanilla Mr. Bones (context.end_of_round, context.game_over, chips >= 25% of blind -> saved). Then SMODS.pseudorandom_probability(card, 'bplus_lich', 1, extra.odds): on success destroy itself like vanilla, otherwise it stays. Note: Oops! All 6s raises the self-destruct chance (2 in 2 = always), the same way it makes Gros Michel die more often in vanilla."
 acceptance_tests:
   - "Lose with 30% of required chips -> saved"

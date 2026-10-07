@@ -18,6 +18,7 @@ state_transfer: []
 blueprint_compat: true
 eternal_compat: true
 perishable_compat: true
+carpenter_compat: true
 impl_notes: "Like Architect but targets G.jokers.cards[1] and [2]: SMODS.blueprint_effect for each, SMODS.merge_effects. If Hive Mind itself is one of the two leftmost, that slot copies nothing (SMODS.blueprint_effect returns nothing for copier == copied), same as vanilla Brainstorm being leftmost. Carpenter turns Brainstorm into this joker (brief M1). Name: 'hive mind' is the English for the Hebrew 'כוורת מוחות'."
 acceptance_tests:
   - "Joker+, Joker, ..., Hive Mind -> copies +20 and +4"

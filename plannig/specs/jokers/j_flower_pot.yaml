@@ -18,6 +18,7 @@ state_transfer: []
 blueprint_compat: true
 eternal_compat: true
 perishable_compat: true
+carpenter_compat: true
 impl_notes: "context.joker_main. Same algorithm as vanilla on context.scoring_hand: non-Wild cards claim their suit first (is_suit(s, true)), then Wild cards fill missing suits. Trigger when distinct suits >= extra.suits."
 acceptance_tests:
   - "Scoring hand with Hearts, Diamonds, Spades -> X3"

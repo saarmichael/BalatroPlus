@@ -18,6 +18,7 @@ state_transfer: []
 blueprint_compat: true
 eternal_compat: true
 perishable_compat: true
+carpenter_compat: true
 impl_notes: "Same as vanilla Business Card: context.individual + G.play, other_card:is_face(), SMODS.pseudorandom_probability(card, 'bplus_executive_card', 1, extra.odds) -> dollars = extra.dollars (with dollar_buffer)."
 acceptance_tests:
   - "With Oops! All 6s: score 2 face cards -> +$3 + $3 (vanilla: +$2 + $2)"

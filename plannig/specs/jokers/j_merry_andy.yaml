@@ -18,6 +18,7 @@ state_transfer: []
 blueprint_compat: false
 eternal_compat: true
 perishable_compat: true
+carpenter_compat: true
 impl_notes: "add_to_deck: G.GAME.round_resets.discards += extra.d_size, ease_discard(extra.d_size), G.hand:change_size(extra.h_size); remove_from_deck: the reverse. Keep the numbers in extra and apply them in add_to_deck / remove_from_deck by hand (like Daredevil), not via vanilla's top-level ability.h_size / d_size. On upgrade set_ability runs remove_from_deck on the vanilla joker, then add_to_deck on the new one, so only the difference stays applied. Name: 'Merry Andrew' is the old full form of 'merry andy' (a clown)."
 acceptance_tests:
   - "Discards per round 3 + 4 = 7, hand size 8 - 1 = 7 (vanilla: 3 + 3 discards)"

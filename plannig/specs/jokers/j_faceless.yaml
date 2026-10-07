@@ -18,6 +18,7 @@ state_transfer: []
 blueprint_compat: true
 eternal_compat: true
 perishable_compat: true
+carpenter_compat: true
 impl_notes: "Same as vanilla: context.discard, on the last card of context.full_hand, count is_face() cards; if >= extra.faces -> dollars = extra.dollars (with dollar_buffer)."
 acceptance_tests:
   - "Discard 3 face cards -> +$6 (vanilla: +$5)"

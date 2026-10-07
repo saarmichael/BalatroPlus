@@ -18,6 +18,7 @@ state_transfer: []
 blueprint_compat: true
 eternal_compat: true
 perishable_compat: true
+carpenter_compat: true
 impl_notes: "Reuse vanilla's G.GAME.current_round.idol_card (vanilla resets it every round whether or not The Idol is held, picking a random non-Stone card from the deck). Match rank only: context.individual + G.play, other_card:get_id() == idol_card.id -> xmult = extra.Xmult. Description shows the rank only."
 acceptance_tests:
   - "Chosen card is a 7: play a Pair of 7s in two suits -> X2 * X2"

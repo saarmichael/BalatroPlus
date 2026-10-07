@@ -18,6 +18,7 @@ state_transfer: []
 blueprint_compat: true
 eternal_compat: true
 perishable_compat: true
+carpenter_compat: true
 impl_notes: "context.joker_main -> mult = extra.mult_per * G.GAME.hands[context.scoring_name].played (the count already includes the current hand, same as vanilla). Reads a run-wide count, nothing is stored on the card, so not blocked on Q1."
 acceptance_tests:
   - "Play a Pair for the 3rd time this run -> +2 * 3 = 6 Mult (vanilla: +3)"

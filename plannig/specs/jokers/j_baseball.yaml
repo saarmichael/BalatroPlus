@@ -18,6 +18,7 @@ state_transfer: []
 blueprint_compat: true
 eternal_compat: true
 perishable_compat: true
+carpenter_compat: true
 impl_notes: "context.other_joker, other_joker.config.center.rarity == 2 and other_joker ~= card -> xmult = extra.Xmult (same as vanilla). '+' jokers keep their vanilla rarity, so Uncommon '+' jokers count too."
 acceptance_tests:
   - "With 2 Uncommon jokers -> X2 * X2"

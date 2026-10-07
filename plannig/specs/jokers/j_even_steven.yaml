@@ -18,6 +18,7 @@ state_transfer: []
 blueprint_compat: true
 eternal_compat: true
 perishable_compat: true
+carpenter_compat: true
 impl_notes: "context.individual + cardarea G.play, get_id() <= 10 and get_id() % 2 == 0 (same as vanilla, so face cards don't count) -> mult = extra.mult."
 acceptance_tests:
   - "Score a 10 and a 4 -> +8 + 8 Mult (vanilla: +4 + 4)"

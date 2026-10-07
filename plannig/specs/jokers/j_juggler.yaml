@@ -18,6 +18,7 @@ state_transfer: []
 blueprint_compat: false
 eternal_compat: true
 perishable_compat: true
+carpenter_compat: true
 impl_notes: "add_to_deck: G.hand:change_size(extra.h_size); remove_from_deck: the reverse. Keep the numbers in extra and apply them in add_to_deck / remove_from_deck by hand (like Daredevil), not via vanilla's top-level ability.h_size / d_size. On upgrade set_ability runs remove_from_deck on the vanilla joker, then add_to_deck on the new one, so only the difference stays applied."
 acceptance_tests:
   - "Hand size 8 + 2 = 10 (vanilla: 8 + 1)"

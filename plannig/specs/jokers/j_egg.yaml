@@ -1,7 +1,5 @@
 # Implementation ticket for j_egg -> j_bplus_egg_plus.
 # Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
-# BLOCKED on Q1 (see Open questions in BALATRO_PLUS_AGENT_BRIEF.md).
-# The design is written down so it isn't forgotten. Do not implement until it is unblocked.
 vanilla_key: "j_egg"
 vanilla_name: "Egg"
 vanilla_rarity: "Common"
@@ -16,12 +14,14 @@ plus_effect: "Gains $5 of sell value at end of round"
 plus_config: {"extra": {"sell_gain": 5}}
 plus_rarity: "Common"
 plus_cost: 4
-state_transfer: "TBD (Q1)"
+state_transfer: []
 blueprint_compat: false
 eternal_compat: true
 perishable_compat: true
-impl_notes: "Same as vanilla with extra.sell_gain: at end of round (not blueprint) ability.extra_value += extra.sell_gain, then card:set_cost(). Q1 input: Card:set_ability keeps ability.extra_value, so the sell value Egg built up carries over on its own unless Q1 says otherwise."
+carpenter_compat: false
+impl_notes: "Same as vanilla with extra.sell_gain: at end of round (not blueprint) ability.extra_value += extra.sell_gain, then card:set_cost(). Upgrade (growing): the built-up sell value carries over by itself, because Card:set_ability keeps ability.extra_value; nothing to copy. carpenter_compat false: Carpenter skips it."
 acceptance_tests:
   - "End 2 rounds -> sell value = base sell value + 5 + 5"
-status: "blocked"
+  - "Egg after 2 rounds (+3 + 3 sell value), upgrade -> Free Range Egg keeps that sell value, then +5 per round"
+status: "approved"
 art_status: "none"

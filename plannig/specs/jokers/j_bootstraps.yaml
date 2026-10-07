@@ -18,6 +18,7 @@ state_transfer: []
 blueprint_compat: true
 eternal_compat: true
 perishable_compat: true
+carpenter_compat: true
 impl_notes: "context.joker_main -> extra.mult * floor((G.GAME.dollars + (G.GAME.dollar_buffer or 0)) / extra.dollars), only when >= 1 step (same as vanilla, incl. dollar_buffer)."
 acceptance_tests:
   - "With $10 -> +2 * floor(10 / 3) = 6 Mult"

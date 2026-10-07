@@ -18,6 +18,7 @@ state_transfer: []
 blueprint_compat: true
 eternal_compat: true
 perishable_compat: true
+carpenter_compat: true
 impl_notes: "Count cards in G.playing_cards whose config.center ~= G.P_CENTERS.c_base (same as vanilla driver_tally). context.joker_main when count >= extra.needed -> xmult = extra.Xmult. loc_vars shows (Currently N)."
 acceptance_tests:
   - "10 Enhanced cards in deck -> X3 (vanilla needs 16)"

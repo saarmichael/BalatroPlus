@@ -19,6 +19,7 @@ state_transfer:
 blueprint_compat: true
 eternal_compat: true
 perishable_compat: true
+carpenter_compat: true
 impl_notes: "Same logic as vanilla with extra.every = 2 (vanilla's every = 5 means every 6 hands, so 2 means every 3 hands): loyalty_remaining = (every - 1 - (G.GAME.hands_played - hands_played_at_create)) % (every + 1); trigger when == every; juice when 0. Init loyalty_remaining = every in set_ability/add_to_deck. Card:set_ability resets ability.hands_played_at_create, so the upgrade must restore it (state_transfer), otherwise the count restarts."
 acceptance_tests:
   - "Play 3 hands -> X4 on hand 3 only (vanilla Loyalty Card: hand 6)"

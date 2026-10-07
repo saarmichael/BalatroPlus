@@ -1,7 +1,5 @@
 # Implementation ticket for j_ramen -> j_bplus_ramen_plus.
 # Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
-# BLOCKED on Q1 (see Open questions in BALATRO_PLUS_AGENT_BRIEF.md).
-# The design is written down so it isn't forgotten. Do not implement until it is unblocked.
 vanilla_key: "j_ramen"
 vanilla_name: "Ramen"
 vanilla_rarity: "Uncommon"
@@ -16,13 +14,15 @@ plus_effect: "X3 Mult, loses X0.01 Mult per card discarded"
 plus_config: {"extra": {"Xmult": 3, "Xmult_mod": 0.01}}
 plus_rarity: "Uncommon"
 plus_cost: 6
-state_transfer: "TBD (Q1)"
+state_transfer: []
 blueprint_compat: true
 eternal_compat: false
 perishable_compat: true
-impl_notes: "Same as vanilla Ramen: context.joker_main -> xmult = extra.Xmult; context.discard (not blueprint), per discarded card: if extra.Xmult - extra.Xmult_mod <= 1 destroy the card ('Eaten!'), else extra.Xmult -= extra.Xmult_mod. Blocked on Q1 (decaying value, same question as scaling): vanilla keeps the current XMult in ability.x_mult."
+carpenter_compat: false
+impl_notes: "Same as vanilla Ramen: context.joker_main -> xmult = extra.Xmult; context.discard (not blueprint), per discarded card: if extra.Xmult - extra.Xmult_mod <= 1 destroy the card ('Eaten!'), else extra.Xmult -= extra.Xmult_mod. Upgrade (shrinking): resets, the '+' joker starts from its own starting values (state_transfer []). carpenter_compat false: Carpenter skips it."
 acceptance_tests:
   - "Discard 5 cards -> X3 - 5 * 0.01 = X2.95"
   - "Destroyed after 200 discarded cards ((3 - 1) / 0.01 = 200)"
-status: "blocked"
+  - "Ramen partly used up, upgrade -> Tonkotsu starts fresh at X3"
+status: "approved"
 art_status: "none"

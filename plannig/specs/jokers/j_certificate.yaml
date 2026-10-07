@@ -18,6 +18,7 @@ state_transfer: []
 blueprint_compat: true
 eternal_compat: true
 perishable_compat: true
+carpenter_compat: true
 impl_notes: "Same as vanilla Certificate (context.first_hand_drawn), done extra.cards times: create_playing_card with a random front, each with its own random seal (Red/Blue/Gold/Purple, 1 in 4 each, seed 'bplus_diploma'); debuff by the blind; playing_card_joker_effects so Hologram triggers."
 acceptance_tests:
   - "Start a round -> hand has 8 + 2 cards, both new cards have a seal"

@@ -18,6 +18,7 @@ state_transfer: []
 blueprint_compat: false
 eternal_compat: true
 perishable_compat: true
+carpenter_compat: true
 impl_notes: "Boss part: same as vanilla Chicot (context.setting_blind, boss -> G.GAME.blind:disable()). New part: context.setting_blind (not blueprint), any blind: G.GAME.blind.chips = floor(G.GAME.blind.chips * (1 - extra.blind_reduction)), then update G.GAME.blind.chip_text (number_format) so the UI shows it. Applied once per blind per Chicot+ (stacks multiplicatively if somehow two are held)."
 acceptance_tests:
   - "Small Blind needing 300 -> needs 300 * 0.75 = 225"

@@ -1,7 +1,5 @@
 # Implementation ticket for j_green_joker -> j_bplus_green_joker_plus.
 # Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
-# BLOCKED on Q1 (see Open questions in BALATRO_PLUS_AGENT_BRIEF.md).
-# The design is written down so it isn't forgotten. Do not implement until it is unblocked.
 vanilla_key: "j_green_joker"
 vanilla_name: "Green Joker"
 vanilla_rarity: "Common"
@@ -16,14 +14,17 @@ plus_effect: "+2 Mult per hand played, -1 Mult per discard"
 plus_config: {"extra": {"hand_add": 2, "discard_sub": 1, "mult": 0}}
 plus_rarity: "Common"
 plus_cost: 4
-state_transfer: "TBD (Q1)"
+state_transfer:
+  - "mult -> extra.mult"
 blueprint_compat: true
 eternal_compat: true
 perishable_compat: false
-impl_notes: "Same as vanilla (not blueprint): context.before extra.mult += extra.hand_add; context.discard on the last discarded card extra.mult = max(0, extra.mult - extra.discard_sub). Score in context.joker_main. Blocked on Q1: what happens to the Mult the vanilla joker built up. Vanilla keeps it in ability.mult; under any answer except 'reset', state_transfer will be 'mult -> extra.mult'."
+carpenter_compat: true
+impl_notes: "Same as vanilla (not blueprint): context.before extra.mult += extra.hand_add; context.discard on the last discarded card extra.mult = max(0, extra.mult - extra.discard_sub). Score in context.joker_main. Upgrade (growing): the built-up value carries over via state_transfer and the '+' rate applies from then on. Carpenter: plus_calculate works on the card's stored value; only the gain changes."
 acceptance_tests:
   - "Play 3 hands -> +2 + 2 + 2 = 6 Mult"
   - "Then 1 discard -> 6 - 1 = 5 Mult"
   - "Mult never goes below 0"
-status: "blocked"
+  - "Green Joker at +6 Mult, upgrade -> Evergreen Joker keeps +6 Mult, later gains use the '+' rate"
+status: "approved"
 art_status: "none"

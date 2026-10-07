@@ -1,7 +1,5 @@
 # Implementation ticket for j_wee -> j_bplus_wee_plus.
 # Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
-# BLOCKED on Q1 (see Open questions in BALATRO_PLUS_AGENT_BRIEF.md).
-# The design is written down so it isn't forgotten. Do not implement until it is unblocked.
 vanilla_key: "j_wee"
 vanilla_name: "Wee Joker"
 vanilla_rarity: "Rare"
@@ -16,13 +14,16 @@ plus_effect: "This Joker gains +16 Chips when each played 2 is scored"
 plus_config: {"extra": {"chips": 0, "chip_mod": 16}}
 plus_rarity: "Rare"
 plus_cost: 8
-state_transfer: "TBD (Q1)"
+state_transfer:
+  - "extra.chips"
 blueprint_compat: true
 eternal_compat: true
 perishable_compat: false
-impl_notes: "Same as vanilla Wee Joker: context.individual + G.play (not blueprint), other_card:get_id() == 2 -> extra.chips += extra.chip_mod, 'Upgrade!' message. Score extra.chips in context.joker_main when > 0. Blocked on Q1: vanilla keeps the built-up Chips in ability.extra.chips, which the upgrade replaces with the new config, so it resets to 0 unless Q1 says to carry or recompute it."
+carpenter_compat: true
+impl_notes: "Same as vanilla Wee Joker: context.individual + G.play (not blueprint), other_card:get_id() == 2 -> extra.chips += extra.chip_mod, 'Upgrade!' message. Score extra.chips in context.joker_main when > 0. Upgrade (growing): the built-up value carries over via state_transfer and the '+' rate applies from then on. Carpenter: plus_calculate works on the card's stored value; only the gain changes."
 acceptance_tests:
   - "Score a Pair of 2s -> gains +16 + 16 = 32 Chips (vanilla: 8 + 8)"
   - "Score a 3 -> no gain"
-status: "blocked"
+  - "Wee Joker at +30 Chips, upgrade -> Wee Wee Joker keeps +30, next gain +16: 30 + 16"
+status: "approved"
 art_status: "none"

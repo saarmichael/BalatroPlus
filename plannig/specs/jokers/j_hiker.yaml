@@ -18,6 +18,7 @@ state_transfer: []
 blueprint_compat: true
 eternal_compat: true
 perishable_compat: true
+carpenter_compat: true
 impl_notes: "Same as vanilla Hiker: context.individual + G.play -> other_card.ability.perma_bonus += extra.chips, 'Upgrade!' message. The bonus lives on the playing cards, not on the joker, so nothing to transfer."
 acceptance_tests:
   - "Score a 5 twice in two hands -> it gives 5 + 10 chips the second time, then has +20 permanent chips"

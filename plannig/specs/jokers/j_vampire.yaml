@@ -1,7 +1,5 @@
 # Implementation ticket for j_vampire -> j_bplus_vampire_plus.
 # Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
-# BLOCKED on Q1 (see Open questions in BALATRO_PLUS_AGENT_BRIEF.md).
-# The design is written down so it isn't forgotten. Do not implement until it is unblocked.
 vanilla_key: "j_vampire"
 vanilla_name: "Vampire"
 vanilla_rarity: "Uncommon"
@@ -16,13 +14,16 @@ plus_effect: "This Joker gains X0.2 Mult per scoring Enhanced card played, remov
 plus_config: {"extra": {"Xmult": 1, "Xmult_mod": 0.2}}
 plus_rarity: "Uncommon"
 plus_cost: 7
-state_transfer: "TBD (Q1)"
+state_transfer:
+  - "x_mult -> extra.Xmult"
 blueprint_compat: true
 eternal_compat: true
 perishable_compat: false
-impl_notes: "Same as vanilla Vampire: context.before (not blueprint): for each scoring card with an enhancement (config.center ~= c_base) that isn't debuffed or already vampired, set it back to c_base and extra.Xmult += extra.Xmult_mod. Score extra.Xmult in context.joker_main when > 1. Blocked on Q1: vanilla keeps the built-up XMult in ability.x_mult; under any answer except 'reset', state_transfer will be 'x_mult -> extra.Xmult'."
+carpenter_compat: true
+impl_notes: "Same as vanilla Vampire: context.before (not blueprint): for each scoring card with an enhancement (config.center ~= c_base) that isn't debuffed or already vampired, set it back to c_base and extra.Xmult += extra.Xmult_mod. Score extra.Xmult in context.joker_main when > 1. Upgrade (growing): the built-up value carries over via state_transfer and the '+' rate applies from then on. Carpenter: plus_calculate works on the card's stored value; only the gain changes."
 acceptance_tests:
   - "Play 2 scoring Steel cards -> X(1 + 0.2 * 2) = X1.4, both become plain cards (vanilla: X1.2)"
   - "Play plain cards -> no gain"
-status: "blocked"
+  - "Vampire at X1.5, upgrade -> Dracula keeps X1.5, next gain +0.2: X(1.5 + 0.2)"
+status: "approved"
 art_status: "none"

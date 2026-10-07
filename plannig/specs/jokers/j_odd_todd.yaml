@@ -18,6 +18,7 @@ state_transfer: []
 blueprint_compat: true
 eternal_compat: true
 perishable_compat: true
+carpenter_compat: true
 impl_notes: "context.individual + cardarea G.play, (get_id() <= 10 and get_id() % 2 == 1) or get_id() == 14 (same as vanilla) -> chips = extra.chips."
 acceptance_tests:
   - "Score an Ace and a 7 -> +67 + 67 Chips (vanilla: +31 + 31)"

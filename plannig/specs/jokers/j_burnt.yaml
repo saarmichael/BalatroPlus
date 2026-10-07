@@ -18,6 +18,7 @@ state_transfer: []
 blueprint_compat: true
 eternal_compat: true
 perishable_compat: true
+carpenter_compat: true
 impl_notes: "Same as vanilla Burnt Joker (context.pre_discard, first discard of the round: G.GAME.current_round.discards_used <= 0, not context.hook): evaluate the discarded hand's poker hand and level_up_hand(card, hand, nil, extra.levels)."
 acceptance_tests:
   - "First discard is a Pair -> Pair goes up 2 levels (vanilla: 1)"

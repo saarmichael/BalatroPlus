@@ -18,6 +18,7 @@ state_transfer: []
 blueprint_compat: true
 eternal_compat: true
 perishable_compat: true
+carpenter_compat: true
 impl_notes: "context.joker_main when #G.deck.cards > 0 -> chips = extra.chips_per * #G.deck.cards (same as vanilla)."
 acceptance_tests:
   - "First hand of a 52-card deck with 8 drawn -> +3 * 44 = 132 Chips (vanilla: 2 * 44)"

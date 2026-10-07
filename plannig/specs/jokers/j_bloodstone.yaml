@@ -18,6 +18,7 @@ state_transfer: []
 blueprint_compat: true
 eternal_compat: true
 perishable_compat: true
+carpenter_compat: true
 impl_notes: "context.individual + G.play, is_suit('Hearts') and SMODS.pseudorandom_probability(card, 'bplus_fire_opal', extra.num, extra.odds) -> { xmult = extra.Xmult }. loc_vars via SMODS.get_probability_vars(card, extra.num, extra.odds, 'bplus_fire_opal')."
 acceptance_tests:
   - "With Oops! All 6s (4 in 3): play 5 Hearts -> X1.5 five times"

@@ -18,6 +18,7 @@ state_transfer: []
 blueprint_compat: true
 eternal_compat: true
 perishable_compat: true
+carpenter_compat: true
 impl_notes: "context.joker_main -> mult = pseudorandom('bplus_never_misprint', extra.min, extra.max). Vanilla description is custom UI built in card.lua (scrolling random number); mirror it or use plain text '+10 to +50 Mult'."
 acceptance_tests:
   - "Seeded run, play 10 hands -> every hand's joker Mult is between 10 and 50"

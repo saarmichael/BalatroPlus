@@ -18,6 +18,7 @@ state_transfer: []
 blueprint_compat: true
 eternal_compat: true
 perishable_compat: true
+carpenter_compat: true
 impl_notes: "context.individual + G.play, is_suit('Diamonds') -> { dollars = extra.dollars }, using dollar_buffer like vanilla."
 acceptance_tests:
   - "Play a Pair of Diamonds -> +$2 + $2 (vanilla: +$1 + $1)"

@@ -1,7 +1,5 @@
 # Implementation ticket for j_obelisk -> j_bplus_obelisk_plus.
 # Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
-# BLOCKED on Q1 (see Open questions in BALATRO_PLUS_AGENT_BRIEF.md).
-# The design is written down so it isn't forgotten. Do not implement until it is unblocked.
 vanilla_key: "j_obelisk"
 vanilla_name: "Obelisk"
 vanilla_rarity: "Rare"
@@ -16,13 +14,16 @@ plus_effect: "This Joker gains X0.4 Mult per consecutive hand played without pla
 plus_config: {"extra": {"Xmult": 1, "Xmult_mod": 0.4}}
 plus_rarity: "Rare"
 plus_cost: 8
-state_transfer: "TBD (Q1)"
+state_transfer:
+  - "x_mult -> extra.Xmult"
 blueprint_compat: true
 eternal_compat: true
 perishable_compat: false
-impl_notes: "Same as vanilla Obelisk: context.before (not blueprint): if the played hand is your most played hand (vanilla's tie rule), reset extra.Xmult to 1, else extra.Xmult += extra.Xmult_mod. Score extra.Xmult in context.joker_main when > 1. Blocked on Q1: vanilla keeps the built-up XMult in ability.x_mult; under any answer except 'reset', state_transfer will be 'x_mult -> extra.Xmult'."
+carpenter_compat: true
+impl_notes: "Same as vanilla Obelisk: context.before (not blueprint): if the played hand is your most played hand (vanilla's tie rule), reset extra.Xmult to 1, else extra.Xmult += extra.Xmult_mod. Score extra.Xmult in context.joker_main when > 1. Upgrade (growing): the built-up value carries over via state_transfer and the '+' rate applies from then on. Carpenter: plus_calculate works on the card's stored value; only the gain changes."
 acceptance_tests:
   - "Most played is Pair; play 2 Flushes -> X(1 + 0.4 * 2) = X1.8 (vanilla: X1.4)"
   - "Then play a Pair -> resets to X1"
-status: "blocked"
+  - "Obelisk at X1.5, upgrade -> Pyramid keeps X1.5, next gain +0.4: X(1.5 + 0.4)"
+status: "approved"
 art_status: "none"

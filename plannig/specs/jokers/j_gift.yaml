@@ -18,6 +18,7 @@ state_transfer: []
 blueprint_compat: false
 eternal_compat: true
 perishable_compat: true
+carpenter_compat: true
 impl_notes: "Same as vanilla Gift Card: at end of round (main_eval, not blueprint) every card in G.jokers and G.consumeables gets ability.extra_value += extra.sell_gain and set_cost()."
 acceptance_tests:
   - "Hold Bond + a Joker (sell $1) + a Tarot (sell $1), end round -> Joker sells for $1 + 2, Tarot for $1 + 2"

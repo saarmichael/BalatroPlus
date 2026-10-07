@@ -18,6 +18,7 @@ state_transfer: []
 blueprint_compat: true
 eternal_compat: true
 perishable_compat: true
+carpenter_compat: true
 impl_notes: "Same condition as vanilla: context.repetition, cardarea G.play, other_card:is_face() (Pareidolia works through is_face). Retrigger: context.repetition -> { repetitions = extra.retriggers + (bonus and 1 or 0) }, bonus = SMODS.pseudorandom_probability(card, 'bplus_melpomene_and_thalia', 1, extra.odds), rolled separately for each card. loc_vars via SMODS.get_probability_vars (Oops! All 6s makes it 2 in 2 = always)."
 acceptance_tests:
   - "With Oops! All 6s: a scored King scores 1 + 2 times"

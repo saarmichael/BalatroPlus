@@ -18,6 +18,7 @@ state_transfer: []
 blueprint_compat: true
 eternal_compat: false
 perishable_compat: true
+carpenter_compat: true
 impl_notes: "context.selling_self (not blueprint): if G.GAME.blind and G.GAME.blind.boss and a round is in progress -> G.GAME.blind:disable() like vanilla Luchador. Otherwise set G.GAME.bplus_disable_next_boss = true (saved with the run); in a global hook on context.setting_blind, when the selected blind is a Boss and the flag is set, disable it, clear the flag, and show 'Boss Blind disabled'. Lets you buy it in the shop and sell it right away. Selling two before one Boss still disables only that one Boss (flag, not counter). Name: El Santo, the most famous Mexican luchador."
 acceptance_tests:
   - "Sell during a Boss Blind -> it is disabled (same as vanilla)"

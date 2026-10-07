@@ -50,7 +50,7 @@ COLUMNS = [
     "vanilla_blueprint_compat", "vanilla_eternal_compat", "vanilla_perishable_compat",
     "upgradable", "pattern", "plus_key", "plus_name", "plus_effect", "plus_config",
     "plus_rarity", "plus_cost", "state_transfer",
-    "blueprint_compat", "eternal_compat", "perishable_compat",
+    "blueprint_compat", "eternal_compat", "perishable_compat", "carpenter_compat",
     "impl_notes", "acceptance_tests", "status", "art_status",
     "vanilla_effect_raw", "vanilla_loc_vars",
 ]

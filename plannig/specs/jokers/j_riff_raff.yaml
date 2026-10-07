@@ -18,6 +18,7 @@ state_transfer: []
 blueprint_compat: true
 eternal_compat: true
 perishable_compat: true
+carpenter_compat: true
 impl_notes: "Like vanilla Riff-Raff (context.setting_blind, not getting_sliced; create min(extra.jokers, free joker slots) using G.GAME.joker_buffer). Each created joker is a random Common joker that has a '+' version (its key is in BPlus.upgrade_map), picked with the normal pool rules (unlocked, no duplicates unless Showman/Salesman); create it and call BPlus.upgrade_card on it (fresh card, starts from its own initial values). If no such Common joker is available, create a normal Common joker instead. Depends on BPlus.upgrade_card and upgrade_map (Phase 3); the planned 'one version per joker' rule may later limit the pool."
 acceptance_tests:
   - "Select Blind with 2 free slots -> 2 Common '+' jokers created (all from upgrade_map)"

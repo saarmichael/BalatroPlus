@@ -18,6 +18,7 @@ state_transfer: []
 blueprint_compat: true
 eternal_compat: true
 perishable_compat: true
+carpenter_compat: true
 impl_notes: "Same as vanilla Mail-In Rebate: context.discard, not debuffed, other_card:get_id() == G.GAME.current_round.mail_card.id (vanilla's shared global, reset every round) -> dollars = extra.dollars."
 acceptance_tests:
   - "Listed rank is 7: discard two 7s -> +$6 + $6 (vanilla: +$5 + $5)"

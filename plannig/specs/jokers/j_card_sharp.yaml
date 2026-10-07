@@ -18,6 +18,7 @@ state_transfer: []
 blueprint_compat: true
 eternal_compat: true
 perishable_compat: true
+carpenter_compat: true
 impl_notes: "context.joker_main when G.GAME.hands[context.scoring_name].played_this_round > 1 (same as vanilla) -> xmult = extra.Xmult."
 acceptance_tests:
   - "Play a Pair, then another Pair -> second hand X4"

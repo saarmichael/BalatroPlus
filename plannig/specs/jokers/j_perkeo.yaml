@@ -18,6 +18,7 @@ state_transfer: []
 blueprint_compat: true
 eternal_compat: true
 perishable_compat: true
+carpenter_compat: true
 impl_notes: "Same as vanilla Perkeo (context.ending_shop: copy a random consumable from G.consumeables, set_edition negative). Then SMODS.pseudorandom_probability(card, 'bplus_perkeo', 1, extra.odds): on success make a second Negative copy of another random consumable you hold (picked independently, may be the same card, chosen from the cards held before this shop's copies)."
 acceptance_tests:
   - "End shop holding 1 Tarot, with Oops! All 6s -> 2 Negative copies"

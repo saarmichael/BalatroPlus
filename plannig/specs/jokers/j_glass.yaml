@@ -1,7 +1,5 @@
 # Implementation ticket for j_glass -> j_bplus_glass_plus.
 # Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
-# BLOCKED on Q1 (see Open questions in BALATRO_PLUS_AGENT_BRIEF.md).
-# The design is written down so it isn't forgotten. Do not implement until it is unblocked.
 vanilla_key: "j_glass"
 vanilla_name: "Glass Joker"
 vanilla_rarity: "Uncommon"
@@ -16,12 +14,15 @@ plus_effect: "This Joker gains X1.5 Mult for every Glass Card that is destroyed"
 plus_config: {"extra": {"Xmult": 1, "Xmult_mod": 1.5}}
 plus_rarity: "Uncommon"
 plus_cost: 6
-state_transfer: "TBD (Q1)"
+state_transfer:
+  - "x_mult -> extra.Xmult"
 blueprint_compat: true
 eternal_compat: true
 perishable_compat: false
-impl_notes: "Same as vanilla Glass Joker: context.remove_playing_cards (and the vanilla shatter path) (not blueprint), count destroyed Glass cards -> extra.Xmult += count * extra.Xmult_mod. Score extra.Xmult in context.joker_main when > 1. Blocked on Q1: vanilla keeps the built-up XMult in ability.x_mult; under any answer except 'reset', state_transfer will be 'x_mult -> extra.Xmult'."
+carpenter_compat: true
+impl_notes: "Same as vanilla Glass Joker: context.remove_playing_cards (and the vanilla shatter path) (not blueprint), count destroyed Glass cards -> extra.Xmult += count * extra.Xmult_mod. Score extra.Xmult in context.joker_main when > 1. Upgrade (growing): the built-up value carries over via state_transfer and the '+' rate applies from then on. Carpenter: plus_calculate works on the card's stored value; only the gain changes."
 acceptance_tests:
   - "2 Glass cards shatter -> X(1 + 1.5 * 2) = X4 (vanilla: X2.5)"
-status: "blocked"
+  - "Glass Joker at X1.5, upgrade -> Plexiglass Joker keeps X1.5, next gain +1.5: X(1.5 + 1.5)"
+status: "approved"
 art_status: "none"

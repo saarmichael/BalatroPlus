@@ -18,6 +18,7 @@ state_transfer: []
 blueprint_compat: true
 eternal_compat: true
 perishable_compat: true
+carpenter_compat: true
 impl_notes: "context.individual + cardarea G.play: find the first is_face() card in context.scoring_hand; if it is other_card -> xmult = extra.Xmult (same as vanilla). Retriggers of that card apply again, like vanilla."
 acceptance_tests:
   - "Score a Pair of Kings -> only the first King gives X4 (vanilla: X2)"
