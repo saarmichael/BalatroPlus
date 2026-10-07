@@ -18,6 +18,16 @@ BPlus.Joker({
         return { vars = { card.ability.extra.chip_mod, card.ability.extra.chips } }
     end,
 
+    joker_display_def = function(JokerDisplay)
+        return {
+            text = {
+                { text = '+' },
+                { ref_table = 'card.ability.extra', ref_value = 'chips', retrigger_type = 'mult' },
+            },
+            text_config = { colour = G.C.CHIPS },
+        }
+    end,
+
     calculate = function(self, card, context)
         if context.before and not context.blueprint and next(context.poker_hands['Straight']) then
             SMODS.scale_card(card, { ref_table = card.ability.extra, ref_value = 'chips', scalar_value = 'chip_mod' })

@@ -69,3 +69,15 @@ T.test('Sprinter: forced to base gains the vanilla rate and keeps its value', fu
     gain(1)
     near(T.joker('bplus_runner_plus').ability.extra.chips, 0 + 30 + 15 + 30)
 end)
+
+T.test('Sprinter JokerDisplay: +40 stored; vanilla forced to "+" shows its stored +24; "+" forced to base shows +40', function()
+    T.start_run({ jokers = { 'bplus_runner_plus', 'runner' }, ante = 3 })
+    T.joker(1).ability.extra.chips = 40   -- setup: stored value
+    T.joker(2).ability.extra.chips = 24
+    T.eq(T.joker_display('bplus_runner_plus').text, '+40')
+    T.eq(T.joker_display('runner').text, '+24')
+    T.force_behavior('runner', 'plus')
+    T.eq(T.joker_display('runner').text, '+24')
+    T.force_behavior('bplus_runner_plus', 'base')
+    T.eq(T.joker_display('bplus_runner_plus').text, '+40')
+end)
