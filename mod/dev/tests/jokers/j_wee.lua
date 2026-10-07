@@ -66,3 +66,15 @@ T.test('Wee Wee Joker: forced to base gains the vanilla rate and keeps its value
     gain(1)
     near(T.joker('bplus_wee_plus').ability.extra.chips, 0 + 16 + 8 + 16)
 end)
+
+T.test('Wee Wee Joker JokerDisplay: +40 stored; vanilla forced to "+" shows its stored +24; "+" forced to base shows +40', function()
+    T.start_run({ jokers = { 'bplus_wee_plus', 'wee' }, ante = 3 })
+    T.joker(1).ability.extra.chips = 40   -- setup: stored value
+    T.joker(2).ability.extra.chips = 24
+    T.eq(T.joker_display('bplus_wee_plus').text, '+40')
+    T.eq(T.joker_display('wee').text, '+24')
+    T.force_behavior('wee', 'plus')
+    T.eq(T.joker_display('wee').text, '+24')
+    T.force_behavior('bplus_wee_plus', 'base')
+    T.eq(T.joker_display('bplus_wee_plus').text, '+40')
+end)
