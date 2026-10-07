@@ -1,0 +1,26 @@
+local T = BPlus.test
+
+T.test('Valet Parking: with Oops! All 6s, hold 2 face cards and play -> +$3 + $3 (vanilla: +$1 + $1)', function()
+    T.start_run({ ante = 3, dollars = 0, jokers = { 'bplus_reserved_parking_plus', 'oops' } })
+    T.select_blind()
+    T.set_hand({ 'KS', 'QH', '2C', '3D', '5S' })
+    local r = T.play({ '2C' })
+    T.eq(r.dollars, 3 + 3)
+end)
+
+T.test('Valet Parking: hold no face cards -> $0', function()
+    T.start_run({ ante = 3, dollars = 0, jokers = { 'bplus_reserved_parking_plus', 'oops' } })
+    T.select_blind()
+    T.set_hand({ '4S', '7H', '2C', '3D', '5S' })
+    local r = T.play({ '2C' })
+    T.eq(r.dollars, 0)
+end)
+
+T.test('Valet Parking: vanilla Reserved Parking forced to "+" with Oops! -> $3 + $3', function()
+    T.start_run({ ante = 3, dollars = 0, jokers = { 'reserved_parking', 'oops' } })
+    T.force_behavior('reserved_parking', 'plus')
+    T.select_blind()
+    T.set_hand({ 'KS', 'QH', '2C', '3D', '5S' })
+    local r = T.play({ '2C' })
+    T.eq(r.dollars, 3 + 3)
+end)
