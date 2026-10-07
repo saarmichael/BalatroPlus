@@ -14,6 +14,16 @@ BPlus.Joker({
     blueprint_compat = true, eternal_compat = true, perishable_compat = true,
     bplus = { vanilla_key = 'j_sock_and_buskin', state_transfer = {}, carpenter_compat = true },
 
+    joker_display_def = function(JokerDisplay)
+        return {
+            retrigger_function = function(playing_card, scoring_hand, held_in_hand, joker_card)
+                if held_in_hand then return 0 end
+                return playing_card:is_face() and JokerDisplay.in_scoring(playing_card, scoring_hand)
+                    and joker_card.ability.extra.retriggers * JokerDisplay.calculate_joker_triggers(joker_card) or 0
+            end,
+        }
+    end,
+
     loc_vars = function(self, info_queue, card)
         local num, den = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, 'bplus_melpomene_and_thalia')
         return { vars = { num, den } }

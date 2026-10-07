@@ -24,3 +24,13 @@ T.test('Melpomene and Thalia: Sock and Buskin forced to "+" with Oops! All 6s ->
     local r = T.play({ 'KS' })
     T.eq(r.chips, 5 + 10 * 3)
 end)
+
+T.test('Melpomene and Thalia JokerDisplay: scored King triggers 1 + 1 times, scored 7 once', function()
+    T.start_run({ jokers = { 'bplus_sock_and_buskin_plus' }, ante = 3 })
+    T.select_blind()
+    T.set_hand({ 'KS', '7H', '4C', '5D', '2D' })
+    local k, seven = G.hand.cards[1], G.hand.cards[2]
+    T.eq(rawget(_G, 'JokerDisplay').calculate_card_triggers(k, { k, seven }, false), 1 + 1)
+    T.eq(rawget(_G, 'JokerDisplay').calculate_card_triggers(seven, { k, seven }, false), 1)
+    T.eq(T.joker_display('bplus_sock_and_buskin_plus').text, '')
+end)
