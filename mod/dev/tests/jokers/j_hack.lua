@@ -24,3 +24,16 @@ T.test('Jerry Seinfeld: Hack forced to "+" with Oops! All 6s -> a scored 2 score
     local r = T.play({ '2S' })
     T.eq(r.chips, 5 + 2 * 3)
 end)
+
+T.test('Jerry Seinfeld JokerDisplay: reminder (2,3,4,5); scored 2 triggers 1 + 1 times, scored 9 once', function()
+    T.start_run({ jokers = { 'bplus_hack_plus' }, ante = 3 })
+    T.select_blind()
+    T.set_hand({ '2S', '9H', '4C', '5D', '7D' })
+    local two, nine
+    for _, c in ipairs(G.hand.cards) do
+        if c:get_id() == 2 then two = c elseif c:get_id() == 9 then nine = c end
+    end
+    T.eq(T.joker_display('bplus_hack_plus').reminder, '(2,3,4,5)')
+    T.eq(rawget(_G, 'JokerDisplay').calculate_card_triggers(two, { two, nine }, false), 1 + 1)
+    T.eq(rawget(_G, 'JokerDisplay').calculate_card_triggers(nine, { two, nine }, false), 1)
+end)

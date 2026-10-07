@@ -14,6 +14,21 @@ BPlus.Joker({
     blueprint_compat = true, eternal_compat = true, perishable_compat = true,
     bplus = { vanilla_key = 'j_hack', state_transfer = {}, carpenter_compat = true },
 
+    joker_display_def = function(JokerDisplay)
+        return {
+            reminder_text = {
+                { text = '(2,3,4,5)' },
+            },
+            retrigger_function = function(playing_card, scoring_hand, held_in_hand, joker_card)
+                if held_in_hand then return 0 end
+                return JokerDisplay.in_scoring(playing_card, scoring_hand)
+                    and (playing_card:get_id() == 2 or playing_card:get_id() == 3
+                        or playing_card:get_id() == 4 or playing_card:get_id() == 5)
+                    and joker_card.ability.extra.retriggers * JokerDisplay.calculate_joker_triggers(joker_card) or 0
+            end,
+        }
+    end,
+
     loc_vars = function(self, info_queue, card)
         local num, den = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, 'bplus_jerry_seinfeld')
         return { vars = { num, den } }
