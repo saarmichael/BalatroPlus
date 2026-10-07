@@ -1,0 +1,26 @@
+local T = BPlus.test
+
+T.test('Melpomene and Thalia: with Oops! All 6s, a scored King scores 1 + 2 times', function()
+    T.start_run({ jokers = { 'oops', 'bplus_sock_and_buskin_plus' } })
+    T.select_blind()
+    T.set_hand({ 'KS', '9H' })
+    local r = T.play({ 'KS' })
+    T.eq(r.chips, 5 + 10 * 3)
+end)
+
+T.test('Melpomene and Thalia: a scored 7 -> no retrigger', function()
+    T.start_run({ jokers = { 'oops', 'bplus_sock_and_buskin_plus' } })
+    T.select_blind()
+    T.set_hand({ '7S', '9H' })
+    local r = T.play({ '7S' })
+    T.eq(r.chips, 5 + 7)
+end)
+
+T.test('Melpomene and Thalia: Sock and Buskin forced to "+" with Oops! All 6s -> King scores 1 + 2 times', function()
+    T.start_run({ jokers = { 'oops', 'sock_and_buskin' } })
+    T.select_blind()
+    T.force_behavior('sock_and_buskin', 'plus')
+    T.set_hand({ 'KS', '9H' })
+    local r = T.play({ 'KS' })
+    T.eq(r.chips, 5 + 10 * 3)
+end)
