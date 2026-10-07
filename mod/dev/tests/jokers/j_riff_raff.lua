@@ -35,3 +35,12 @@ T.test('Nobleman: vanilla Riff-Raff forced to "+" -> 2 Common "+" jokers', funct
     T.eq(#G.jokers.cards, 1 + 2)
     all_plus_commons()
 end)
+
+T.test('Nobleman JokerDisplay: shows nothing (vanilla definition is empty)', function()
+    T.start_run({ dollars = 6, jokers = { 'bplus_riff_raff_plus', 'riff_raff' } })
+    T.eq(T.joker_display('bplus_riff_raff_plus').text, '')
+    T.force_behavior('riff_raff', 'plus')
+    T.eq(T.joker_display('riff_raff').text, '')
+    T.force_behavior('bplus_riff_raff_plus', 'base')
+    T.eq(T.joker_display('bplus_riff_raff_plus').text, '')
+end)

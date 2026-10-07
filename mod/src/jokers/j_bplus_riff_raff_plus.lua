@@ -29,6 +29,10 @@ BPlus.Joker({
     blueprint_compat = true, eternal_compat = true, perishable_compat = true,
     bplus = { vanilla_key = 'j_riff_raff', state_transfer = {}, carpenter_compat = true },
 
+    joker_display_def = function(JokerDisplay)
+        return {}
+    end,
+
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.jokers } }
     end,
