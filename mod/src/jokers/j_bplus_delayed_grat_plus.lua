@@ -13,6 +13,23 @@ BPlus.Joker({
         return { vars = { card.ability.extra.dollars } }
     end,
 
+    joker_display_def = function(JokerDisplay)
+        return {
+            text = {
+                { text = '+$' },
+                { ref_table = 'card.joker_display_values', ref_value = 'dollars' },
+            },
+        text_config = { colour = G.C.GOLD },
+        reminder_text = {
+            { ref_table = 'card.joker_display_values', ref_value = 'localized_text' },
+        },
+            calc_function = function(card)
+                card.joker_display_values.dollars = math.max(G.GAME.current_round.discards_left, 0) * card.ability.extra.dollars
+                card.joker_display_values.localized_text = '(' .. localize('k_round') .. ')'
+            end,
+        }
+    end,
+
     calc_dollar_bonus = function(self, card)
         local left = G.GAME.current_round.discards_left
         if left > 0 then return left * card.ability.extra.dollars end
