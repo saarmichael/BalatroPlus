@@ -14,6 +14,26 @@ BPlus.Joker({
     blueprint_compat = true, eternal_compat = true, perishable_compat = true,
     bplus = { vanilla_key = 'j_seance', state_transfer = {}, carpenter_compat = true },
 
+    joker_display_def = function(JokerDisplay)
+        return {
+            text = {
+                { text = '+' },
+                { ref_table = 'card.joker_display_values', ref_value = 'count', retrigger_type = 'mult' },
+            },
+            text_config = { colour = G.C.SECONDARY_SET.Spectral },
+            reminder_text = {
+                { text = '(' },
+                { ref_table = 'card.joker_display_values', ref_value = 'localized_text', colour = G.C.ORANGE },
+                { text = ')' },
+            },
+            calc_function = function(card)
+                local text = JokerDisplay.evaluate_hand()
+                card.joker_display_values.count = text == card.ability.extra.poker_hand and 1 or 0
+                card.joker_display_values.localized_text = localize(card.ability.extra.poker_hand, 'poker_hands')
+            end,
+        }
+    end,
+
     loc_vars = function(self, info_queue, card)
         return { vars = { localize(card.ability.extra.poker_hand, 'poker_hands'), card.ability.extra.cards } }
     end,
