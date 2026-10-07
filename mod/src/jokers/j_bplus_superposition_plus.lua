@@ -14,6 +14,35 @@ BPlus.Joker({
     blueprint_compat = true, eternal_compat = true, perishable_compat = true,
     bplus = { vanilla_key = 'j_superposition', state_transfer = {}, carpenter_compat = true },
 
+    joker_display_def = function(JokerDisplay)
+        return {
+            text = {
+                { text = '+' },
+                { ref_table = 'card.joker_display_values', ref_value = 'count', retrigger_type = 'mult' },
+            },
+            text_config = { colour = G.C.SECONDARY_SET.Tarot },
+            reminder_text = {
+                { text = '(' },
+                { ref_table = 'card.joker_display_values', ref_value = 'localized_text_ace', colour = G.C.ORANGE },
+                { text = '+' },
+                { ref_table = 'card.joker_display_values', ref_value = 'localized_text_straight', colour = G.C.ORANGE },
+                { text = ')' },
+            },
+            calc_function = function(card)
+                local active = false
+                local _, poker_hands, scoring_hand = JokerDisplay.evaluate_hand()
+                if poker_hands['Straight'] and next(poker_hands['Straight']) then
+                    for _, scoring_card in pairs(scoring_hand) do
+                        if scoring_card:get_id() == 14 then active = true end
+                    end
+                end
+                card.joker_display_values.count = active and 1 or 0
+                card.joker_display_values.localized_text_straight = localize('Straight', 'poker_hands')
+                card.joker_display_values.localized_text_ace = localize('Ace', 'ranks')
+            end,
+        }
+    end,
+
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.cards } }
     end,
