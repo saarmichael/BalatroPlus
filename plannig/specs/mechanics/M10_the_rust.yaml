@@ -1,0 +1,30 @@
+# Implementation ticket for mechanic M10 The Rust (decision D13 in plannig/DECISIONS.md).
+id: "M10"
+name: "The Rust"
+kind: "boss blind (SMODS.Blind)"
+file: "mod/src/mechanics/M10_the_rust.lua"
+key: "bl_bplus_the_rust"
+numbers:
+  mult: "BPlus.balance.the_rust.mult      # 2 (normal boss)"
+  dollars: "BPlus.balance.the_rust.dollars # 5"
+  min_ante: "BPlus.balance.the_rust.min_ante # 2 (boss.min)"
+  max_ante: "BPlus.balance.the_rust.max_ante # 10 (normal boss)"
+behavior: >
+  While The Rust is the active blind (G.GAME.facing_blind) and not disabled, every joker behaves as its BASE
+  version (behaviour provider priority 200, above Carpenter at 100 and below only the test override). That includes
+  jokers made '+' by Carpenter. Permanent '+' jokers run their vanilla version; growing jokers keep their stored
+  value and only the rate changes back. Jokers with carpenter_compat = false are not affected (enforced by
+  BPlus.behavior_target). Disabling the blind (Chicot, Luchador) restores '+' behaviour immediately.
+edge_cases:
+  - "Vanilla jokers are unaffected (provider answer 'base' is ignored for non-'+' jokers)."
+  - "Carpenter-upgraded joker under The Rust behaves as base."
+  - "After the blind is defeated / outside the blind, behaviour is normal again."
+  - "Disabled (Chicot) -> '+' jokers behave as '+' again."
+  - "Shrinking jokers (carpenter_compat false) keep '+' behaviour."
+acceptance_tests:
+  - "Joker+ vs The Rust scores +4 Mult instead of +20"
+  - "Joker+ outside The Rust (same run, small blind) scores +20"
+  - "Carpenter next to a vanilla Joker under The Rust: +4, not +20"
+  - "Express Bus (Ride the Bus+) with +6 stored under The Rust keeps +6 and gains +1 instead of +2"
+  - "Chicot disables The Rust: Joker+ scores +20 again"
+  - "Shrinking '+' joker (Ice Cream+) unaffected (skipped if not yet implemented)"
