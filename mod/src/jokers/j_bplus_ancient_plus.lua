@@ -64,6 +64,43 @@ BPlus.Joker({
         return { vars = { card.ability.extra.Xmult, localize(suit, 'suits_singular') }, colours = { G.C.SUITS[suit] } }
     end,
 
+    joker_display_def = function(JokerDisplay)
+        return {
+            text = {
+                {
+                    border_nodes = {
+                        { text = 'X' },
+                        { ref_table = 'card.joker_display_values', ref_value = 'x_mult', retrigger_type = 'exp' },
+                    },
+                },
+            },
+            reminder_text = {
+                { text = '(' },
+                { ref_table = 'card.joker_display_values', ref_value = 'ur_suit' },
+                { text = ')' },
+            },
+            calc_function = function(card)
+                local suit = ur_suit()
+                local count = 0
+                local text, _, scoring_hand = JokerDisplay.evaluate_hand()
+                if text ~= 'Unknown' then
+                    for _, scoring_card in pairs(scoring_hand) do
+                        if scoring_card:is_suit(suit) then
+                            count = count + JokerDisplay.calculate_card_triggers(scoring_card, scoring_hand)
+                        end
+                    end
+                end
+                card.joker_display_values.x_mult = card.ability.extra.Xmult ^ count
+                card.joker_display_values.ur_suit = localize(suit, 'suits_plural')
+            end,
+            style_function = function(card, text, reminder_text, extra)
+                if reminder_text and reminder_text.children[2] then
+                    reminder_text.children[2].config.colour = lighten(G.C.SUITS[ur_suit()], 0.35)
+                end
+            end,
+        }
+    end,
+
     calculate = function(self, card, context)
         if context.individual and context.cardarea == G.play and context.other_card:is_suit(ur_suit()) then
             return { xmult = card.ability.extra.Xmult }
