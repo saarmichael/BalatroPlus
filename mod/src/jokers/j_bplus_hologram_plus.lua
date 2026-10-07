@@ -18,6 +18,19 @@ BPlus.Joker({
         return { vars = { card.ability.extra.Xmult_mod, card.ability.extra.Xmult } }
     end,
 
+    joker_display_def = function(JokerDisplay)
+        return {
+            text = {
+                {
+                    border_nodes = {
+                        { text = 'X' },
+                        { ref_table = 'card.ability.extra', ref_value = 'Xmult', retrigger_type = 'exp' },
+                    },
+                },
+            },
+        }
+    end,
+
     calculate = function(self, card, context)
         if context.playing_card_added and not card.getting_sliced and not context.blueprint and context.cards and context.cards[1] then
             SMODS.scale_card(card, { ref_table = card.ability.extra, ref_value = 'Xmult', scalar_value = 'Xmult_mod',
