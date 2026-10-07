@@ -13,6 +13,10 @@ BPlus.Joker({
     blueprint_compat = true, eternal_compat = false, perishable_compat = true,
     bplus = { vanilla_key = 'j_diet_cola', state_transfer = {}, carpenter_compat = true },
 
+    joker_display_def = function(JokerDisplay)
+        return {}
+    end,
+
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = { key = 'tag_double', set = 'Tag' }
         return { vars = { card.ability.extra.tags, localize { type = 'name_text', set = 'Tag', key = 'tag_double', nodes = {} } } }

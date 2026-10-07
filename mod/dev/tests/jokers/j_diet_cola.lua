@@ -19,3 +19,12 @@ T.test('Cola Zero: vanilla Diet Cola forced to "+" gives 2 Double Tags', functio
     T.sell('diet_cola')
     T.eq(double_tags(), 2)
 end)
+
+T.test('Cola Zero JokerDisplay: shows nothing (vanilla definition is empty)', function()
+    T.start_run({ dollars = 6, jokers = { 'bplus_diet_cola_plus', 'diet_cola' } })
+    T.eq(T.joker_display('bplus_diet_cola_plus').text, '')
+    T.force_behavior('diet_cola', 'plus')
+    T.eq(T.joker_display('diet_cola').text, '')
+    T.force_behavior('bplus_diet_cola_plus', 'base')
+    T.eq(T.joker_display('bplus_diet_cola_plus').text, '')
+end)
