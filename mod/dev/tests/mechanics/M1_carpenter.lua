@@ -99,3 +99,14 @@ T.test('Carpenter: the affected joker shows a "+" badge, others do not', functio
     T.contains(badges('joker'), 'bplus_plus', 'right neighbour')
     for _, b in ipairs(badges('greedy_joker')) do T.truthy(b ~= 'bplus_plus', 'no badge on others') end
 end)
+
+T.test('Carpenter JokerDisplay: (compatible) before a Joker with a "+" version, (incompatible) alone', function()
+    T.start_run({ jokers = { 'carpenter', 'joker' } })
+    T.wait_frames(3)
+    T.eq(T.joker_display('carpenter').reminder, '(compatible)')
+    T.eq(T.joker_display('joker').text, '+' .. 20)
+    T.start_run({ jokers = { 'joker', 'carpenter' } })
+    T.wait_frames(3)
+    T.eq(T.joker_display('carpenter').reminder, '(incompatible)')
+    T.eq(T.joker_display('joker').text, '+' .. 4)
+end)
