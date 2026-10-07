@@ -42,3 +42,12 @@ T.test('Chocolate Bar: Carpenter cannot switch Ice Cream (carpenter_compat false
     T.errors(function() T.force_behavior('ice_cream', 'plus') end)
     T.eq(hand().chips, 5 + 2 + 100)
 end)
+
+T.test('Chocolate Bar JokerDisplay: +150 at start, +145 after one hand', function()
+    T.start_run({ jokers = { 'bplus_ice_cream_plus' }, hands = 5, ante = 3 })
+    T.select_blind()
+    T.eq(T.joker_display('bplus_ice_cream_plus').text, '+150')
+    T.set_hand({ '2S', '3H', '7C', '5D', '9D' })
+    T.play({ '2S' })
+    T.eq(T.joker_display('bplus_ice_cream_plus').text, '+' .. (150 - 5))
+end)
