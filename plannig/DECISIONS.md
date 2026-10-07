@@ -38,6 +38,45 @@ given paths). CSV `status` columns are updated by the orchestrator in batches, n
   a test run restored it), which overwrote `profile 2/save.jkr`. If a run was in progress there, it is lost
   (no Time Machine backup was reachable). D6 makes this impossible now.
 
+## Orchestrator decisions (mechanics, settled before the batch launch)
+
+**D8. M3 Wheel of Fortune.** `SMODS.take_ownership('c_wheel_of_fortune', ...)`. Vanilla odds and "Nope!" unchanged
+(Oops! All 6s still applies). On a success, pick among the outcomes that have a valid joker (upgrade: an eligible
+joker; editions: an edition-less joker), renormalising the shares from `balance.wheel_of_fortune`, then a random
+joker valid for that outcome. `can_use` is true if either kind of joker exists. The card text is updated.
+
+**D9. M4 Apotheosis.** New Spectral, cost like Hex. `can_use` needs an eligible joker. Upgrades one random eligible
+joker (`BPlus.upgrade_card`) and destroys every other non-Eternal joker.
+
+**D10. M2 Apprentice.** Uncommon, $6, `blueprint_compat = false`, `eternal_compat = false` (like Invisible Joker).
+Counts rounds at `end_of_round` (not on blueprint/repetition contexts), active at `balance.apprentice.rounds`, shows
+the counter. Selling it while active upgrades a random eligible joker, never itself. With none eligible it shows a
+message and does nothing. No "+" version, never eligible (Q2).
+
+**D11. M9 Veteran Deck.** A `SMODS.Back`. Each joker counts rounds held in its own ability field
+(`ability.bplus_veteran_rounds`), incremented at end of round. At `balance.veteran_deck.rounds` it gets
+`BPlus.upgrade_card` if eligible (the counter is irrelevant afterwards).
+
+**D12. M1 Carpenter.** Uncommon, $8, `blueprint_compat = false`. Behaviour provider at priority 100: the joker to
+Carpenter's right behaves as 'plus' unless Carpenter is debuffed. The affected joker shows a "+" badge; Carpenter
+shows Blueprint-style compatible/incompatible text. No "+" version, never eligible.
+
+**D13. M10 The Rust.** A `SMODS.Blind` with normal boss stats, `boss.min = 2`. Behaviour provider at priority 200
+(above Carpenter): every joker behaves as 'base' while The Rust is the active, non-disabled blind (Chicot/Luchador
+disable it). Covers Carpenter-upgraded jokers too; `carpenter_compat = false` jokers are untouched (already enforced
+by `behavior_target`). Tested with Ride the Bus (growing) and Ice Cream (shrinking; rerun once B6 lands).
+
+**D14. M5-M8 shop/pack upgrades.** One shared helper, "maybe upgrade a freshly created shop/pack joker", living in
+the MC mechanics files. Shop rate = Salesman `salesman.upgrade_rate` + Craftsmanship `craftsmanship.upgrade_rate`
+(Masterwork replaces it with `masterwork.upgrade_rate`); 0 without any of them. Workshop Pack rolls 1 in
+`workshop_pack.odds` per joker via the smods probability helpers. An upgraded shop/pack joker is a FRESH "+" card
+with its starting values (no state transfer); MC may add an `opts.fresh` option to `BPlus.upgrade_card` (allowed
+shared-file edit). Price stays the base price. M7 Masterwork Tag works like Foil Tag (next eligible shop joker
+appears upgraded). M8 has Buffoon-pack sizes, prices and weights. Placeholder art (PIL-generated if needed).
+M5 Salesman is the `j_ring_master` "+" row (`j_bplus_ring_master_plus`).
+
+**D15. Not built now:** "one version per joker" enforcement (brief: later) and JokerDisplay support (separate pass).
+
 ## Questions from agents
 
 (none yet)
