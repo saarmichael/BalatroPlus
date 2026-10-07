@@ -9,6 +9,10 @@ BPlus.Joker({
     blueprint_compat = false, eternal_compat = true, perishable_compat = true,
     bplus = { vanilla_key = 'j_merry_andy', state_transfer = {}, carpenter_compat = true },
 
+    joker_display_def = function(JokerDisplay)
+        return {} -- vanilla Merry Andy shows nothing either
+    end,
+
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.d_size, card.ability.extra.h_size } }
     end,
