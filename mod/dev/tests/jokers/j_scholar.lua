@@ -1,5 +1,10 @@
 local T = BPlus.test
 
+local function jd_select(specs)
+    G.hand:unhighlight_all()
+    for _, c in ipairs(T.hand_cards(specs)) do G.hand:add_to_highlighted(c, true) end
+end
+
 T.test('Professor: 2 Aces -> +40 + 40 Chips and +10 + 10 Mult (vanilla: +20 / +4 each)', function()
     T.start_run({ jokers = { 'bplus_scholar_plus' }, ante = 3 })
     T.select_blind()
@@ -35,4 +40,19 @@ T.test('Professor: vanilla not forced keeps vanilla numbers', function()
     local r = T.play({ 'AS', 'AH' })
     T.eq(r.chips, 10 + 11 + 11 + 20 + 20)
     T.eq(r.mult, 2 + 4 + 4)
+end)
+
+T.test('Professor JokerDisplay: "+" shows the "+" numbers; vanilla forced to "+" shows them too; "+" forced to base shows vanilla numbers', function()
+    T.start_run({ ante = 4, jokers = { 'bplus_scholar_plus', 'scholar' } })
+    T.select_blind()
+    T.set_hand({ 'AS','AH','KD','QC','JC' })
+    jd_select({ 'AS','AH' })
+    local d = T.joker_display('bplus_scholar_plus')
+    T.eq(d.text, '+' .. (40 * 2) .. ' +' .. (10 * 2))
+    T.eq(d.reminder, '(Aces)')
+    T.eq(T.joker_display('scholar').text, '+' .. (20 * 2) .. ' +' .. (4 * 2))
+    T.force_behavior('scholar', 'plus')
+    T.eq(T.joker_display('scholar').text, '+' .. (40 * 2) .. ' +' .. (10 * 2))
+    T.force_behavior('bplus_scholar_plus', 'base')
+    T.eq(T.joker_display('bplus_scholar_plus').text, '+' .. (20 * 2) .. ' +' .. (4 * 2))
 end)
