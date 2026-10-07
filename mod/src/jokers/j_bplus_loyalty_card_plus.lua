@@ -27,6 +27,41 @@ BPlus.Joker({
         return { vars = { e.Xmult, e.every + 1, status } }
     end,
 
+    joker_display_def = function(JokerDisplay)
+        return {
+            text = {
+                {
+                    border_nodes = {
+                        { text = 'X' },
+                        { ref_table = 'card.joker_display_values', ref_value = 'x_mult', retrigger_type = 'exp' },
+                    },
+                },
+            },
+            reminder_text = {
+                { text = '(' },
+                { ref_table = 'card.joker_display_values', ref_value = 'loyalty_text' },
+                { text = ')' },
+            },
+            calc_function = function(card)
+                local e = card.ability.extra
+                local rem = (e.every - hands_since(card)) % (e.every + 1)
+                card.joker_display_values.is_active = rem == 0
+                card.joker_display_values.loyalty_text = localize {
+                    type = 'variable',
+                    key = (rem == 0 and 'loyalty_active' or 'loyalty_inactive'),
+                    vars = { rem },
+                }
+                card.joker_display_values.x_mult = rem == 0 and e.Xmult or 1
+            end,
+            style_function = function(card, text, reminder_text, extra)
+                if reminder_text and reminder_text.children and reminder_text.children[2] then
+                    reminder_text.children[2].config.colour = card.joker_display_values.is_active and G.C.GREEN
+                        or G.C.UI.TEXT_INACTIVE
+                end
+            end,
+        }
+    end,
+
     calculate = function(self, card, context)
         if context.joker_main then
             local e = card.ability.extra

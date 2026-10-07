@@ -59,3 +59,22 @@ T.test('Membership Card: forced to base keeps its count and triggers every 6th h
     for i = 4, 6 do mults[#mults + 1] = hand().mult end
     T.eq(mults, { 1, 1, 1 * 4 }, 'base fires when (played - created) hits 5, i.e. on hand 6')
 end)
+
+T.test('Membership Card JokerDisplay: X1 (2 remaining) -> after 2 hands X4 (Active!); vanilla forced to "+" matches; "+" forced to base shows vanilla', function()
+    start({ 'bplus_loyalty_card_plus', 'loyalty_card' })
+    local d = T.joker_display('bplus_loyalty_card_plus')
+    T.eq(d.text, 'X1')
+    T.eq(d.reminder, '(2 remaining)')
+    T.eq(T.joker_display('loyalty_card').reminder, '(5 remaining)')
+    hand(); hand()
+    d = T.joker_display('bplus_loyalty_card_plus')
+    T.eq(d.text, 'X4')
+    T.eq(d.reminder, '(Active!)')
+    T.force_behavior('loyalty_card', 'plus')
+    d = T.joker_display('loyalty_card')
+    T.eq(d.text, 'X4')
+    T.eq(d.reminder, '(Active!)')
+    T.force_behavior('bplus_loyalty_card_plus', 'base')
+    d = T.joker_display('bplus_loyalty_card_plus')
+    T.eq(d.text, 'X1') -- vanilla's own loyalty_remaining counter is only refreshed by vanilla code, so no reminder check
+end)
