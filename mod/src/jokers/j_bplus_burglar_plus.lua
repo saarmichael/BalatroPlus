@@ -13,6 +13,10 @@ BPlus.Joker({
     blueprint_compat = true, eternal_compat = true, perishable_compat = true,
     bplus = { vanilla_key = 'j_burglar', state_transfer = {}, carpenter_compat = true },
 
+    joker_display_def = function(JokerDisplay)
+        return {} -- vanilla Burglar shows nothing either
+    end,
+
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.hands } }
     end,

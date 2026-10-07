@@ -30,3 +30,12 @@ T.test('Cat Burglar: forced to base (The Rust case) -> 4 + 3 = 7 hands, 0 discar
     T.eq(G.GAME.current_round.hands_left, 4 + 3)
     T.eq(G.GAME.current_round.discards_left, 0)
 end)
+
+T.test('Cat Burglar JokerDisplay: shows nothing, like vanilla (also forced to base / plus)', function()
+    T.start_run({ jokers = { 'bplus_burglar_plus', 'burglar' } })
+    T.eq(T.joker_display('bplus_burglar_plus').text, '')
+    T.force_behavior('burglar', 'plus')
+    T.eq(T.joker_display('burglar').text, '')
+    T.force_behavior('bplus_burglar_plus', 'base')
+    T.eq(T.joker_display('bplus_burglar_plus').text, '')
+end)
