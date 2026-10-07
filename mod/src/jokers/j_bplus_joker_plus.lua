@@ -13,6 +13,16 @@ BPlus.Joker({
         return { vars = { card.ability.extra.mult } }
     end,
 
+    joker_display_def = function(JokerDisplay)
+        return {
+            text = {
+                { text = '+' },
+                { ref_table = 'card.ability.extra', ref_value = 'mult', retrigger_type = 'mult' },
+            },
+            text_config = { colour = G.C.MULT },
+        }
+    end,
+
     calculate = function(self, card, context)
         if context.joker_main then
             return { mult = card.ability.extra.mult }
