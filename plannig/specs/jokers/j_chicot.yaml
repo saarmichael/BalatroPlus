@@ -1,0 +1,26 @@
+# Implementation ticket for j_chicot -> j_bplus_chicot_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_chicot"
+vanilla_name: "Chicot"
+vanilla_rarity: "Legendary"
+vanilla_cost: 20
+archetype: "Legendary"
+vanilla_effect: "Disables effect of every Boss Blind"
+vanilla_config: {}
+pattern: "Second effect"
+plus_key: "j_bplus_chicot_plus"
+plus_name: "Chicot+"
+plus_effect: "Disables effect of every Boss Blind. All Blinds require 25% fewer chips"
+plus_config: {"extra": {"blind_reduction": 0.25}}
+plus_rarity: "Legendary"
+plus_cost: 20
+state_transfer: []
+blueprint_compat: false
+eternal_compat: true
+perishable_compat: true
+impl_notes: "Boss part: same as vanilla Chicot (context.setting_blind, boss -> G.GAME.blind:disable()). New part: context.setting_blind (not blueprint), any blind: G.GAME.blind.chips = floor(G.GAME.blind.chips * (1 - extra.blind_reduction)), then update G.GAME.blind.chip_text (number_format) so the UI shows it. Applied once per blind per Chicot+ (stacks multiplicatively if somehow two are held)."
+acceptance_tests:
+  - "Small Blind needing 300 -> needs 300 * 0.75 = 225"
+  - "Boss Blind: ability disabled and required chips * 0.75"
+status: "approved"
+art_status: "none"

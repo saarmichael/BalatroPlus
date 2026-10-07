@@ -1,0 +1,27 @@
+# Implementation ticket for j_order -> j_bplus_order_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_order"
+vanilla_name: "The Order"
+vanilla_rarity: "Rare"
+vanilla_cost: 8
+archetype: "Hand-type-conditional"
+vanilla_effect: "X3 Mult if played hand contains a Straight"
+vanilla_config: {"Xmult": 3, "type": "Straight"}
+pattern: "Bigger number"
+plus_key: "j_bplus_order_plus"
+plus_name: "The New Order"
+plus_effect: "X4 Mult if played hand contains a Straight"
+plus_config: {"extra": {"Xmult": 4, "type": "Straight"}}
+plus_rarity: "Rare"
+plus_cost: 8
+state_transfer: []
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "context.joker_main and next(context.poker_hands[extra.type]) -> { xmult = extra.Xmult }. Same 'contains' rule as vanilla. Vanilla keeps its value in ability.t_mult/t_chips/x_mult; ours lives in extra."
+acceptance_tests:
+  - "Play a Straight -> X4 Mult (vanilla: X3 Mult)"
+  - "Play a Straight Flush (contains a Straight) -> X4 Mult"
+  - "Play a High Card -> no effect"
+status: "approved"
+art_status: "none"

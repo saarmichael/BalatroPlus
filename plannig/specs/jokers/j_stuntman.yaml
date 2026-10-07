@@ -1,0 +1,27 @@
+# Implementation ticket for j_stuntman -> j_bplus_stuntman_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_stuntman"
+vanilla_name: "Stuntman"
+vanilla_rarity: "Rare"
+vanilla_cost: 7
+archetype: "Flat Chips"
+vanilla_effect: "+250 Chips, -2 hand size"
+vanilla_config: {"extra": {"h_size": 2, "chip_mod": 250}}
+pattern: "Bigger number + Smaller downside"
+plus_key: "j_bplus_stuntman_plus"
+plus_name: "Daredevil"
+plus_effect: "+350 Chips, -1 hand size"
+plus_config: {"extra": {"chips": 350, "h_size": 1}}
+plus_rarity: "Rare"
+plus_cost: 7
+state_transfer: []
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "context.joker_main -> chips = extra.chips. add_to_deck: G.hand:change_size(-extra.h_size); remove_from_deck: +extra.h_size. On upgrade set_ability runs remove_from_deck on Stuntman (+2) then add_to_deck on Daredevil (-1), so hand size ends at base - 1."
+acceptance_tests:
+  - "Play any hand -> +350 Chips (vanilla: +250)"
+  - "Hand size is 8 - 1 = 7 (vanilla: 8 - 2 = 6)"
+  - "Upgrade Stuntman -> hand size goes from 6 to 7"
+status: "approved"
+art_status: "none"

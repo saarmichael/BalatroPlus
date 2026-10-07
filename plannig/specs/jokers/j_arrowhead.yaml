@@ -1,0 +1,25 @@
+# Implementation ticket for j_arrowhead -> j_bplus_arrowhead_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_arrowhead"
+vanilla_name: "Arrowhead"
+vanilla_rarity: "Uncommon"
+vanilla_cost: 7
+archetype: "Suit-conditional"
+vanilla_effect: "Played cards with Spade suit give +50 Chips when scored"
+vanilla_config: {"extra": 50}
+pattern: "Bigger number"
+plus_key: "j_bplus_arrowhead_plus"
+plus_name: "Spearhead"
+plus_effect: "Played cards with Spade suit give +80 Chips when scored"
+plus_config: {"extra": {"chips": 80}}
+plus_rarity: "Uncommon"
+plus_cost: 7
+state_transfer: []
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "context.individual + G.play, is_suit('Spades') -> { chips = extra.chips }."
+acceptance_tests:
+  - "Play a Pair of Spades -> joker adds +80 + 80 Chips (vanilla: +50 + 50)"
+status: "approved"
+art_status: "none"

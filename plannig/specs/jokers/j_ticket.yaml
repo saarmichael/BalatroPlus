@@ -1,0 +1,25 @@
+# Implementation ticket for j_ticket -> j_bplus_ticket_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_ticket"
+vanilla_name: "Golden Ticket"
+vanilla_rarity: "Common"
+vanilla_cost: 5
+archetype: "Economy"
+vanilla_effect: "Played Gold cards earn $4 when scored"
+vanilla_config: {"extra": 4}
+pattern: "Bigger number"
+plus_key: "j_bplus_ticket_plus"
+plus_name: "Goldbars"
+plus_effect: "Played Gold cards earn $5 when scored"
+plus_config: {"extra": {"dollars": 5}}
+plus_rarity: "Common"
+plus_cost: 5
+state_transfer: []
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "Same as vanilla Golden Ticket: context.individual + G.play, other_card is Gold (config.center == G.P_CENTERS.m_gold) -> dollars = extra.dollars (with dollar_buffer)."
+acceptance_tests:
+  - "Score 2 Gold cards -> +$5 + $5 (vanilla: +$4 + $4)"
+status: "approved"
+art_status: "none"

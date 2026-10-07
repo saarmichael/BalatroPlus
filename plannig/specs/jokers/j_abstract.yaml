@@ -1,0 +1,26 @@
+# Implementation ticket for j_abstract -> j_bplus_abstract_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_abstract"
+vanilla_name: "Abstract Joker"
+vanilla_rarity: "Common"
+vanilla_cost: 4
+archetype: "Flat Mult"
+vanilla_effect: "+3 Mult for each Joker card (Currently +0 Mult)"
+vanilla_config: {"extra": 3}
+pattern: "Bigger number"
+plus_key: "j_bplus_abstract_plus"
+plus_name: "Abstract Abstract Joker"
+plus_effect: "+10 Mult for each Joker card"
+plus_config: {"extra": {"mult": 10}}
+plus_rarity: "Common"
+plus_cost: 4
+state_transfer: []
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "context.joker_main -> #G.jokers.cards * extra.mult (counts itself, same as vanilla). loc_vars shows Currently value."
+acceptance_tests:
+  - "3 jokers incl. this one -> +10 * 3 = 30 Mult"
+  - "Alone -> +10 * 1 = 10 Mult"
+status: "approved"
+art_status: "none"

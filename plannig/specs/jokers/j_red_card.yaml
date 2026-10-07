@@ -1,0 +1,27 @@
+# Implementation ticket for j_red_card -> j_bplus_red_card_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+# BLOCKED on Q1 (see Open questions in BALATRO_PLUS_AGENT_BRIEF.md).
+# The design is written down so it isn't forgotten. Do not implement until it is unblocked.
+vanilla_key: "j_red_card"
+vanilla_name: "Red Card"
+vanilla_rarity: "Common"
+vanilla_cost: 5
+archetype: "Scaling Mult"
+vanilla_effect: "This Joker gains +3 Mult when any Booster Pack is skipped (Currently +0 Mult)"
+vanilla_config: {"extra": 3}
+pattern: "Faster scaling"
+plus_key: "j_bplus_red_card_plus"
+plus_name: "Crimson Card"
+plus_effect: "This Joker gains +5 Mult when any Booster Pack is skipped"
+plus_config: {"extra": {"mult_gain": 5, "mult": 0}}
+plus_rarity: "Common"
+plus_cost: 5
+state_transfer: "TBD (Q1)"
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: false
+impl_notes: "Same as vanilla: context.skipping_booster (not blueprint) -> extra.mult += extra.mult_gain. Score in context.joker_main. Blocked on Q1: what happens to the Mult the vanilla joker built up. Vanilla keeps it in ability.mult; under any answer except 'reset', state_transfer will be 'mult -> extra.mult'."
+acceptance_tests:
+  - "Skip 2 Booster Packs -> +5 + 5 = 10 Mult (vanilla: 3 + 3)"
+status: "blocked"
+art_status: "none"

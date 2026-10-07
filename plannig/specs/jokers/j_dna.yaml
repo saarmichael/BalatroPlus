@@ -1,0 +1,27 @@
+# Implementation ticket for j_dna -> j_bplus_dna_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_dna"
+vanilla_name: "DNA"
+vanilla_rarity: "Rare"
+vanilla_cost: 8
+archetype: "Deck manipulation"
+vanilla_effect: "If first hand of round has only 1 card, add a permanent copy to deck and draw it to hand"
+vanilla_config: {}
+pattern: "Bigger number"
+plus_key: "j_bplus_dna_plus"
+plus_name: "Mitosis"
+plus_effect: "If first hand of round has only 1 card, add 2 permanent copies to deck and draw them to hand"
+plus_config: {"extra": {"copies": 2}}
+plus_rarity: "Rare"
+plus_cost: 8
+state_transfer: []
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "Same as vanilla DNA (context.before, G.GAME.current_round.hands_played == 0 and #context.full_hand == 1), done extra.copies times: copy_card, add_to_deck, raise G.deck.config.card_limit, insert into G.playing_cards, emplace in G.hand; return playing_cards_created so Hologram etc. trigger. Juice until the first hand is played (context.first_hand_drawn), like vanilla."
+acceptance_tests:
+  - "First hand is a single King -> 2 Kings added to deck and to hand (deck 52 + 2 = 54)"
+  - "First hand has 2 cards -> no copies"
+  - "Second hand of the round is a single card -> no copies"
+status: "approved"
+art_status: "none"

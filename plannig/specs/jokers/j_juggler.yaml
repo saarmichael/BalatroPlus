@@ -1,0 +1,27 @@
+# Implementation ticket for j_juggler -> j_bplus_juggler_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_juggler"
+vanilla_name: "Juggler"
+vanilla_rarity: "Common"
+vanilla_cost: 4
+archetype: "Hands & discards"
+vanilla_effect: "+1 hand size"
+vanilla_config: {"h_size": 1}
+pattern: "Bigger number"
+plus_key: "j_bplus_juggler_plus"
+plus_name: "Knife Juggler"
+plus_effect: "+2 hand size"
+plus_config: {"extra": {"h_size": 2}}
+plus_rarity: "Common"
+plus_cost: 4
+state_transfer: []
+blueprint_compat: false
+eternal_compat: true
+perishable_compat: true
+impl_notes: "add_to_deck: G.hand:change_size(extra.h_size); remove_from_deck: the reverse. Keep the numbers in extra and apply them in add_to_deck / remove_from_deck by hand (like Daredevil), not via vanilla's top-level ability.h_size / d_size. On upgrade set_ability runs remove_from_deck on the vanilla joker, then add_to_deck on the new one, so only the difference stays applied."
+acceptance_tests:
+  - "Hand size 8 + 2 = 10 (vanilla: 8 + 1)"
+  - "Sell it -> hand size back to 8"
+  - "Upgrade Juggler -> hand size goes from 9 to 10"
+status: "approved"
+art_status: "none"

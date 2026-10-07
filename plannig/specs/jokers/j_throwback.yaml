@@ -1,0 +1,26 @@
+# Implementation ticket for j_throwback -> j_bplus_throwback_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_throwback"
+vanilla_name: "Throwback"
+vanilla_rarity: "Uncommon"
+vanilla_cost: 6
+archetype: "Scaling xMult"
+vanilla_effect: "X0.25 Mult for each Blind skipped this run (Currently X1 Mult)"
+vanilla_config: {"extra": 0.25}
+pattern: "Bigger number"
+plus_key: "j_bplus_throwback_plus"
+plus_name: "Nostalgic Joker"
+plus_effect: "X1 Mult for each Blind skipped this run"
+plus_config: {"extra": {"Xmult_per": 1}}
+plus_rarity: "Uncommon"
+plus_cost: 6
+state_transfer: []
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "context.joker_main when G.GAME.skips > 0 -> xmult = 1 + extra.Xmult_per * G.GAME.skips (same as vanilla Throwback). Reads a run-wide count, nothing stored on the card, so not blocked on Q1. Show the 'skip' message on context.skip_blind like vanilla."
+acceptance_tests:
+  - "Skipped 2 Blinds this run -> X(1 + 1 * 2) = X3 (vanilla: X1.5)"
+  - "No skips -> no effect"
+status: "approved"
+art_status: "none"

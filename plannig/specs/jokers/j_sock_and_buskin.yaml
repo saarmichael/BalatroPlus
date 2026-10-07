@@ -1,0 +1,26 @@
+# Implementation ticket for j_sock_and_buskin -> j_bplus_sock_and_buskin_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_sock_and_buskin"
+vanilla_name: "Sock and Buskin"
+vanilla_rarity: "Uncommon"
+vanilla_cost: 6
+archetype: "Retrigger"
+vanilla_effect: "Retrigger all played face cards"
+vanilla_config: {"extra": 1}
+pattern: "Extra retrigger (chance)"
+plus_key: "j_bplus_sock_and_buskin_plus"
+plus_name: "Melpomene and Thalia"
+plus_effect: "Retrigger all played face cards, with a 1 in 2 chance to retrigger them again"
+plus_config: {"extra": {"retriggers": 1, "odds": 2}}
+plus_rarity: "Uncommon"
+plus_cost: 6
+state_transfer: []
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "Same condition as vanilla: context.repetition, cardarea G.play, other_card:is_face() (Pareidolia works through is_face). Retrigger: context.repetition -> { repetitions = extra.retriggers + (bonus and 1 or 0) }, bonus = SMODS.pseudorandom_probability(card, 'bplus_melpomene_and_thalia', 1, extra.odds), rolled separately for each card. loc_vars via SMODS.get_probability_vars (Oops! All 6s makes it 2 in 2 = always)."
+acceptance_tests:
+  - "With Oops! All 6s: a scored King scores 1 + 2 times"
+  - "A scored 7 -> no retrigger"
+status: "approved"
+art_status: "none"

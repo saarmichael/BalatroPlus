@@ -1,0 +1,26 @@
+# Implementation ticket for j_business -> j_bplus_business_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_business"
+vanilla_name: "Business Card"
+vanilla_rarity: "Common"
+vanilla_cost: 4
+archetype: "Probability"
+vanilla_effect: "Played face cards have a 1 in 2 chance to give $2 when scored"
+vanilla_config: {"extra": 2}
+pattern: "Bigger number"
+plus_key: "j_bplus_business_plus"
+plus_name: "Executive Card"
+plus_effect: "Played face cards have a 1 in 2 chance to give $3 when scored"
+plus_config: {"extra": {"odds": 2, "dollars": 3}}
+plus_rarity: "Common"
+plus_cost: 4
+state_transfer: []
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "Same as vanilla Business Card: context.individual + G.play, other_card:is_face(), SMODS.pseudorandom_probability(card, 'bplus_executive_card', 1, extra.odds) -> dollars = extra.dollars (with dollar_buffer)."
+acceptance_tests:
+  - "With Oops! All 6s: score 2 face cards -> +$3 + $3 (vanilla: +$2 + $2)"
+  - "Score a 7 -> $0"
+status: "approved"
+art_status: "none"

@@ -1,0 +1,28 @@
+# Implementation ticket for j_selzer -> j_bplus_selzer_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_selzer"
+vanilla_name: "Seltzer"
+vanilla_rarity: "Uncommon"
+vanilla_cost: 6
+archetype: "Retrigger"
+vanilla_effect: "Retrigger all cards played for the next 10 hands"
+vanilla_config: {"extra": 10}
+pattern: "Extra retrigger (chance)"
+plus_key: "j_bplus_selzer_plus"
+plus_name: "Fizzy Bubbelech"
+plus_effect: "Retrigger all cards played for the next 10 hands, with a 1 in 2 chance to retrigger them again"
+plus_config: {"extra": {"retriggers": 1, "odds": 2, "hands_left": 10}}
+plus_rarity: "Uncommon"
+plus_cost: 6
+state_transfer:
+  - "extra -> extra.hands_left"
+blueprint_compat: true
+eternal_compat: false
+perishable_compat: true
+impl_notes: "Same as vanilla Seltzer: context.repetition, cardarea G.play, every scored card. In context.after (not blueprint) count extra.hands_left down; at 0 the card is destroyed with the 'Drank!' message. Retrigger: context.repetition -> { repetitions = extra.retriggers + (bonus and 1 or 0) }, bonus = SMODS.pseudorandom_probability(card, 'bplus_fizzy_bubbelech', 1, extra.odds), rolled separately for each card. loc_vars via SMODS.get_probability_vars (Oops! All 6s makes it 2 in 2 = always). Vanilla stores the hands left as the bare ability.extra number; state_transfer copies it into extra.hands_left. Vanilla key is spelled 'selzer'; plus key follows it."
+acceptance_tests:
+  - "With Oops! All 6s: each scored card scores 1 + 2 times"
+  - "After 10 hands the card is destroyed"
+  - "Seltzer with 4 hands left, upgrade -> Fizzy Bubbelech has 4 hands left"
+status: "approved"
+art_status: "none"

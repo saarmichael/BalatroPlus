@@ -1,0 +1,27 @@
+# Implementation ticket for j_clever -> j_bplus_clever_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_clever"
+vanilla_name: "Clever Joker"
+vanilla_rarity: "Common"
+vanilla_cost: 4
+archetype: "Hand-type-conditional"
+vanilla_effect: "+80 Chips if played hand contains a Two Pair"
+vanilla_config: {"t_chips": 80, "type": "Two Pair"}
+pattern: "Bigger number"
+plus_key: "j_bplus_clever_plus"
+plus_name: "Brainy Joker"
+plus_effect: "+140 Chips if played hand contains a Two Pair"
+plus_config: {"extra": {"t_chips": 140, "type": "Two Pair"}}
+plus_rarity: "Common"
+plus_cost: 4
+state_transfer: []
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "context.joker_main and next(context.poker_hands[extra.type]) -> { chips = extra.t_chips }. Same 'contains' rule as vanilla. Vanilla keeps its value in ability.t_mult/t_chips/x_mult; ours lives in extra."
+acceptance_tests:
+  - "Play a Two Pair -> +140 Chips (vanilla: +80 Chips)"
+  - "Play a Full House (contains a Two Pair) -> +140 Chips"
+  - "Play a Pair -> no effect"
+status: "approved"
+art_status: "none"

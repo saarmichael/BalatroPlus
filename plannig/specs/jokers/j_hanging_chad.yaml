@@ -1,0 +1,25 @@
+# Implementation ticket for j_hanging_chad -> j_bplus_hanging_chad_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_hanging_chad"
+vanilla_name: "Hanging Chad"
+vanilla_rarity: "Common"
+vanilla_cost: 4
+archetype: "Retrigger"
+vanilla_effect: "Retrigger first played card used in scoring 2 additional times"
+vanilla_config: {"extra": 2}
+pattern: "Extra retrigger"
+plus_key: "j_bplus_hanging_chad_plus"
+plus_name: "Defibrillator"
+plus_effect: "Retrigger first played card used in scoring 3 additional times"
+plus_config: {"extra": {"retriggers": 3}}
+plus_rarity: "Common"
+plus_cost: 4
+state_transfer: []
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "Same as vanilla: context.repetition, cardarea G.play, other_card == context.scoring_hand[1] -> { repetitions = extra.retriggers }."
+acceptance_tests:
+  - "Play a Pair -> first scored card scores 1 + 3 = 4 times (vanilla: 1 + 2 = 3), second card once"
+status: "approved"
+art_status: "none"

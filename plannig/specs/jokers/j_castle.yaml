@@ -1,0 +1,28 @@
+# Implementation ticket for j_castle -> j_bplus_castle_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+# BLOCKED on Q1 (see Open questions in BALATRO_PLUS_AGENT_BRIEF.md).
+# The design is written down so it isn't forgotten. Do not implement until it is unblocked.
+vanilla_key: "j_castle"
+vanilla_name: "Castle"
+vanilla_rarity: "Uncommon"
+vanilla_cost: 6
+archetype: "Scaling Chips"
+vanilla_effect: "This Joker gains +3 Chips per discarded <?> card, suit changes every round (Currently +0 Chips)"
+vanilla_config: {"extra": {"chips": 0, "chip_mod": 3}}
+pattern: "Faster scaling"
+plus_key: "j_bplus_castle_plus"
+plus_name: "Citadel"
+plus_effect: "This Joker gains +6 Chips per discarded card of the listed suit, suit changes every round"
+plus_config: {"extra": {"chips": 0, "chip_mod": 6}}
+plus_rarity: "Uncommon"
+plus_cost: 6
+state_transfer: "TBD (Q1)"
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: false
+impl_notes: "Same as vanilla Castle: context.discard (not blueprint), not debuffed, other_card:is_suit(G.GAME.current_round.castle_card.suit) (vanilla's shared global, reset every round) -> extra.chips += extra.chip_mod. Score extra.chips in context.joker_main when > 0. Blocked on Q1: vanilla keeps the built-up Chips in ability.extra.chips, which the upgrade replaces with the new config, so it resets to 0 unless Q1 says to carry or recompute it."
+acceptance_tests:
+  - "Listed suit Hearts: discard 3 Hearts -> +6 * 3 = 18 Chips (vanilla: 3 * 3)"
+  - "Discard other suits -> no gain"
+status: "blocked"
+art_status: "none"

@@ -1,0 +1,26 @@
+# Implementation ticket for j_seance -> j_bplus_seance_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_seance"
+vanilla_name: "Séance"
+vanilla_rarity: "Uncommon"
+vanilla_cost: 6
+archetype: "Card generation"
+vanilla_effect: "If poker hand is a Straight Flush, create a random Spectral card (Must have room)"
+vanilla_config: {"extra": {"poker_hand": "Straight Flush"}}
+pattern: "Bigger number"
+plus_key: "j_bplus_seance_plus"
+plus_name: "Spirit Board"
+plus_effect: "If poker hand is a Straight Flush, create 2 random Spectral cards (Must have room)"
+plus_config: {"extra": {"poker_hand": "Straight Flush", "cards": 2}}
+plus_rarity: "Uncommon"
+plus_cost: 6
+state_transfer: []
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "Same condition as vanilla Seance (context.joker_main, next(context.poker_hands[extra.poker_hand]) - so a Royal Flush counts); create Spectral cards (seed 'bplus_spirit_board'). Room: create min(extra.cards, free consumable slots) cards, where free = card_limit - (#G.consumeables.cards + G.GAME.consumeable_buffer), using consumeable_buffer like vanilla (same pattern as vanilla Riff-Raff uses for jokers). Nothing if no free slot."
+acceptance_tests:
+  - "Play a Straight Flush with 2 free slots -> 2 Spectral cards (vanilla: 1)"
+  - "Play a Flush -> nothing"
+status: "approved"
+art_status: "none"

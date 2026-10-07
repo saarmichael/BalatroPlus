@@ -1,0 +1,27 @@
+# Implementation ticket for j_dusk -> j_bplus_dusk_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_dusk"
+vanilla_name: "Dusk"
+vanilla_rarity: "Uncommon"
+vanilla_cost: 5
+archetype: "Retrigger"
+vanilla_effect: "Retrigger all played cards in final hand of round"
+vanilla_config: {"extra": 1}
+pattern: "Extra retrigger (chance)"
+plus_key: "j_bplus_dusk_plus"
+plus_name: "Twilight"
+plus_effect: "Retrigger all played cards in final hand of round, with a 1 in 2 chance to retrigger them again"
+plus_config: {"extra": {"retriggers": 1, "odds": 2}}
+plus_rarity: "Uncommon"
+plus_cost: 5
+state_transfer: []
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "Same condition as vanilla: context.repetition, cardarea G.play, G.GAME.current_round.hands_left == 0. Retrigger: context.repetition -> { repetitions = extra.retriggers + (bonus and 1 or 0) }, bonus = SMODS.pseudorandom_probability(card, 'bplus_twilight', 1, extra.odds), rolled separately for each card. loc_vars via SMODS.get_probability_vars (Oops! All 6s makes it 2 in 2 = always)."
+acceptance_tests:
+  - "With Oops! All 6s: final hand, each scored card scores 1 + 2 times"
+  - "Hand with hands left -> no retrigger"
+  - "Without Oops!: seeded final hand of 5 cards -> each card retriggered 1 or 2 times, both seen"
+status: "approved"
+art_status: "none"

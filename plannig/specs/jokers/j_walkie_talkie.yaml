@@ -1,0 +1,27 @@
+# Implementation ticket for j_walkie_talkie -> j_bplus_walkie_talkie_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_walkie_talkie"
+vanilla_name: "Walkie Talkie"
+vanilla_rarity: "Common"
+vanilla_cost: 4
+archetype: "Rank-conditional"
+vanilla_effect: "Each played 10 or 4 gives +10 Chips and +4 Mult when scored"
+vanilla_config: {"extra": {"chips": 10, "mult": 4}}
+pattern: "Bigger number"
+plus_key: "j_bplus_walkie_talkie_plus"
+plus_name: "Ham Radio"
+plus_effect: "Each played 10 gives +100 Chips and +4 Mult, each played 4 gives +10 Chips and +40 Mult when scored"
+plus_config: {"extra": {"ten_chips": 100, "ten_mult": 4, "four_chips": 10, "four_mult": 40}}
+plus_rarity: "Common"
+plus_cost: 4
+state_transfer: []
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "context.individual + cardarea G.play: get_id() == 10 -> { chips = extra.ten_chips, mult = extra.ten_mult }; get_id() == 4 -> { chips = extra.four_chips, mult = extra.four_mult }."
+acceptance_tests:
+  - "Score a 10 -> +100 Chips and +4 Mult (vanilla: +10 Chips, +4 Mult)"
+  - "Score a 4 -> +10 Chips and +40 Mult (vanilla: +10 Chips, +4 Mult)"
+  - "Score a 7 -> no effect"
+status: "approved"
+art_status: "none"

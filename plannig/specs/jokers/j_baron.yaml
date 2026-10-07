@@ -1,0 +1,26 @@
+# Implementation ticket for j_baron -> j_bplus_baron_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_baron"
+vanilla_name: "Baron"
+vanilla_rarity: "Rare"
+vanilla_cost: 8
+archetype: "Rank-conditional"
+vanilla_effect: "Each King held in hand gives X1.5 Mult"
+vanilla_config: {"extra": 1.5}
+pattern: "Bigger number"
+plus_key: "j_bplus_baron_plus"
+plus_name: "Duke"
+plus_effect: "Each King held in hand gives X2 Mult"
+plus_config: {"extra": {"Xmult": 2}}
+plus_rarity: "Rare"
+plus_cost: 8
+state_transfer: []
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "Same as vanilla Baron: context.individual + cardarea G.hand (not end_of_round), get_id() == 13, debuffed -> 'Debuffed' message, else x_mult = extra.Xmult. Held-in-hand effect, so Mime retriggers it."
+acceptance_tests:
+  - "Hold 2 Kings -> X2 * X2 (vanilla: X1.5 * X1.5)"
+  - "Hold no Kings -> no effect"
+status: "approved"
+art_status: "none"

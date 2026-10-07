@@ -1,0 +1,26 @@
+# Implementation ticket for j_idol -> j_bplus_idol_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_idol"
+vanilla_name: "The Idol"
+vanilla_rarity: "Uncommon"
+vanilla_cost: 6
+archetype: "xMult"
+vanilla_effect: "Each played <?> of <?> gives X2 Mult when scored Card changes every round"
+vanilla_config: {"extra": 2}
+pattern: "Relax condition"
+plus_key: "j_bplus_idol_plus"
+plus_name: "The Deity"
+plus_effect: "Each played card of the chosen rank gives X2 Mult when scored. Rank changes every round"
+plus_config: {"extra": {"Xmult": 2}}
+plus_rarity: "Uncommon"
+plus_cost: 6
+state_transfer: []
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "Reuse vanilla's G.GAME.current_round.idol_card (vanilla resets it every round whether or not The Idol is held, picking a random non-Stone card from the deck). Match rank only: context.individual + G.play, other_card:get_id() == idol_card.id -> xmult = extra.Xmult. Description shows the rank only."
+acceptance_tests:
+  - "Chosen card is a 7: play a Pair of 7s in two suits -> X2 * X2"
+  - "Play a different rank -> no effect"
+status: "approved"
+art_status: "none"

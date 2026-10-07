@@ -1,0 +1,25 @@
+# Implementation ticket for j_blue_joker -> j_bplus_blue_joker_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_blue_joker"
+vanilla_name: "Blue Joker"
+vanilla_rarity: "Common"
+vanilla_cost: 5
+archetype: "Flat Chips"
+vanilla_effect: "+2 Chips for each remaining card in deck (Currently +104 Chips)"
+vanilla_config: {"extra": 2}
+pattern: "Bigger number"
+plus_key: "j_bplus_blue_joker_plus"
+plus_name: "Deep Blue"
+plus_effect: "+3 Chips for each remaining card in deck"
+plus_config: {"extra": {"chips_per": 3}}
+plus_rarity: "Common"
+plus_cost: 5
+state_transfer: []
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "context.joker_main when #G.deck.cards > 0 -> chips = extra.chips_per * #G.deck.cards (same as vanilla)."
+acceptance_tests:
+  - "First hand of a 52-card deck with 8 drawn -> +3 * 44 = 132 Chips (vanilla: 2 * 44)"
+status: "approved"
+art_status: "none"

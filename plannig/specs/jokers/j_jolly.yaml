@@ -1,0 +1,27 @@
+# Implementation ticket for j_jolly -> j_bplus_jolly_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_jolly"
+vanilla_name: "Jolly Joker"
+vanilla_rarity: "Common"
+vanilla_cost: 3
+archetype: "Hand-type-conditional"
+vanilla_effect: "+8 Mult if played hand contains a Pair"
+vanilla_config: {"t_mult": 8, "type": "Pair"}
+pattern: "Bigger number"
+plus_key: "j_bplus_jolly_plus"
+plus_name: "Merry Joker"
+plus_effect: "+20 Mult if played hand contains a Pair"
+plus_config: {"extra": {"t_mult": 20, "type": "Pair"}}
+plus_rarity: "Common"
+plus_cost: 3
+state_transfer: []
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "context.joker_main and next(context.poker_hands[extra.type]) -> { mult = extra.t_mult }. Same 'contains' rule as vanilla. Vanilla keeps its value in ability.t_mult/t_chips/x_mult; ours lives in extra."
+acceptance_tests:
+  - "Play a Pair -> +20 Mult (vanilla: +8 Mult)"
+  - "Play a Full House (contains a Pair) -> +20 Mult"
+  - "Play a High Card -> no effect"
+status: "approved"
+art_status: "none"

@@ -1,0 +1,26 @@
+# Implementation ticket for j_misprint -> j_bplus_misprint_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_misprint"
+vanilla_name: "Misprint"
+vanilla_rarity: "Common"
+vanilla_cost: 4
+archetype: "Flat Mult"
+vanilla_effect: "<custom UI: built in card.lua, see report>"
+vanilla_config: {"extra": {"max": 23, "min": 0}}
+pattern: "Bigger number"
+plus_key: "j_bplus_misprint_plus"
+plus_name: "Never Misprint"
+plus_effect: "+10 to +50 Mult (random each hand)"
+plus_config: {"extra": {"min": 10, "max": 50}}
+plus_rarity: "Common"
+plus_cost: 4
+state_transfer: []
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "context.joker_main -> mult = pseudorandom('bplus_never_misprint', extra.min, extra.max). Vanilla description is custom UI built in card.lua (scrolling random number); mirror it or use plain text '+10 to +50 Mult'."
+acceptance_tests:
+  - "Seeded run, play 10 hands -> every hand's joker Mult is between 10 and 50"
+  - "Same seed twice -> same values (deterministic)"
+status: "approved"
+art_status: "none"

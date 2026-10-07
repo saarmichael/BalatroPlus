@@ -1,0 +1,26 @@
+# Implementation ticket for j_trading -> j_bplus_trading_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_trading"
+vanilla_name: "Trading Card"
+vanilla_rarity: "Uncommon"
+vanilla_cost: 6
+archetype: "Economy"
+vanilla_effect: "If first discard of round has only 1 card, destroy it and earn $3"
+vanilla_config: {"extra": 3}
+pattern: "Bigger number"
+plus_key: "j_bplus_trading_plus"
+plus_name: "Chase Card"
+plus_effect: "If first discard of round has only 1 card, destroy it and earn $6"
+plus_config: {"extra": {"dollars": 6}}
+plus_rarity: "Uncommon"
+plus_cost: 6
+state_transfer: []
+blueprint_compat: false
+eternal_compat: true
+perishable_compat: true
+impl_notes: "Same as vanilla Trading Card (not blueprint): first discard (discards_used <= 0) of exactly 1 card -> destroy it (context.discard returns remove = true) and earn extra.dollars."
+acceptance_tests:
+  - "First discard is 1 card -> card destroyed, +$6 (vanilla: +$3)"
+  - "First discard is 2 cards -> nothing"
+status: "approved"
+art_status: "none"

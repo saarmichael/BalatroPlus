@@ -1,0 +1,26 @@
+# Implementation ticket for j_hiker -> j_bplus_hiker_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_hiker"
+vanilla_name: "Hiker"
+vanilla_rarity: "Uncommon"
+vanilla_cost: 5
+archetype: "Deck manipulation"
+vanilla_effect: "Every played card permanently gains +5 Chips when scored"
+vanilla_config: {"extra": 5}
+pattern: "Bigger number"
+plus_key: "j_bplus_hiker_plus"
+plus_name: "Jogger"
+plus_effect: "Every played card permanently gains +10 Chips when scored"
+plus_config: {"extra": {"chips": 10}}
+plus_rarity: "Uncommon"
+plus_cost: 5
+state_transfer: []
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "Same as vanilla Hiker: context.individual + G.play -> other_card.ability.perma_bonus += extra.chips, 'Upgrade!' message. The bonus lives on the playing cards, not on the joker, so nothing to transfer."
+acceptance_tests:
+  - "Score a 5 twice in two hands -> it gives 5 + 10 chips the second time, then has +20 permanent chips"
+  - "(vanilla Hiker: +5 per score)"
+status: "approved"
+art_status: "none"

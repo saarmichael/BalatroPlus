@@ -1,0 +1,28 @@
+# Implementation ticket for j_ice_cream -> j_bplus_ice_cream_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+# BLOCKED on Q1 (see Open questions in BALATRO_PLUS_AGENT_BRIEF.md).
+# The design is written down so it isn't forgotten. Do not implement until it is unblocked.
+vanilla_key: "j_ice_cream"
+vanilla_name: "Ice Cream"
+vanilla_rarity: "Common"
+vanilla_cost: 5
+archetype: "Self-destructing / decaying"
+vanilla_effect: "+100 Chips -5 Chips for every hand played"
+vanilla_config: {"extra": {"chips": 100, "chip_mod": 5}}
+pattern: "Bigger number"
+plus_key: "j_bplus_ice_cream_plus"
+plus_name: "Chocolate Bar"
+plus_effect: "+150 Chips, -5 Chips for every hand played"
+plus_config: {"extra": {"chips": 150, "chip_mod": 5}}
+plus_rarity: "Common"
+plus_cost: 5
+state_transfer: "TBD (Q1)"
+blueprint_compat: true
+eternal_compat: false
+perishable_compat: true
+impl_notes: "Same as vanilla Ice Cream: context.joker_main -> chips = extra.chips; context.after (not blueprint): if extra.chips - extra.chip_mod <= 0 destroy the card ('Melted!'), else extra.chips -= extra.chip_mod. Blocked on Q1 (decaying value, same question as scaling): vanilla keeps the current chips in ability.extra.chips, which the upgrade replaces with the new config, so it resets to 150 unless Q1 says to carry or recompute it."
+acceptance_tests:
+  - "Play 3 hands -> 150, then 145, then 140 Chips"
+  - "After 30 hands it melts (150 / 5 = 30)"
+status: "blocked"
+art_status: "none"

@@ -1,0 +1,26 @@
+# Implementation ticket for j_to_the_moon -> j_bplus_to_the_moon_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_to_the_moon"
+vanilla_name: "To the Moon"
+vanilla_rarity: "Uncommon"
+vanilla_cost: 5
+archetype: "Economy"
+vanilla_effect: "Earn an extra $1 of interest for every $5 you have at end of round"
+vanilla_config: {"extra": 1}
+pattern: "Bigger number"
+plus_key: "j_bplus_to_the_moon_plus"
+plus_name: "To the Stars"
+plus_effect: "Earn an extra $2 of interest for every $5 you have at end of round"
+plus_config: {"extra": {"interest": 2}}
+plus_rarity: "Uncommon"
+plus_cost: 5
+state_transfer: []
+blueprint_compat: false
+eternal_compat: true
+perishable_compat: true
+impl_notes: "Same as vanilla: add_to_deck G.GAME.interest_amount += extra.interest; remove_from_deck -= extra.interest. The interest cap (G.GAME.interest_cap) still applies."
+acceptance_tests:
+  - "End round with $25 -> interest (1 + 2) * 5 = $15 (vanilla To the Moon: (1 + 1) * 5 = $10)"
+  - "Sell it -> interest back to $1 per $5"
+status: "approved"
+art_status: "none"

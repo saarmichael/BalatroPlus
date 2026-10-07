@@ -1,0 +1,25 @@
+# Implementation ticket for j_satellite -> j_bplus_satellite_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_satellite"
+vanilla_name: "Satellite"
+vanilla_rarity: "Uncommon"
+vanilla_cost: 6
+archetype: "Economy"
+vanilla_effect: "Earn $1 at end of round per unique Planet card used this run (Currently $<?>)"
+vanilla_config: {"extra": 1}
+pattern: "Bigger number"
+plus_key: "j_bplus_satellite_plus"
+plus_name: "Space Station"
+plus_effect: "Earn $2 at end of round per unique Planet card used this run"
+plus_config: {"extra": {"dollars": 2}}
+plus_rarity: "Uncommon"
+plus_cost: 6
+state_transfer: []
+blueprint_compat: false
+eternal_compat: true
+perishable_compat: true
+impl_notes: "calc_dollar_bonus: count entries in G.GAME.consumeable_usage with set == 'Planet' -> extra.dollars * count, only if count > 0 (same as vanilla)."
+acceptance_tests:
+  - "Used Mercury, Venus, and Mercury again -> 2 unique, end round -> $2 * 2 = $4 (vanilla: $2)"
+status: "approved"
+art_status: "none"

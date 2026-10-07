@@ -1,0 +1,27 @@
+# Implementation ticket for j_flash -> j_bplus_flash_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+# BLOCKED on Q1 (see Open questions in BALATRO_PLUS_AGENT_BRIEF.md).
+# The design is written down so it isn't forgotten. Do not implement until it is unblocked.
+vanilla_key: "j_flash"
+vanilla_name: "Flash Card"
+vanilla_rarity: "Uncommon"
+vanilla_cost: 5
+archetype: "Scaling Mult"
+vanilla_effect: "This Joker gains +2 Mult per reroll in the shop (Currently +0 Mult)"
+vanilla_config: {"extra": 2, "mult": 0}
+pattern: "Faster scaling"
+plus_key: "j_bplus_flash_plus"
+plus_name: "Cheat Sheet"
+plus_effect: "This Joker gains +4 Mult per reroll in the shop"
+plus_config: {"extra": {"mult_gain": 4, "mult": 0}}
+plus_rarity: "Uncommon"
+plus_cost: 5
+state_transfer: "TBD (Q1)"
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: false
+impl_notes: "Same as vanilla Flash Card: context.reroll_shop (not blueprint) -> extra.mult += extra.mult_gain. Score in context.joker_main. Blocked on Q1: what happens to the Mult the vanilla joker built up. Vanilla keeps it in ability.mult; under any answer except 'reset', state_transfer will be 'mult -> extra.mult'."
+acceptance_tests:
+  - "Reroll 3 times -> +4 + 4 + 4 = 12 Mult (vanilla: 2 + 2 + 2)"
+status: "blocked"
+art_status: "none"

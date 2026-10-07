@@ -1,0 +1,28 @@
+# Implementation ticket for j_8_ball -> j_bplus_8_ball_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_8_ball"
+vanilla_name: "8 Ball"
+vanilla_rarity: "Common"
+vanilla_cost: 5
+archetype: "Probability"
+vanilla_effect: "1 in 4 chance for each played 8 to create a Tarot card when scored (Must have room)"
+vanilla_config: {"extra": 4}
+pattern: "Second effect"
+plus_key: "j_bplus_8_ball_plus"
+plus_name: "Magic 8 Ball"
+plus_effect: "Each played 8 has a 1 in 4 chance to create a Tarot card or a 1 in 4 chance to create a Spectral card when scored (never both; Must have room)"
+plus_config: {"extra": {"odds": 4}}
+plus_rarity: "Common"
+plus_cost: 5
+state_transfer: []
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "context.individual + G.play, other_card:get_id() == 8, and a free consumable slot (#G.consumeables.cards + G.GAME.consumeable_buffer < card_limit, like vanilla). One roll decides both outcomes so they can't both happen: p = num/den from SMODS.get_probability_vars(card, 1, extra.odds, 'bplus_magic_8_ball', true) (so Oops! All 6s counts); any = min(1, 2 * p); u = pseudorandom('bplus_magic_8_ball'); u < any/2 -> Tarot, any/2 <= u < any -> Spectral. Tarot and Spectral stay equally likely even when Oops! pushes the total to 1. Add the result to SMODS.post_prob the way SMODS.pseudorandom_probability does, so 'probability rolled' effects still see it. Create with create_card('Tarot' / 'Spectral', G.consumeables, nil, nil, nil, nil, nil, '8ba'), using consumeable_buffer."
+acceptance_tests:
+  - "Seeded run, score many 8s with free slots -> Tarots and Spectrals both appear, never two cards from one 8"
+  - "With Oops! All 6s (2 in 4 each): every scored 8 creates exactly one card"
+  - "Consumable slots full -> nothing created"
+  - "Description shows '1 in 4' twice (with Oops!: '2 in 4')"
+status: "approved"
+art_status: "none"

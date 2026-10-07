@@ -1,0 +1,27 @@
+# Implementation ticket for j_midas_mask -> j_bplus_midas_mask_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_midas_mask"
+vanilla_name: "Midas Mask"
+vanilla_rarity: "Uncommon"
+vanilla_cost: 7
+archetype: "Deck manipulation"
+vanilla_effect: "All played face cards become Gold cards when scored"
+vanilla_config: {}
+pattern: "Relax condition"
+plus_key: "j_bplus_midas_mask_plus"
+plus_name: "Midas Touch"
+plus_effect: "All played cards become Gold cards when scored"
+plus_config: {"extra": {}}
+plus_rarity: "Uncommon"
+plus_cost: 7
+state_transfer: []
+blueprint_compat: false
+eternal_compat: true
+perishable_compat: true
+impl_notes: "Same as vanilla Midas Mask (context.before, not blueprint) but for every card in context.scoring_hand, not only is_face() ones: set_ability(G.P_CENTERS.m_gold, nil, true), juice, 'Gold' message. Existing enhancements (including Stone, Steel, Glass) are replaced, as vanilla does for face cards. This can be worse than Midas Mask (e.g. a scored Steel 7 becomes Gold); the human accepted that. Unscored cards are not changed."
+acceptance_tests:
+  - "Play a scoring Pair of 7s -> both become Gold"
+  - "Play a Pair of 7s with a kicker -> kicker (not scored) stays as it is"
+  - "Scoring Glass King -> becomes Gold"
+status: "approved"
+art_status: "none"

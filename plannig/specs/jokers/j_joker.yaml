@@ -1,0 +1,25 @@
+# Implementation ticket for j_joker -> j_bplus_joker_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_joker"
+vanilla_name: "Joker"
+vanilla_rarity: "Common"
+vanilla_cost: 2
+archetype: "Flat Mult"
+vanilla_effect: "+4 Mult"
+vanilla_config: {"mult": 4}
+pattern: "Bigger number"
+plus_key: "j_bplus_joker_plus"
+plus_name: "Joker+"
+plus_effect: "+20 Mult"
+plus_config: {"extra": {"mult": 20}}
+plus_rarity: "Common"
+plus_cost: 2
+state_transfer: []
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "context.joker_main -> { mult = extra.mult }. Vanilla keeps its value in ability.mult; ours lives in extra."
+acceptance_tests:
+  - "Joker+ alone, play a Pair of 2s -> joker adds +20 Mult (vanilla Joker: +4)"
+status: "approved"
+art_status: "none"

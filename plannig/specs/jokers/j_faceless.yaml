@@ -1,0 +1,26 @@
+# Implementation ticket for j_faceless -> j_bplus_faceless_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_faceless"
+vanilla_name: "Faceless Joker"
+vanilla_rarity: "Common"
+vanilla_cost: 4
+archetype: "Economy"
+vanilla_effect: "Earn $5 if 3 or more face cards are discarded at the same time"
+vanilla_config: {"extra": {"dollars": 5, "faces": 3}}
+pattern: "Bigger number"
+plus_key: "j_bplus_faceless_plus"
+plus_name: "Undercover Joker"
+plus_effect: "Earn $6 if 3 or more face cards are discarded at the same time"
+plus_config: {"extra": {"dollars": 6, "faces": 3}}
+plus_rarity: "Common"
+plus_cost: 4
+state_transfer: []
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "Same as vanilla: context.discard, on the last card of context.full_hand, count is_face() cards; if >= extra.faces -> dollars = extra.dollars (with dollar_buffer)."
+acceptance_tests:
+  - "Discard 3 face cards -> +$6 (vanilla: +$5)"
+  - "Discard 2 face cards and a 7 -> $0"
+status: "approved"
+art_status: "none"

@@ -1,0 +1,25 @@
+# Implementation ticket for j_golden -> j_bplus_golden_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_golden"
+vanilla_name: "Golden Joker"
+vanilla_rarity: "Common"
+vanilla_cost: 6
+archetype: "Economy"
+vanilla_effect: "Earn $4 at end of round"
+vanilla_config: {"extra": 4}
+pattern: "Bigger number"
+plus_key: "j_bplus_golden_plus"
+plus_name: "Golden Joker+"
+plus_effect: "Earn $8 at end of round"
+plus_config: {"extra": {"dollars": 8}}
+plus_rarity: "Common"
+plus_cost: 6
+state_transfer: []
+blueprint_compat: false
+eternal_compat: true
+perishable_compat: true
+impl_notes: "calc_dollar_bonus returns extra.dollars."
+acceptance_tests:
+  - "End round -> +$8 (vanilla: +$4)"
+status: "approved"
+art_status: "none"

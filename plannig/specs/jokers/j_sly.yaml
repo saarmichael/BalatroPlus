@@ -1,0 +1,27 @@
+# Implementation ticket for j_sly -> j_bplus_sly_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_sly"
+vanilla_name: "Sly Joker"
+vanilla_rarity: "Common"
+vanilla_cost: 3
+archetype: "Hand-type-conditional"
+vanilla_effect: "+50 Chips if played hand contains a Pair"
+vanilla_config: {"t_chips": 50, "type": "Pair"}
+pattern: "Bigger number"
+plus_key: "j_bplus_sly_plus"
+plus_name: "Foxy Joker"
+plus_effect: "+100 Chips if played hand contains a Pair"
+plus_config: {"extra": {"t_chips": 100, "type": "Pair"}}
+plus_rarity: "Common"
+plus_cost: 3
+state_transfer: []
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "context.joker_main and next(context.poker_hands[extra.type]) -> { chips = extra.t_chips }. Same 'contains' rule as vanilla. Vanilla keeps its value in ability.t_mult/t_chips/x_mult; ours lives in extra."
+acceptance_tests:
+  - "Play a Pair -> +100 Chips (vanilla: +50 Chips)"
+  - "Play a Full House (contains a Pair) -> +100 Chips"
+  - "Play a High Card -> no effect"
+status: "approved"
+art_status: "none"

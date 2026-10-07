@@ -1,0 +1,27 @@
+# Implementation ticket for j_mr_bones -> j_bplus_mr_bones_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_mr_bones"
+vanilla_name: "Mr. Bones"
+vanilla_rarity: "Uncommon"
+vanilla_cost: 5
+archetype: "Other"
+vanilla_effect: "Prevents Death if chips scored are at least 25% of required chips self destructs"
+vanilla_config: {}
+pattern: "Remove downside"
+plus_key: "j_bplus_mr_bones_plus"
+plus_name: "Lich"
+plus_effect: "Prevents Death if chips scored are at least 25% of required chips. 1 in 2 chance to self destruct"
+plus_config: {"extra": {"odds": 2}}
+plus_rarity: "Uncommon"
+plus_cost: 5
+state_transfer: []
+blueprint_compat: false
+eternal_compat: false
+perishable_compat: true
+impl_notes: "Same as vanilla Mr. Bones (context.end_of_round, context.game_over, chips >= 25% of blind -> saved). Then SMODS.pseudorandom_probability(card, 'bplus_lich', 1, extra.odds): on success destroy itself like vanilla, otherwise it stays. Note: Oops! All 6s raises the self-destruct chance (2 in 2 = always), the same way it makes Gros Michel die more often in vanilla."
+acceptance_tests:
+  - "Lose with 30% of required chips -> saved"
+  - "Seeded run, saved several times -> sometimes destroyed, sometimes not"
+  - "Lose with 20% -> game over"
+status: "approved"
+art_status: "none"

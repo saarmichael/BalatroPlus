@@ -75,7 +75,7 @@ SMODS.Joker {
         },
     },
     config = { extra = { mult_gain = 1, mult = 0 } },   -- ALL custom state in extra
-    rarity = 2, cost = 7,                                -- from plus_rarity / plus_cost
+    rarity = 1, cost = 6,                                -- from plus_rarity / plus_cost (= vanilla rarity / cost)
     blueprint_compat = true, eternal_compat = true, perishable_compat = false,  -- always set all three
     unlocked = true, discovered = false,
     atlas = 'placeholder', pos = { x = 0, y = 0 },
@@ -105,7 +105,8 @@ SMODS.Joker {
   - Formatting codes: `{C:mult}`, `{C:chips}`, `{C:money}`, `{C:attention}`, `{C:green}`, `{C:inactive}`, `{X:mult,C:white}` for ×Mult, `{}` to reset.
   - `#n#` is `vars[n]` from `loc_vars`.
   - Match the vanilla text style of the base joker.
-- **Rarity.** Either `1`–`4` or `'Common'`/`'Uncommon'`/`'Rare'`/`'Legendary'` works; use numbers for consistency.
+- **Cost.** Always the vanilla joker's cost (`plus_cost = vanilla_cost`). Prices never change on upgrade.
+- **Rarity.** Always the vanilla joker's rarity (`plus_rarity = vanilla_rarity`). Either `1`–`4` or `'Common'`/`'Uncommon'`/`'Rare'`/`'Legendary'` works; use numbers for consistency.
 - **Tooltips.** To show the base joker, add `info_queue[#info_queue+1] = G.P_CENTERS.<vanilla_key>` in `loc_vars`.
 - **Shop pool.** Whether "+" jokers can appear in shops is an upgrade-mechanic decision, which is not designed yet. Until then, **don't add `in_pool`**. Each joker spawns normally, which is fine for testing. When the mechanic is designed, a single shared `in_pool` will be added.
 

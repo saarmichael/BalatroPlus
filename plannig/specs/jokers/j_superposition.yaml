@@ -1,0 +1,27 @@
+# Implementation ticket for j_superposition -> j_bplus_superposition_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_superposition"
+vanilla_name: "Superposition"
+vanilla_rarity: "Common"
+vanilla_cost: 4
+archetype: "Card generation"
+vanilla_effect: "Create a Tarot card if poker hand contains an Ace and a Straight (Must have room)"
+vanilla_config: {}
+pattern: "Bigger number"
+plus_key: "j_bplus_superposition_plus"
+plus_name: "Superduperposition"
+plus_effect: "Create 2 Tarot cards if poker hand contains an Ace and a Straight (Must have room)"
+plus_config: {"extra": {"cards": 2}}
+plus_rarity: "Common"
+plus_cost: 4
+state_transfer: []
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "Same condition as vanilla Superposition (context.joker_main: a scoring Ace and next(context.poker_hands['Straight'])); create Tarot cards (seed 'bplus_superduperposition'). Room: create min(extra.cards, free consumable slots) cards, where free = card_limit - (#G.consumeables.cards + G.GAME.consumeable_buffer), using consumeable_buffer like vanilla (same pattern as vanilla Riff-Raff uses for jokers). Nothing if no free slot."
+acceptance_tests:
+  - "Play A-2-3-4-5 Straight with 2 free slots -> 2 Tarots (vanilla: 1)"
+  - "Straight without an Ace -> nothing"
+  - "Only 1 free slot -> 1 Tarot"
+status: "approved"
+art_status: "none"

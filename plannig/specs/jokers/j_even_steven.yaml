@@ -1,0 +1,26 @@
+# Implementation ticket for j_even_steven -> j_bplus_even_steven_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_even_steven"
+vanilla_name: "Even Steven"
+vanilla_rarity: "Common"
+vanilla_cost: 4
+archetype: "Rank-conditional"
+vanilla_effect: "Played cards with even rank give +4 Mult when scored (10, 8, 6, 4, 2)"
+vanilla_config: {"extra": 4}
+pattern: "Bigger number"
+plus_key: "j_bplus_even_steven_plus"
+plus_name: "Steven the Even"
+plus_effect: "Played cards with even rank give +8 Mult when scored (10, 8, 6, 4, 2)"
+plus_config: {"extra": {"mult": 8}}
+plus_rarity: "Common"
+plus_cost: 4
+state_transfer: []
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "context.individual + cardarea G.play, get_id() <= 10 and get_id() % 2 == 0 (same as vanilla, so face cards don't count) -> mult = extra.mult."
+acceptance_tests:
+  - "Score a 10 and a 4 -> +8 + 8 Mult (vanilla: +4 + 4)"
+  - "Score a Queen -> no effect"
+status: "approved"
+art_status: "none"

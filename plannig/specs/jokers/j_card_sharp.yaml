@@ -1,0 +1,26 @@
+# Implementation ticket for j_card_sharp -> j_bplus_card_sharp_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_card_sharp"
+vanilla_name: "Card Sharp"
+vanilla_rarity: "Uncommon"
+vanilla_cost: 6
+archetype: "xMult"
+vanilla_effect: "X3 Mult if played poker hand has already been played this round"
+vanilla_config: {"extra": {"Xmult": 3}}
+pattern: "Bigger number"
+plus_key: "j_bplus_card_sharp_plus"
+plus_name: "Card Shark"
+plus_effect: "X4 Mult if played poker hand has already been played this round"
+plus_config: {"extra": {"Xmult": 4}}
+plus_rarity: "Uncommon"
+plus_cost: 6
+state_transfer: []
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "context.joker_main when G.GAME.hands[context.scoring_name].played_this_round > 1 (same as vanilla) -> xmult = extra.Xmult."
+acceptance_tests:
+  - "Play a Pair, then another Pair -> second hand X4"
+  - "Play a Pair, then a Flush -> no effect"
+status: "approved"
+art_status: "none"

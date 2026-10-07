@@ -1,0 +1,28 @@
+# Implementation ticket for j_luchador -> j_bplus_luchador_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_luchador"
+vanilla_name: "Luchador"
+vanilla_rarity: "Uncommon"
+vanilla_cost: 5
+archetype: "Other"
+vanilla_effect: "Sell this card to disable the current Boss Blind"
+vanilla_config: {}
+pattern: "Relax condition"
+plus_key: "j_bplus_luchador_plus"
+plus_name: "El Santo"
+plus_effect: "Sell this card to disable the current Boss Blind, or the next one if you are not in a Boss Blind"
+plus_config: {"extra": {}}
+plus_rarity: "Uncommon"
+plus_cost: 5
+state_transfer: []
+blueprint_compat: true
+eternal_compat: false
+perishable_compat: true
+impl_notes: "context.selling_self (not blueprint): if G.GAME.blind and G.GAME.blind.boss and a round is in progress -> G.GAME.blind:disable() like vanilla Luchador. Otherwise set G.GAME.bplus_disable_next_boss = true (saved with the run); in a global hook on context.setting_blind, when the selected blind is a Boss and the flag is set, disable it, clear the flag, and show 'Boss Blind disabled'. Lets you buy it in the shop and sell it right away. Selling two before one Boss still disables only that one Boss (flag, not counter). Name: El Santo, the most famous Mexican luchador."
+acceptance_tests:
+  - "Sell during a Boss Blind -> it is disabled (same as vanilla)"
+  - "Buy in the shop before the Boss, sell immediately -> the next Boss Blind is disabled when selected"
+  - "Sell during the Small Blind -> the Boss Blind of that ante is disabled"
+  - "After that Boss, the following Boss is not disabled"
+status: "approved"
+art_status: "none"

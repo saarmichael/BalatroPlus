@@ -1,0 +1,28 @@
+# Implementation ticket for j_campfire -> j_bplus_campfire_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+# BLOCKED on Q1 (see Open questions in BALATRO_PLUS_AGENT_BRIEF.md).
+# The design is written down so it isn't forgotten. Do not implement until it is unblocked.
+vanilla_key: "j_campfire"
+vanilla_name: "Campfire"
+vanilla_rarity: "Rare"
+vanilla_cost: 9
+archetype: "Scaling xMult"
+vanilla_effect: "This Joker gains X0.25 Mult for each card sold, resets when Boss Blind is defeated (Currently X1 Mult)"
+vanilla_config: {"extra": 0.25}
+pattern: "Faster scaling"
+plus_key: "j_bplus_campfire_plus"
+plus_name: "Burning Man"
+plus_effect: "This Joker gains X0.4 Mult for each card sold, resets when Boss Blind is defeated"
+plus_config: {"extra": {"Xmult": 1, "Xmult_mod": 0.4}}
+plus_rarity: "Rare"
+plus_cost: 9
+state_transfer: "TBD (Q1)"
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "Same as vanilla Campfire: context.selling_card (not blueprint) -> extra.Xmult += extra.Xmult_mod; end of round after a Boss Blind (not blueprint) -> reset to 1. Score extra.Xmult in context.joker_main when > 1. Blocked on Q1: vanilla keeps the built-up XMult in ability.x_mult; under any answer except 'reset', state_transfer will be 'x_mult -> extra.Xmult'."
+acceptance_tests:
+  - "Sell 3 cards -> X(1 + 0.4 * 3) = X2.2 (vanilla: X1.75)"
+  - "Defeat the Boss Blind -> back to X1"
+status: "blocked"
+art_status: "none"

@@ -1,0 +1,27 @@
+# Implementation ticket for j_lucky_cat -> j_bplus_lucky_cat_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+# BLOCKED on Q1 (see Open questions in BALATRO_PLUS_AGENT_BRIEF.md).
+# The design is written down so it isn't forgotten. Do not implement until it is unblocked.
+vanilla_key: "j_lucky_cat"
+vanilla_name: "Lucky Cat"
+vanilla_rarity: "Uncommon"
+vanilla_cost: 6
+archetype: "Scaling xMult"
+vanilla_effect: "This Joker gains X0.25 Mult every time a Lucky card successfully triggers (Currently X1 Mult)"
+vanilla_config: {"Xmult": 1, "extra": 0.25}
+pattern: "Faster scaling"
+plus_key: "j_bplus_lucky_cat_plus"
+plus_name: "Maneki-neko"
+plus_effect: "This Joker gains X0.4 Mult every time a Lucky card successfully triggers"
+plus_config: {"extra": {"Xmult": 1, "Xmult_mod": 0.4}}
+plus_rarity: "Uncommon"
+plus_cost: 6
+state_transfer: "TBD (Q1)"
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: false
+impl_notes: "Same as vanilla Lucky Cat: context.individual + G.play (not blueprint), other_card.lucky_trigger -> extra.Xmult += extra.Xmult_mod. Name: Maneki-neko is the Japanese name of the 'lucky cat' figurine. Score extra.Xmult in context.joker_main when > 1. Blocked on Q1: vanilla keeps the built-up XMult in ability.x_mult; under any answer except 'reset', state_transfer will be 'x_mult -> extra.Xmult'."
+acceptance_tests:
+  - "With Oops! All 6s, 2 Lucky cards trigger -> X(1 + 0.4 * 2) = X1.8 (vanilla: X1.5)"
+status: "blocked"
+art_status: "none"

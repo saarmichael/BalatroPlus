@@ -1,0 +1,28 @@
+# Implementation ticket for j_rocket -> j_bplus_rocket_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+# BLOCKED on Q1 (see Open questions in BALATRO_PLUS_AGENT_BRIEF.md).
+# The design is written down so it isn't forgotten. Do not implement until it is unblocked.
+vanilla_key: "j_rocket"
+vanilla_name: "Rocket"
+vanilla_rarity: "Uncommon"
+vanilla_cost: 6
+archetype: "Economy"
+vanilla_effect: "Earn $1 at end of round Payout increases by $2 when Boss Blind is defeated"
+vanilla_config: {"extra": {"dollars": 1, "increase": 2}}
+pattern: "Faster scaling"
+plus_key: "j_bplus_rocket_plus"
+plus_name: "Spaceship"
+plus_effect: "Earn $1 at end of round. Payout increases by $4 when Boss Blind is defeated"
+plus_config: {"extra": {"dollars": 1, "increase": 4}}
+plus_rarity: "Uncommon"
+plus_cost: 6
+state_transfer: "TBD (Q1)"
+blueprint_compat: false
+eternal_compat: true
+perishable_compat: false
+impl_notes: "Same as vanilla: calc_dollar_bonus returns extra.dollars; at end of round after a Boss Blind (not blueprint) extra.dollars += extra.increase with 'Upgrade!' message. Scaling: what happens to the payout Rocket already built is Q1."
+acceptance_tests:
+  - "End a non-boss round -> +$1"
+  - "Defeat a Boss Blind -> payout becomes $1 + 4 = $5 for the following rounds"
+status: "blocked"
+art_status: "none"

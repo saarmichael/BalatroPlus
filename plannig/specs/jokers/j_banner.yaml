@@ -1,0 +1,26 @@
+# Implementation ticket for j_banner -> j_bplus_banner_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_banner"
+vanilla_name: "Banner"
+vanilla_rarity: "Common"
+vanilla_cost: 5
+archetype: "Flat Chips"
+vanilla_effect: "+30 Chips for each remaining discard"
+vanilla_config: {"extra": 30}
+pattern: "Bigger number"
+plus_key: "j_bplus_banner_plus"
+plus_name: "War Banner"
+plus_effect: "+60 Chips for each remaining discard"
+plus_config: {"extra": {"chips_per": 60}}
+plus_rarity: "Common"
+plus_cost: 5
+state_transfer: []
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "context.joker_main when G.GAME.current_round.discards_left > 0 -> chips = extra.chips_per * discards_left (same as vanilla)."
+acceptance_tests:
+  - "Play with 3 discards left -> +60 * 3 = 180 Chips (vanilla: 30 * 3)"
+  - "Play with 0 discards left -> no effect"
+status: "approved"
+art_status: "none"

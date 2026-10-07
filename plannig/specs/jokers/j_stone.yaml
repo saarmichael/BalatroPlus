@@ -1,0 +1,26 @@
+# Implementation ticket for j_stone -> j_bplus_stone_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_stone"
+vanilla_name: "Stone Joker"
+vanilla_rarity: "Uncommon"
+vanilla_cost: 6
+archetype: "Flat Chips"
+vanilla_effect: "Gives +25 Chips for each Stone Card in your full deck (Currently +0 Chips)"
+vanilla_config: {"extra": 25}
+pattern: "Bigger number"
+plus_key: "j_bplus_stone_plus"
+plus_name: "Monolith"
+plus_effect: "Gives +50 Chips for each Stone Card in your full deck"
+plus_config: {"extra": {"chips_per": 50}}
+plus_rarity: "Uncommon"
+plus_cost: 6
+state_transfer: []
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "Count Stone cards (config.center == G.P_CENTERS.m_stone) in G.playing_cards, like vanilla stone_tally. context.joker_main when count > 0 -> chips = extra.chips_per * count."
+acceptance_tests:
+  - "3 Stone cards in deck -> +50 * 3 = 150 Chips (vanilla: 25 * 3)"
+  - "No Stone cards -> no effect"
+status: "approved"
+art_status: "none"

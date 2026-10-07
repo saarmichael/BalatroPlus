@@ -1,0 +1,26 @@
+# Implementation ticket for j_bull -> j_bplus_bull_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_bull"
+vanilla_name: "Bull"
+vanilla_rarity: "Uncommon"
+vanilla_cost: 6
+archetype: "Flat Chips"
+vanilla_effect: "+2 Chips for each $1 you have (Currently +<?> Chips)"
+vanilla_config: {"extra": 2}
+pattern: "Bigger number"
+plus_key: "j_bplus_bull_plus"
+plus_name: "Golden Bull"
+plus_effect: "+5 Chips for each $1 you have"
+plus_config: {"extra": {"chips_per": 5}}
+plus_rarity: "Uncommon"
+plus_cost: 6
+state_transfer: []
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "context.joker_main -> chips = extra.chips_per * max(0, G.GAME.dollars + (G.GAME.dollar_buffer or 0)), only when > 0 (same as vanilla)."
+acceptance_tests:
+  - "With $20 -> +5 * 20 = 100 Chips (vanilla: 2 * 20)"
+  - "In debt (Credit Card at -$5) -> no effect"
+status: "approved"
+art_status: "none"

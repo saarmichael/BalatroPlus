@@ -1,0 +1,26 @@
+# Implementation ticket for j_matador -> j_bplus_matador_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_matador"
+vanilla_name: "Matador"
+vanilla_rarity: "Uncommon"
+vanilla_cost: 7
+archetype: "Economy"
+vanilla_effect: "Earn $8 if played hand triggers the Boss Blind ability"
+vanilla_config: {"extra": 8}
+pattern: "Bigger number"
+plus_key: "j_bplus_matador_plus"
+plus_name: "Toreador"
+plus_effect: "Earn $20 if played hand triggers the Boss Blind ability"
+plus_config: {"extra": {"dollars": 20}}
+plus_rarity: "Uncommon"
+plus_cost: 7
+state_transfer: []
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "Same as vanilla Matador: when G.GAME.blind.triggered after a played hand (vanilla checks in both the debuffed-hand path and joker_main) -> dollars = extra.dollars."
+acceptance_tests:
+  - "Play a hand that triggers The Psychic (fewer than 5 cards) -> +$20 (vanilla: +$8)"
+  - "Boss ability not triggered -> $0"
+status: "approved"
+art_status: "none"

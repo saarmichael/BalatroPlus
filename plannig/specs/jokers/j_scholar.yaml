@@ -1,0 +1,25 @@
+# Implementation ticket for j_scholar -> j_bplus_scholar_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_scholar"
+vanilla_name: "Scholar"
+vanilla_rarity: "Common"
+vanilla_cost: 4
+archetype: "Rank-conditional"
+vanilla_effect: "Played Aces give +20 Chips and +4 Mult when scored"
+vanilla_config: {"extra": {"mult": 4, "chips": 20}}
+pattern: "Bigger number"
+plus_key: "j_bplus_scholar_plus"
+plus_name: "Professor"
+plus_effect: "Played Aces give +40 Chips and +10 Mult when scored"
+plus_config: {"extra": {"chips": 40, "mult": 10}}
+plus_rarity: "Common"
+plus_cost: 4
+state_transfer: []
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "context.individual + cardarea G.play, get_id() == 14 -> { chips = extra.chips, mult = extra.mult }."
+acceptance_tests:
+  - "Score 2 Aces -> +40 + 40 Chips and +10 + 10 Mult (vanilla: +20 Chips, +4 Mult each)"
+status: "approved"
+art_status: "none"

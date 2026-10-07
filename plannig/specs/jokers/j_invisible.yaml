@@ -1,0 +1,29 @@
+# Implementation ticket for j_invisible -> j_bplus_invisible_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_invisible"
+vanilla_name: "Invisible Joker"
+vanilla_rarity: "Rare"
+vanilla_cost: 8
+archetype: "Copy"
+vanilla_effect: "After 2 rounds, sell this card to Duplicate a random Joker (Currently 0/2)"
+vanilla_config: {"extra": 2}
+pattern: "Second effect"
+plus_key: "j_bplus_invisible_plus"
+plus_name: "Phantom"
+plus_effect: "After 2 rounds, sell this card to upgrade a random Joker and Duplicate it (picks a Joker that can still be upgraded if there is one)"
+plus_config: {"extra": {"rounds_needed": 2, "rounds": 0}}
+plus_rarity: "Rare"
+plus_cost: 8
+state_transfer:
+  - "invis_rounds -> extra.rounds"
+blueprint_compat: false
+eternal_compat: false
+perishable_compat: true
+impl_notes: "Round counter same as vanilla Invisible Joker (end of round, not blueprint: extra.rounds += 1, 'N/2' then 'Active!'). context.selling_self when active: pick a random other joker that is eligible for an upgrade (brief: upgradable and not yet upgraded; seed 'bplus_phantom'), BPlus.upgrade_card(it), then duplicate it with copy_card like vanilla (removing Negative from the copy), so both are upgraded (brief: duplicates keep the upgrade level). If no other joker is eligible, pick any other joker at random and only duplicate it, like vanilla Invisible Joker. Vanilla keeps the counter in ability.invis_rounds; state_transfer moves it so the countdown isn't lost (a counter, not a scaling value, so not Q1). Depends on BPlus.upgrade_card."
+acceptance_tests:
+  - "After 2 rounds, sell with Joker held -> Joker becomes Joker+ and a second Joker+ appears"
+  - "Held: Joker+ and Joker -> always picks Joker (the eligible one): result Joker+, Joker+, Joker+"
+  - "All other jokers already upgraded or not upgradable -> one of them is picked at random and duplicated"
+  - "Invisible Joker at 1/2, upgrade -> Phantom at 1/2"
+status: "approved"
+art_status: "none"

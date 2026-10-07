@@ -1,0 +1,27 @@
+# Implementation ticket for j_space -> j_bplus_space_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_space"
+vanilla_name: "Space Joker"
+vanilla_rarity: "Uncommon"
+vanilla_cost: 5
+archetype: "Probability"
+vanilla_effect: "1 in 4 chance to upgrade level of played poker hand"
+vanilla_config: {"extra": 4}
+pattern: "Better odds"
+plus_key: "j_bplus_space_plus"
+plus_name: "Astronaut"
+plus_effect: "1 in 2 chance to upgrade level of played poker hand"
+plus_config: {"extra": {"odds": 2}}
+plus_rarity: "Uncommon"
+plus_cost: 5
+state_transfer: []
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "Same as vanilla Space Joker: context.before, SMODS.pseudorandom_probability(card, 'bplus_astronaut', 1, extra.odds) -> level_up_hand for context.scoring_name with the 'Level Up!' message."
+acceptance_tests:
+  - "With Oops! All 6s (2 in 2): play a Pair -> Pair goes up 1 level every time"
+  - "Seeded run, 20 hands -> some level-ups and some misses"
+  - "Description shows '1 in 2' (vanilla: '1 in 4')"
+status: "approved"
+art_status: "none"

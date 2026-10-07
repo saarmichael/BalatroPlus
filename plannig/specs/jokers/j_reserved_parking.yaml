@@ -1,0 +1,26 @@
+# Implementation ticket for j_reserved_parking -> j_bplus_reserved_parking_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_reserved_parking"
+vanilla_name: "Reserved Parking"
+vanilla_rarity: "Common"
+vanilla_cost: 6
+archetype: "Probability"
+vanilla_effect: "Each face card held in hand has a 1 in 2 chance to give $1"
+vanilla_config: {"extra": {"odds": 2, "dollars": 1}}
+pattern: "Bigger number"
+plus_key: "j_bplus_reserved_parking_plus"
+plus_name: "Valet Parking"
+plus_effect: "Each face card held in hand has a 1 in 2 chance to give $3"
+plus_config: {"extra": {"odds": 2, "dollars": 3}}
+plus_rarity: "Common"
+plus_cost: 6
+state_transfer: []
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "Same as vanilla Reserved Parking: context.individual + cardarea G.hand (not end_of_round), other_card:is_face(), not debuffed (debuffed -> 'Debuffed' message), SMODS.pseudorandom_probability(card, 'bplus_valet_parking', 1, extra.odds) -> dollars = extra.dollars (with dollar_buffer). Held-in-hand effect, so Mime retriggers it."
+acceptance_tests:
+  - "With Oops! All 6s: hold 2 face cards and play -> +$3 + $3 (vanilla: +$1 + $1)"
+  - "Hold no face cards -> $0"
+status: "approved"
+art_status: "none"

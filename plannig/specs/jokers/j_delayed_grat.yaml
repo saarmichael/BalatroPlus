@@ -1,0 +1,27 @@
+# Implementation ticket for j_delayed_grat -> j_bplus_delayed_grat_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_delayed_grat"
+vanilla_name: "Delayed Gratification"
+vanilla_rarity: "Common"
+vanilla_cost: 4
+archetype: "Economy"
+vanilla_effect: "Earn $2 per discard if no discards are used by end of the round"
+vanilla_config: {"extra": 2}
+pattern: "Remove downside"
+plus_key: "j_bplus_delayed_grat_plus"
+plus_name: "Instant Gratification"
+plus_effect: "Earn $2 per remaining discard at end of round"
+plus_config: {"extra": {"dollars": 2}}
+plus_rarity: "Common"
+plus_cost: 4
+state_transfer: []
+blueprint_compat: false
+eternal_compat: true
+perishable_compat: true
+impl_notes: "calc_dollar_bonus: if G.GAME.current_round.discards_left > 0 return discards_left * extra.dollars. Unlike vanilla there is no discards_used == 0 condition."
+acceptance_tests:
+  - "End round with 3 discards left and none used -> $2 * 3 = $6 (same as vanilla)"
+  - "Use 1 of 3 discards, end round -> $2 * 2 = $4 (vanilla: $0)"
+  - "End round with 0 discards left -> $0"
+status: "approved"
+art_status: "none"

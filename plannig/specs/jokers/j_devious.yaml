@@ -1,0 +1,27 @@
+# Implementation ticket for j_devious -> j_bplus_devious_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_devious"
+vanilla_name: "Devious Joker"
+vanilla_rarity: "Common"
+vanilla_cost: 4
+archetype: "Hand-type-conditional"
+vanilla_effect: "+100 Chips if played hand contains a Straight"
+vanilla_config: {"t_chips": 100, "type": "Straight"}
+pattern: "Bigger number"
+plus_key: "j_bplus_devious_plus"
+plus_name: "Insidious Joker"
+plus_effect: "+200 Chips if played hand contains a Straight"
+plus_config: {"extra": {"t_chips": 200, "type": "Straight"}}
+plus_rarity: "Common"
+plus_cost: 4
+state_transfer: []
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "context.joker_main and next(context.poker_hands[extra.type]) -> { chips = extra.t_chips }. Same 'contains' rule as vanilla. Vanilla keeps its value in ability.t_mult/t_chips/x_mult; ours lives in extra."
+acceptance_tests:
+  - "Play a Straight -> +200 Chips (vanilla: +100 Chips)"
+  - "Play a Straight Flush (contains a Straight) -> +200 Chips"
+  - "Play a High Card -> no effect"
+status: "approved"
+art_status: "none"

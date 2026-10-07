@@ -1,0 +1,27 @@
+# Implementation ticket for j_yorick -> j_bplus_yorick_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+# BLOCKED on Q1 (see Open questions in BALATRO_PLUS_AGENT_BRIEF.md).
+# The design is written down so it isn't forgotten. Do not implement until it is unblocked.
+vanilla_key: "j_yorick"
+vanilla_name: "Yorick"
+vanilla_rarity: "Legendary"
+vanilla_cost: 20
+archetype: "Legendary"
+vanilla_effect: "This Joker gains X1 Mult every 23 [23] cards discarded (Currently X1 Mult)"
+vanilla_config: {"extra": {"xmult": 1, "discards": 23}}
+pattern: "Faster scaling"
+plus_key: "j_bplus_yorick_plus"
+plus_name: "Yorick+"
+plus_effect: "This Joker gains X1 Mult every 14 cards discarded"
+plus_config: {"extra": {"xmult": 1, "discards": 14, "discards_left": 14}}
+plus_rarity: "Legendary"
+plus_cost: 20
+state_transfer: "TBD (Q1)"
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "Same as vanilla Yorick with extra.discards = 14: context.discard (not blueprint): discards_left -= 1; at 0 reset to extra.discards and extra.xmult += 1. Score in context.joker_main when > 1. Blocked on Q1: vanilla keeps ability.extra.xmult and ability.yorick_discards (counter)."
+acceptance_tests:
+  - "Discard 14 cards -> X2; 28 cards -> X3 (vanilla needs 23 per step)"
+status: "blocked"
+art_status: "none"

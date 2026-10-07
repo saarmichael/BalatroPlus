@@ -1,0 +1,25 @@
+# Implementation ticket for j_diet_cola -> j_bplus_diet_cola_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_diet_cola"
+vanilla_name: "Diet Cola"
+vanilla_rarity: "Uncommon"
+vanilla_cost: 6
+archetype: "Card generation"
+vanilla_effect: "Sell this card to create a free Double Tag"
+vanilla_config: {}
+pattern: "Bigger number"
+plus_key: "j_bplus_diet_cola_plus"
+plus_name: "Cola Zero"
+plus_effect: "Sell this card to create 2 free Double Tags"
+plus_config: {"extra": {"tags": 2}}
+plus_rarity: "Uncommon"
+plus_cost: 6
+state_transfer: []
+blueprint_compat: true
+eternal_compat: false
+perishable_compat: true
+impl_notes: "Same as vanilla Diet Cola (context.selling_self): add_tag(Tag('tag_double')) extra.tags times, play_sound('generic1')."
+acceptance_tests:
+  - "Sell it -> 2 Double Tags added (vanilla: 1)"
+status: "approved"
+art_status: "none"

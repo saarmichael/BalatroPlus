@@ -1,0 +1,26 @@
+# Implementation ticket for j_brainstorm -> j_bplus_brainstorm_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_brainstorm"
+vanilla_name: "Brainstorm"
+vanilla_rarity: "Rare"
+vanilla_cost: 10
+archetype: "Copy"
+vanilla_effect: "Copies the ability of leftmost Joker"
+vanilla_config: {}
+pattern: "Bigger number"
+plus_key: "j_bplus_brainstorm_plus"
+plus_name: "Hive Mind"
+plus_effect: "Copies the ability of the 2 leftmost Jokers"
+plus_config: {"extra": {"copies": 2}}
+plus_rarity: "Rare"
+plus_cost: 10
+state_transfer: []
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "Like Architect but targets G.jokers.cards[1] and [2]: SMODS.blueprint_effect for each, SMODS.merge_effects. If Hive Mind itself is one of the two leftmost, that slot copies nothing (SMODS.blueprint_effect returns nothing for copier == copied), same as vanilla Brainstorm being leftmost. Carpenter turns Brainstorm into this joker (brief M1). Name: 'hive mind' is the English for the Hebrew 'כוורת מוחות'."
+acceptance_tests:
+  - "Joker+, Joker, ..., Hive Mind -> copies +20 and +4"
+  - "Hive Mind is leftmost -> copies only the 2nd joker"
+status: "approved"
+art_status: "none"

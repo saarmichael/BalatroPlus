@@ -1,0 +1,27 @@
+# Implementation ticket for j_tribe -> j_bplus_tribe_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_tribe"
+vanilla_name: "The Tribe"
+vanilla_rarity: "Rare"
+vanilla_cost: 8
+archetype: "Hand-type-conditional"
+vanilla_effect: "X2 Mult if played hand contains a Flush"
+vanilla_config: {"Xmult": 2, "type": "Flush"}
+pattern: "Bigger number"
+plus_key: "j_bplus_tribe_plus"
+plus_name: "The Nation"
+plus_effect: "X3 Mult if played hand contains a Flush"
+plus_config: {"extra": {"Xmult": 3, "type": "Flush"}}
+plus_rarity: "Rare"
+plus_cost: 8
+state_transfer: []
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "context.joker_main and next(context.poker_hands[extra.type]) -> { xmult = extra.Xmult }. Same 'contains' rule as vanilla. Vanilla keeps its value in ability.t_mult/t_chips/x_mult; ours lives in extra."
+acceptance_tests:
+  - "Play a Flush -> X3 Mult (vanilla: X2 Mult)"
+  - "Play a Straight Flush (contains a Flush) -> X3 Mult"
+  - "Play a High Card -> no effect"
+status: "approved"
+art_status: "none"

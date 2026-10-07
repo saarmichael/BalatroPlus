@@ -1,0 +1,27 @@
+# Implementation ticket for j_ancient -> j_bplus_ancient_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_ancient"
+vanilla_name: "Ancient Joker"
+vanilla_rarity: "Rare"
+vanilla_cost: 8
+archetype: "Suit-conditional"
+vanilla_effect: "Each played card with <?> suit gives X1.5 Mult when scored, suit changes at end of round"
+vanilla_config: {"extra": 1.5}
+pattern: "Relax condition"
+plus_key: "j_bplus_ancient_plus"
+plus_name: "Ur-Joker"
+plus_effect: "Each played card with the chosen suit gives X1.5 Mult when scored. Suit changes at end of round; suits that are more common in your full deck are more likely to be chosen"
+plus_config: {"extra": {"Xmult": 1.5}}
+plus_rarity: "Rare"
+plus_cost: 8
+state_transfer: []
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "Own global suit G.GAME.current_round.bplus_ur_card.suit (separate from vanilla's ancient_card, shared by all Ur-Jokers/copies like vanilla). Set at run start and at end of every round (hook next to reset_ancient_card). Pick weighted by count of each base suit in G.playing_cards, Stone cards excluded, Wild cards counted by their printed suit; seed 'bplus_ur_joker'..ante via pseudorandom; the same suit may repeat. If no suited cards, pick uniformly. Scoring: context.individual + G.play, is_suit(suit) -> { xmult = extra.Xmult }."
+acceptance_tests:
+  - "Deck of only Spades -> after end of round the suit is Spades"
+  - "Played card of the current suit -> X1.5; other suit -> nothing"
+  - "Vanilla Ancient Joker's suit is unchanged by Ur-Joker's end-of-round pick"
+status: "approved"
+art_status: "none"

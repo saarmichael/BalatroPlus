@@ -1,0 +1,25 @@
+# Implementation ticket for j_onyx_agate -> j_bplus_onyx_agate_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_onyx_agate"
+vanilla_name: "Onyx Agate"
+vanilla_rarity: "Uncommon"
+vanilla_cost: 7
+archetype: "Suit-conditional"
+vanilla_effect: "Played cards with Club suit give +7 Mult when scored"
+vanilla_config: {"extra": 7}
+pattern: "Bigger number"
+plus_key: "j_bplus_onyx_agate_plus"
+plus_name: "Obsidian"
+plus_effect: "Played cards with Club suit give +15 Mult when scored"
+plus_config: {"extra": {"mult": 15}}
+plus_rarity: "Uncommon"
+plus_cost: 7
+state_transfer: []
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "context.individual + G.play, is_suit('Clubs') -> { mult = extra.mult }."
+acceptance_tests:
+  - "Play a Pair of Clubs -> joker adds +15 + 15 Mult (vanilla: +7 + 7)"
+status: "approved"
+art_status: "none"

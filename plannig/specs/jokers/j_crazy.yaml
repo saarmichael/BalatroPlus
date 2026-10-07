@@ -1,0 +1,27 @@
+# Implementation ticket for j_crazy -> j_bplus_crazy_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_crazy"
+vanilla_name: "Crazy Joker"
+vanilla_rarity: "Common"
+vanilla_cost: 4
+archetype: "Hand-type-conditional"
+vanilla_effect: "+12 Mult if played hand contains a Straight"
+vanilla_config: {"t_mult": 12, "type": "Straight"}
+pattern: "Bigger number"
+plus_key: "j_bplus_crazy_plus"
+plus_name: "Wacky Joker"
+plus_effect: "+32 Mult if played hand contains a Straight"
+plus_config: {"extra": {"t_mult": 32, "type": "Straight"}}
+plus_rarity: "Common"
+plus_cost: 4
+state_transfer: []
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "context.joker_main and next(context.poker_hands[extra.type]) -> { mult = extra.t_mult }. Same 'contains' rule as vanilla. Vanilla keeps its value in ability.t_mult/t_chips/x_mult; ours lives in extra."
+acceptance_tests:
+  - "Play a Straight -> +32 Mult (vanilla: +12 Mult)"
+  - "Play a Straight Flush (contains a Straight) -> +32 Mult"
+  - "Play a High Card -> no effect"
+status: "approved"
+art_status: "none"

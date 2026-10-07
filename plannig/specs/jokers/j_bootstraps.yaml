@@ -1,0 +1,26 @@
+# Implementation ticket for j_bootstraps -> j_bplus_bootstraps_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_bootstraps"
+vanilla_name: "Bootstraps"
+vanilla_rarity: "Uncommon"
+vanilla_cost: 7
+archetype: "Flat Mult"
+vanilla_effect: "+2 Mult for every $5 you have (Currently +<?> Mult)"
+vanilla_config: {"extra": {"mult": 2, "dollars": 5}}
+pattern: "Relax condition"
+plus_key: "j_bplus_bootstraps_plus"
+plus_name: "Self-Made"
+plus_effect: "+2 Mult for every $3 you have"
+plus_config: {"extra": {"mult": 2, "dollars": 3}}
+plus_rarity: "Uncommon"
+plus_cost: 7
+state_transfer: []
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "context.joker_main -> extra.mult * floor((G.GAME.dollars + (G.GAME.dollar_buffer or 0)) / extra.dollars), only when >= 1 step (same as vanilla, incl. dollar_buffer)."
+acceptance_tests:
+  - "With $10 -> +2 * floor(10 / 3) = 6 Mult"
+  - "With $2 -> +0 Mult"
+status: "approved"
+art_status: "none"

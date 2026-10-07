@@ -1,0 +1,26 @@
+# Implementation ticket for j_chaos -> j_bplus_chaos_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_chaos"
+vanilla_name: "Chaos the Clown"
+vanilla_rarity: "Common"
+vanilla_cost: 4
+archetype: "Economy"
+vanilla_effect: "1 free Reroll per shop"
+vanilla_config: {"extra": 1}
+pattern: "Bigger number"
+plus_key: "j_bplus_chaos_plus"
+plus_name: "Krusty the Clown"
+plus_effect: "2 free Rerolls per shop"
+plus_config: {"extra": {"rerolls": 2}}
+plus_rarity: "Common"
+plus_cost: 4
+state_transfer: []
+blueprint_compat: false
+eternal_compat: true
+perishable_compat: true
+impl_notes: "Vanilla: add_to_deck adds 1 free reroll and calls calculate_reroll_cost(true); remove does the reverse; at each new shop the game sets G.GAME.current_round.free_rerolls = #find_joker('Chaos the Clown') (state_events.lua). Krusty must add extra.rerolls there too (hook that reset, check the lovely dump for how smods does it now)."
+acceptance_tests:
+  - "Enter a shop -> first 2 rerolls are free, third costs money"
+  - "Buy Krusty mid-shop -> 2 free rerolls become available immediately"
+status: "approved"
+art_status: "none"

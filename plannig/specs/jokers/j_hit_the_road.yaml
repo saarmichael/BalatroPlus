@@ -1,0 +1,28 @@
+# Implementation ticket for j_hit_the_road -> j_bplus_hit_the_road_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+# BLOCKED on Q1 (see Open questions in BALATRO_PLUS_AGENT_BRIEF.md).
+# The design is written down so it isn't forgotten. Do not implement until it is unblocked.
+vanilla_key: "j_hit_the_road"
+vanilla_name: "Hit the Road"
+vanilla_rarity: "Rare"
+vanilla_cost: 8
+archetype: "Scaling xMult"
+vanilla_effect: "This Joker gains X0.5 Mult for every Jack discarded this round (Currently X1 Mult)"
+vanilla_config: {"extra": 0.5}
+pattern: "Faster scaling"
+plus_key: "j_bplus_hit_the_road_plus"
+plus_name: "Hit the Road+"
+plus_effect: "This Joker gains X1 Mult for every Jack discarded this round"
+plus_config: {"extra": {"Xmult": 1, "Xmult_mod": 1}}
+plus_rarity: "Rare"
+plus_cost: 8
+state_transfer: "TBD (Q1)"
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "Same as vanilla Hit the Road: context.discard (not blueprint), other_card:get_id() == 11 and not debuffed -> extra.Xmult += extra.Xmult_mod; end of round (not blueprint) -> reset to 1. The value only lives for one round, so Q1 only matters for an upgrade during a round. Score extra.Xmult in context.joker_main when > 1. Blocked on Q1: vanilla keeps the built-up XMult in ability.x_mult; under any answer except 'reset', state_transfer will be 'x_mult -> extra.Xmult'."
+acceptance_tests:
+  - "Discard 2 Jacks -> X(1 + 1 * 2) = X3 (vanilla: X2)"
+  - "Next round -> back to X1"
+status: "blocked"
+art_status: "none"

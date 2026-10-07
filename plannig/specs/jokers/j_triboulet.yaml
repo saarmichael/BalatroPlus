@@ -1,0 +1,27 @@
+# Implementation ticket for j_triboulet -> j_bplus_triboulet_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_triboulet"
+vanilla_name: "Triboulet"
+vanilla_rarity: "Legendary"
+vanilla_cost: 20
+archetype: "Legendary"
+vanilla_effect: "Played Kings and Queens each give X2 Mult when scored"
+vanilla_config: {"extra": 2}
+pattern: "Relax condition"
+plus_key: "j_bplus_triboulet_plus"
+plus_name: "Triboulet+"
+plus_effect: "Played Kings, Queens and Jacks each give X2 Mult when scored"
+plus_config: {"extra": {"Xmult": 2}}
+plus_rarity: "Legendary"
+plus_cost: 20
+state_transfer: []
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "Same as vanilla Triboulet: context.individual + G.play, get_id() is 13, 12 or 11 -> xmult = extra.Xmult."
+acceptance_tests:
+  - "Score a Jack -> X2 (vanilla: nothing)"
+  - "Score a King and a Queen -> X2 * X2"
+  - "Score a 10 -> nothing"
+status: "approved"
+art_status: "none"

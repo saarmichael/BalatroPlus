@@ -1,0 +1,26 @@
+# Implementation ticket for j_odd_todd -> j_bplus_odd_todd_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_odd_todd"
+vanilla_name: "Odd Todd"
+vanilla_rarity: "Common"
+vanilla_cost: 4
+archetype: "Rank-conditional"
+vanilla_effect: "Played cards with odd rank give +31 Chips when scored (A, 9, 7, 5, 3)"
+vanilla_config: {"extra": 31}
+pattern: "Bigger number"
+plus_key: "j_bplus_odd_todd_plus"
+plus_name: "Todd the Odd"
+plus_effect: "Played cards with odd rank give +67 Chips when scored (A, 9, 7, 5, 3)"
+plus_config: {"extra": {"chips": 67}}
+plus_rarity: "Common"
+plus_cost: 4
+state_transfer: []
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "context.individual + cardarea G.play, (get_id() <= 10 and get_id() % 2 == 1) or get_id() == 14 (same as vanilla) -> chips = extra.chips."
+acceptance_tests:
+  - "Score an Ace and a 7 -> +67 + 67 Chips (vanilla: +31 + 31)"
+  - "Score an 8 -> no effect"
+status: "approved"
+art_status: "none"

@@ -1,0 +1,26 @@
+# Implementation ticket for j_gluttenous_joker -> j_bplus_gluttenous_joker_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_gluttenous_joker"
+vanilla_name: "Gluttonous Joker"
+vanilla_rarity: "Common"
+vanilla_cost: 5
+archetype: "Suit-conditional"
+vanilla_effect: "Played cards with Club suit give +3 Mult when scored"
+vanilla_config: {"extra": {"s_mult": 3, "suit": "Clubs"}}
+pattern: "Bigger number"
+plus_key: "j_bplus_gluttenous_joker_plus"
+plus_name: "Edacious Joker"
+plus_effect: "Played cards with Club suit give +5 Mult when scored"
+plus_config: {"extra": {"s_mult": 5, "suit": "Clubs"}}
+plus_rarity: "Common"
+plus_cost: 5
+state_transfer: []
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "context.individual + cardarea G.play, other_card:is_suit('Clubs') -> { mult = extra.s_mult } (Wild cards and Smeared Joker work through is_suit, same as vanilla). Vanilla key is spelled 'gluttenous'; plus key follows it."
+acceptance_tests:
+  - "Play a Pair of Clubs -> joker adds +5 + 5 Mult (vanilla: +3 + 3)"
+  - "Play a Pair with no Clubs -> joker adds +0 Mult"
+status: "approved"
+art_status: "none"

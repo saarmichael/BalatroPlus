@@ -1,0 +1,26 @@
+# Implementation ticket for j_merry_andy -> j_bplus_merry_andy_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_merry_andy"
+vanilla_name: "Merry Andy"
+vanilla_rarity: "Uncommon"
+vanilla_cost: 7
+archetype: "Hands & discards"
+vanilla_effect: "+3 discards each round, -1 hand size"
+vanilla_config: {"d_size": 3, "h_size": -1}
+pattern: "Bigger number"
+plus_key: "j_bplus_merry_andy_plus"
+plus_name: "Merry Andrew"
+plus_effect: "+4 discards each round, -1 hand size"
+plus_config: {"extra": {"d_size": 4, "h_size": -1}}
+plus_rarity: "Uncommon"
+plus_cost: 7
+state_transfer: []
+blueprint_compat: false
+eternal_compat: true
+perishable_compat: true
+impl_notes: "add_to_deck: G.GAME.round_resets.discards += extra.d_size, ease_discard(extra.d_size), G.hand:change_size(extra.h_size); remove_from_deck: the reverse. Keep the numbers in extra and apply them in add_to_deck / remove_from_deck by hand (like Daredevil), not via vanilla's top-level ability.h_size / d_size. On upgrade set_ability runs remove_from_deck on the vanilla joker, then add_to_deck on the new one, so only the difference stays applied. Name: 'Merry Andrew' is the old full form of 'merry andy' (a clown)."
+acceptance_tests:
+  - "Discards per round 3 + 4 = 7, hand size 8 - 1 = 7 (vanilla: 3 + 3 discards)"
+  - "Upgrade Merry Andy -> discards 6 -> 7, hand size stays 7"
+status: "approved"
+art_status: "none"

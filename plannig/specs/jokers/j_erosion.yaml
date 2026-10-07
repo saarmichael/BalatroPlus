@@ -1,0 +1,26 @@
+# Implementation ticket for j_erosion -> j_bplus_erosion_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_erosion"
+vanilla_name: "Erosion"
+vanilla_rarity: "Uncommon"
+vanilla_cost: 6
+archetype: "Flat Mult"
+vanilla_effect: "+4 Mult for each card below <?> in your full deck (Currently +0 Mult)"
+vanilla_config: {"extra": 4}
+pattern: "Bigger number"
+plus_key: "j_bplus_erosion_plus"
+plus_name: "Landslide"
+plus_effect: "+8 Mult for each card below starting deck size in your full deck"
+plus_config: {"extra": {"mult": 8}}
+plus_rarity: "Uncommon"
+plus_cost: 6
+state_transfer: []
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "context.joker_main when (G.GAME.starting_deck_size - #G.playing_cards) > 0 -> that difference * extra.mult."
+acceptance_tests:
+  - "Remove 5 cards from a 52-card deck -> +8 * 5 = 40 Mult"
+  - "Full 52-card deck -> +0 Mult"
+status: "approved"
+art_status: "none"

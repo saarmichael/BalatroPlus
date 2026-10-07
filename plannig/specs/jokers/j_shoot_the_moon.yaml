@@ -1,0 +1,26 @@
+# Implementation ticket for j_shoot_the_moon -> j_bplus_shoot_the_moon_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_shoot_the_moon"
+vanilla_name: "Shoot the Moon"
+vanilla_rarity: "Common"
+vanilla_cost: 5
+archetype: "Rank-conditional"
+vanilla_effect: "Each Queen held in hand gives +13 Mult"
+vanilla_config: {"extra": 13}
+pattern: "Bigger number"
+plus_key: "j_bplus_shoot_the_moon_plus"
+plus_name: "Moonshot"
+plus_effect: "Each Queen held in hand gives +21 Mult"
+plus_config: {"extra": {"mult": 21}}
+plus_rarity: "Common"
+plus_cost: 5
+state_transfer: []
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "Same as vanilla Shoot the Moon: context.individual + cardarea G.hand (not end_of_round), get_id() == 12, debuffed -> 'Debuffed' message, else h_mult = extra.mult. Held-in-hand effect, so Mime retriggers it."
+acceptance_tests:
+  - "Hold 2 Queens -> +21 + 21 Mult (vanilla: +13 + 13)"
+  - "Hold no Queens -> no effect"
+status: "approved"
+art_status: "none"

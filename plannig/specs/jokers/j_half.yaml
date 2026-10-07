@@ -1,0 +1,27 @@
+# Implementation ticket for j_half -> j_bplus_half_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_half"
+vanilla_name: "Half Joker"
+vanilla_rarity: "Common"
+vanilla_cost: 5
+archetype: "Flat Mult"
+vanilla_effect: "+20 Mult if played hand contains 3 or fewer cards"
+vanilla_config: {"extra": {"mult": 20, "size": 3}}
+pattern: "Bigger number + Relax condition"
+plus_key: "j_bplus_half_plus"
+plus_name: "Bigger Half Joker"
+plus_effect: "+40 Mult if played hand contains 4 or fewer cards"
+plus_config: {"extra": {"mult": 40, "size": 4}}
+plus_rarity: "Common"
+plus_cost: 5
+state_transfer: []
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "context.joker_main, condition #context.full_hand <= extra.size (full hand, not scoring hand, same as vanilla)."
+acceptance_tests:
+  - "Play 4 cards -> +40 Mult"
+  - "Play 5 cards -> +0 Mult"
+  - "Play 1 card -> +40 Mult"
+status: "approved"
+art_status: "none"

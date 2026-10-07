@@ -1,0 +1,26 @@
+# Implementation ticket for j_mystic_summit -> j_bplus_mystic_summit_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_mystic_summit"
+vanilla_name: "Mystic Summit"
+vanilla_rarity: "Common"
+vanilla_cost: 5
+archetype: "Flat Mult"
+vanilla_effect: "+15 Mult when 0 discards remaining"
+vanilla_config: {"extra": {"mult": 15, "d_remaining": 0}}
+pattern: "Bigger number"
+plus_key: "j_bplus_mystic_summit_plus"
+plus_name: "Mystic Zenith"
+plus_effect: "+35 Mult when 0 discards remaining"
+plus_config: {"extra": {"mult": 35, "d_remaining": 0}}
+plus_rarity: "Common"
+plus_cost: 5
+state_transfer: []
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "context.joker_main, condition G.GAME.current_round.discards_left == extra.d_remaining."
+acceptance_tests:
+  - "Use all discards, then play -> +35 Mult"
+  - "Play with 1 discard left -> +0 Mult"
+status: "approved"
+art_status: "none"

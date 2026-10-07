@@ -1,0 +1,26 @@
+# Implementation ticket for j_fibonacci -> j_bplus_fibonacci_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_fibonacci"
+vanilla_name: "Fibonacci"
+vanilla_rarity: "Uncommon"
+vanilla_cost: 8
+archetype: "Rank-conditional"
+vanilla_effect: "Each played Ace, 2, 3, 5, or 8 gives +8 Mult when scored"
+vanilla_config: {"extra": 8}
+pattern: "Bigger number"
+plus_key: "j_bplus_fibonacci_plus"
+plus_name: "Perfect Storm"
+plus_effect: "Each played Ace, 2, 3, 5, or 8 gives +13 Mult when scored"
+plus_config: {"extra": {"mult": 13}}
+plus_rarity: "Uncommon"
+plus_cost: 8
+state_transfer: []
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "context.individual + cardarea G.play, other_card:get_id() in {14, 2, 3, 5, 8} -> mult = extra.mult (same as vanilla Fibonacci)."
+acceptance_tests:
+  - "Score an Ace and an 8 -> +13 + 13 Mult (vanilla: +8 + 8)"
+  - "Score a 4 -> no effect"
+status: "approved"
+art_status: "none"

@@ -1,0 +1,28 @@
+# Implementation ticket for j_sixth_sense -> j_bplus_sixth_sense_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_sixth_sense"
+vanilla_name: "Sixth Sense"
+vanilla_rarity: "Uncommon"
+vanilla_cost: 6
+archetype: "Card generation"
+vanilla_effect: "If first hand of round is a single 6, destroy it and create a Spectral card (Must have room)"
+vanilla_config: {}
+pattern: "Bigger number"
+plus_key: "j_bplus_sixth_sense_plus"
+plus_name: "Second Sixth Sense"
+plus_effect: "If first hand of round is a single 6, destroy it and create 2 Spectral cards (Must have room)"
+plus_config: {"extra": {"cards": 2}}
+plus_rarity: "Uncommon"
+plus_cost: 6
+state_transfer: []
+blueprint_compat: false
+eternal_compat: true
+perishable_compat: true
+impl_notes: "Same as vanilla Sixth Sense (context.destroying_card, #full_hand == 1, get_id() == 6, hands_played == 0, not blueprint): the 6 is destroyed even with no room, as in vanilla; create Spectral cards (seed 'bplus_second_sixth_sense'). Room: create min(extra.cards, free consumable slots) cards, where free = card_limit - (#G.consumeables.cards + G.GAME.consumeable_buffer), using consumeable_buffer like vanilla (same pattern as vanilla Riff-Raff uses for jokers). Nothing if no free slot."
+acceptance_tests:
+  - "First hand a single 6, 2 free slots -> 6 destroyed, 2 Spectral cards created (vanilla: 1)"
+  - "Only 1 free slot -> 1 Spectral created"
+  - "Slots full -> 6 still destroyed, nothing created"
+  - "Second hand of round a single 6 -> nothing"
+status: "approved"
+art_status: "none"

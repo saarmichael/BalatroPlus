@@ -1,0 +1,27 @@
+# Implementation ticket for j_zany -> j_bplus_zany_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_zany"
+vanilla_name: "Zany Joker"
+vanilla_rarity: "Common"
+vanilla_cost: 4
+archetype: "Hand-type-conditional"
+vanilla_effect: "+12 Mult if played hand contains a Three of a Kind"
+vanilla_config: {"t_mult": 12, "type": "Three of a Kind"}
+pattern: "Bigger number"
+plus_key: "j_bplus_zany_plus"
+plus_name: "Goofy Joker"
+plus_effect: "+28 Mult if played hand contains a Three of a Kind"
+plus_config: {"extra": {"t_mult": 28, "type": "Three of a Kind"}}
+plus_rarity: "Common"
+plus_cost: 4
+state_transfer: []
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "context.joker_main and next(context.poker_hands[extra.type]) -> { mult = extra.t_mult }. Same 'contains' rule as vanilla. Vanilla keeps its value in ability.t_mult/t_chips/x_mult; ours lives in extra."
+acceptance_tests:
+  - "Play a Three of a Kind -> +28 Mult (vanilla: +12 Mult)"
+  - "Play a Full House (contains a Three of a Kind) -> +28 Mult"
+  - "Play a Pair -> no effect"
+status: "approved"
+art_status: "none"

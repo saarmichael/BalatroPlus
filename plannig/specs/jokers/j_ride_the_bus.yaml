@@ -1,0 +1,28 @@
+# Implementation ticket for j_ride_the_bus -> j_bplus_ride_the_bus_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+# BLOCKED on Q1 (see Open questions in BALATRO_PLUS_AGENT_BRIEF.md).
+# The design is written down so it isn't forgotten. Do not implement until it is unblocked.
+vanilla_key: "j_ride_the_bus"
+vanilla_name: "Ride the Bus"
+vanilla_rarity: "Common"
+vanilla_cost: 6
+archetype: "Scaling Mult"
+vanilla_effect: "This Joker gains +1 Mult per consecutive hand played without a scoring face card (Currently +0 Mult)"
+vanilla_config: {"extra": 1}
+pattern: "Faster scaling"
+plus_key: "j_bplus_ride_the_bus_plus"
+plus_name: "Express Bus"
+plus_effect: "This Joker gains +2 Mult per consecutive hand played without a scoring face card"
+plus_config: {"extra": {"mult_gain": 2, "mult": 0}}
+plus_rarity: "Common"
+plus_cost: 6
+state_transfer: "TBD (Q1)"
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: false
+impl_notes: "Same as vanilla (context.before, not blueprint): if any scoring card is_face() reset extra.mult to 0, else extra.mult += extra.mult_gain. Score in context.joker_main when > 0. Note: CONVENTIONS.md uses an older example design for this joker (halve instead of reset); this row replaces it. Blocked on Q1: what happens to the Mult the vanilla joker built up. Vanilla keeps it in ability.mult; under any answer except 'reset', state_transfer will be 'mult -> extra.mult'."
+acceptance_tests:
+  - "3 hands without face cards -> +2 + 2 + 2 = 6 Mult"
+  - "Then a hand with a scoring face card -> Mult resets to 0"
+status: "blocked"
+art_status: "none"

@@ -1,0 +1,26 @@
+# Implementation ticket for j_acrobat -> j_bplus_acrobat_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_acrobat"
+vanilla_name: "Acrobat"
+vanilla_rarity: "Uncommon"
+vanilla_cost: 6
+archetype: "xMult"
+vanilla_effect: "X3 Mult on final hand of round"
+vanilla_config: {"extra": 3}
+pattern: "Bigger number"
+plus_key: "j_bplus_acrobat_plus"
+plus_name: "Nadia Comăneci"
+plus_effect: "X4 Mult on final hand of round"
+plus_config: {"extra": {"Xmult": 4}}
+plus_rarity: "Uncommon"
+plus_cost: 6
+state_transfer: []
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "context.joker_main when G.GAME.current_round.hands_left == 0 -> xmult = extra.Xmult. Font check: the game font m6x11plus has the 'ă' glyph (U+0103)."
+acceptance_tests:
+  - "Play the last hand of the round -> X4 (vanilla Acrobat: X3)"
+  - "Play a hand with hands left -> no effect"
+status: "approved"
+art_status: "none"

@@ -1,0 +1,27 @@
+# Implementation ticket for j_credit_card -> j_bplus_credit_card_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_credit_card"
+vanilla_name: "Credit Card"
+vanilla_rarity: "Common"
+vanilla_cost: 1
+archetype: "Economy"
+vanilla_effect: "Go up to -$20 in debt"
+vanilla_config: {"extra": 20}
+pattern: "Bigger number"
+plus_key: "j_bplus_credit_card_plus"
+plus_name: "Sam Altman"
+plus_effect: "Go up to -$100 in debt"
+plus_config: {"extra": {"debt": 100}}
+plus_rarity: "Common"
+plus_cost: 1
+state_transfer: []
+blueprint_compat: false
+eternal_compat: true
+perishable_compat: true
+impl_notes: "add_to_deck: G.GAME.bankrupt_at -= extra.debt; remove_to_deck: += extra.debt (same as vanilla). On upgrade set_ability calls remove_from_deck on the old center (+20) then add_to_deck on the new one (-100), so the totals stay right."
+acceptance_tests:
+  - "With $0, buy a $5 joker -> allowed down to -$100 (vanilla: -$20)"
+  - "Sell it -> debt limit back to $0"
+  - "Upgrade Credit Card -> limit goes from -$20 to -$100, not -$120"
+status: "approved"
+art_status: "none"

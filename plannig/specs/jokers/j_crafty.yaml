@@ -1,0 +1,27 @@
+# Implementation ticket for j_crafty -> j_bplus_crafty_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_crafty"
+vanilla_name: "Crafty Joker"
+vanilla_rarity: "Common"
+vanilla_cost: 4
+archetype: "Hand-type-conditional"
+vanilla_effect: "+80 Chips if played hand contains a Flush"
+vanilla_config: {"t_chips": 80, "type": "Flush"}
+pattern: "Bigger number"
+plus_key: "j_bplus_crafty_plus"
+plus_name: "Shrewd Joker"
+plus_effect: "+140 Chips if played hand contains a Flush"
+plus_config: {"extra": {"t_chips": 140, "type": "Flush"}}
+plus_rarity: "Common"
+plus_cost: 4
+state_transfer: []
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "context.joker_main and next(context.poker_hands[extra.type]) -> { chips = extra.t_chips }. Same 'contains' rule as vanilla. Vanilla keeps its value in ability.t_mult/t_chips/x_mult; ours lives in extra."
+acceptance_tests:
+  - "Play a Flush -> +140 Chips (vanilla: +80 Chips)"
+  - "Play a Straight Flush (contains a Flush) -> +140 Chips"
+  - "Play a High Card -> no effect"
+status: "approved"
+art_status: "none"

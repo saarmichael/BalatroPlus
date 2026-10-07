@@ -1,0 +1,26 @@
+# Implementation ticket for j_drunkard -> j_bplus_drunkard_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_drunkard"
+vanilla_name: "Drunkard"
+vanilla_rarity: "Common"
+vanilla_cost: 4
+archetype: "Hands & discards"
+vanilla_effect: "+1 discard each round"
+vanilla_config: {"d_size": 1}
+pattern: "Bigger number"
+plus_key: "j_bplus_drunkard_plus"
+plus_name: "Barfly"
+plus_effect: "+2 discards each round"
+plus_config: {"extra": {"d_size": 2}}
+plus_rarity: "Common"
+plus_cost: 4
+state_transfer: []
+blueprint_compat: false
+eternal_compat: true
+perishable_compat: true
+impl_notes: "add_to_deck: G.GAME.round_resets.discards += extra.d_size and ease_discard(extra.d_size); remove_from_deck: the reverse (same as vanilla's d_size handling). Keep the numbers in extra and apply them in add_to_deck / remove_from_deck by hand (like Daredevil), not via vanilla's top-level ability.h_size / d_size. On upgrade set_ability runs remove_from_deck on the vanilla joker, then add_to_deck on the new one, so only the difference stays applied."
+acceptance_tests:
+  - "Discards per round 3 + 2 = 5 (vanilla: 3 + 1)"
+  - "Sell it -> back to 3"
+status: "approved"
+art_status: "none"

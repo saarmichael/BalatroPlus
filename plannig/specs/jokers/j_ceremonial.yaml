@@ -1,0 +1,28 @@
+# Implementation ticket for j_ceremonial -> j_bplus_ceremonial_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+# BLOCKED on Q1 (see Open questions in BALATRO_PLUS_AGENT_BRIEF.md).
+# The design is written down so it isn't forgotten. Do not implement until it is unblocked.
+vanilla_key: "j_ceremonial"
+vanilla_name: "Ceremonial Dagger"
+vanilla_rarity: "Uncommon"
+vanilla_cost: 6
+archetype: "Scaling Mult"
+vanilla_effect: "When Blind is selected, destroy Joker to the right and permanently add double its sell value to this Mult (Currently +0 Mult)"
+vanilla_config: {"mult": 0}
+pattern: "Faster scaling"
+plus_key: "j_bplus_ceremonial_plus"
+plus_name: "Sacrificial Dagger"
+plus_effect: "When Blind is selected, destroy Joker to the right and permanently add triple its sell value to this Mult"
+plus_config: {"extra": {"sell_mult": 3, "mult": 0}}
+plus_rarity: "Uncommon"
+plus_cost: 6
+state_transfer: "TBD (Q1)"
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: false
+impl_notes: "Same as vanilla Ceremonial Dagger (context.setting_blind, not blueprint): skip if no joker to the right, it is Eternal, or it is already being destroyed; set getting_sliced, destroy it, extra.mult += extra.sell_mult * its sell_cost. Score extra.mult in context.joker_main when > 0. Blocked on Q1: what happens to the Mult the vanilla joker built up. Vanilla keeps it in ability.mult; under any answer except 'reset', state_transfer will be 'mult -> extra.mult'."
+acceptance_tests:
+  - "Joker to the right sells for $3, select Blind -> it is destroyed, Mult = 0 + 3 * 3 = 9 (vanilla: 2 * 3 = 6)"
+  - "Eternal joker to the right -> nothing happens"
+status: "blocked"
+art_status: "none"

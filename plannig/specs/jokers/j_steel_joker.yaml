@@ -1,0 +1,26 @@
+# Implementation ticket for j_steel_joker -> j_bplus_steel_joker_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_steel_joker"
+vanilla_name: "Steel Joker"
+vanilla_rarity: "Uncommon"
+vanilla_cost: 7
+archetype: "xMult"
+vanilla_effect: "Gives X0.2 Mult for each Steel Card in your full deck (Currently X1 Mult)"
+vanilla_config: {"extra": 0.2}
+pattern: "Bigger number"
+plus_key: "j_bplus_steel_joker_plus"
+plus_name: "Stainless Steel Joker"
+plus_effect: "Gives X0.4 Mult for each Steel Card in your full deck"
+plus_config: {"extra": {"Xmult_per": 0.4}}
+plus_rarity: "Uncommon"
+plus_cost: 7
+state_transfer: []
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "Count Steel cards (config.center == G.P_CENTERS.m_steel) in G.playing_cards, like vanilla steel_tally. context.joker_main, when count > 0 -> xmult = 1 + extra.Xmult_per * count."
+acceptance_tests:
+  - "3 Steel cards in deck -> X(1 + 0.4 * 3) = X2.2 (vanilla: X1.6)"
+  - "No Steel cards -> no effect"
+status: "approved"
+art_status: "none"

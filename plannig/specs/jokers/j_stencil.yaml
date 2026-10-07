@@ -1,0 +1,27 @@
+# Implementation ticket for j_stencil -> j_bplus_stencil_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_stencil"
+vanilla_name: "Joker Stencil"
+vanilla_rarity: "Uncommon"
+vanilla_cost: 8
+archetype: "xMult"
+vanilla_effect: "X1 Mult for each empty Joker slot Joker Stencil included (Currently X1 )"
+vanilla_config: {}
+pattern: "Bigger number"
+plus_key: "j_bplus_stencil_plus"
+plus_name: "Joker Mold"
+plus_effect: "X1.5 Mult for each empty Joker slot. Joker Mold included"
+plus_config: {"extra": {"Xmult_per": 1.5}}
+plus_rarity: "Uncommon"
+plus_cost: 8
+state_transfer: []
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "Same as vanilla, scaled: N = (G.jokers.config.card_limit - #G.jokers.cards) + number of held Joker Stencils/Joker Molds (itself included). Score X(extra.Xmult_per * N) in context.joker_main, only when at least one slot is actually empty (vanilla condition). Vanilla recomputes in Card:update; loc_vars shows Currently X value."
+acceptance_tests:
+  - "5 slots, Joker Mold alone -> X1.5 * (4 + 1) = X7.5 (vanilla Stencil: X5)"
+  - "5 slots, 4 jokers incl. Mold -> X1.5 * (1 + 1) = X3"
+  - "All slots full -> no effect"
+status: "approved"
+art_status: "none"

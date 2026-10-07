@@ -1,0 +1,26 @@
+# Implementation ticket for j_smiley -> j_bplus_smiley_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_smiley"
+vanilla_name: "Smiley Face"
+vanilla_rarity: "Common"
+vanilla_cost: 4
+archetype: "Rank-conditional"
+vanilla_effect: "Played face cards give +5 Mult when scored"
+vanilla_config: {"extra": 5}
+pattern: "Bigger number"
+plus_key: "j_bplus_smiley_plus"
+plus_name: "Hugging Face"
+plus_effect: "Played face cards give +10 Mult when scored"
+plus_config: {"extra": {"mult": 10}}
+plus_rarity: "Common"
+plus_cost: 4
+state_transfer: []
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "context.individual + cardarea G.play, other_card:is_face() -> mult = extra.mult."
+acceptance_tests:
+  - "Score 2 face cards -> +10 + 10 Mult (vanilla: +5 + 5)"
+  - "Score a 7 -> no effect"
+status: "approved"
+art_status: "none"

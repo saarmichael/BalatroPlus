@@ -1,0 +1,26 @@
+# Implementation ticket for j_mail -> j_bplus_mail_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_mail"
+vanilla_name: "Mail-In Rebate"
+vanilla_rarity: "Common"
+vanilla_cost: 4
+archetype: "Economy"
+vanilla_effect: "Earn $5 for each discarded <?>, rank changes every round"
+vanilla_config: {"extra": 5}
+pattern: "Bigger number"
+plus_key: "j_bplus_mail_plus"
+plus_name: "Cashback"
+plus_effect: "Earn $6 for each discarded card of the listed rank, rank changes every round"
+plus_config: {"extra": {"dollars": 6}}
+plus_rarity: "Common"
+plus_cost: 4
+state_transfer: []
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "Same as vanilla Mail-In Rebate: context.discard, not debuffed, other_card:get_id() == G.GAME.current_round.mail_card.id (vanilla's shared global, reset every round) -> dollars = extra.dollars."
+acceptance_tests:
+  - "Listed rank is 7: discard two 7s -> +$6 + $6 (vanilla: +$5 + $5)"
+  - "Discard other ranks -> $0"
+status: "approved"
+art_status: "none"

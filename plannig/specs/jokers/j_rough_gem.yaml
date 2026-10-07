@@ -1,0 +1,25 @@
+# Implementation ticket for j_rough_gem -> j_bplus_rough_gem_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_rough_gem"
+vanilla_name: "Rough Gem"
+vanilla_rarity: "Uncommon"
+vanilla_cost: 7
+archetype: "Suit-conditional"
+vanilla_effect: "Played cards with Diamond suit earn $1 when scored"
+vanilla_config: {"extra": 1}
+pattern: "Bigger number"
+plus_key: "j_bplus_rough_gem_plus"
+plus_name: "Gemstone"
+plus_effect: "Played cards with Diamond suit earn $2 when scored"
+plus_config: {"extra": {"dollars": 2}}
+plus_rarity: "Uncommon"
+plus_cost: 7
+state_transfer: []
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "context.individual + G.play, is_suit('Diamonds') -> { dollars = extra.dollars }, using dollar_buffer like vanilla."
+acceptance_tests:
+  - "Play a Pair of Diamonds -> +$2 + $2 (vanilla: +$1 + $1)"
+status: "approved"
+art_status: "none"

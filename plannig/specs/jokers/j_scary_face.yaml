@@ -1,0 +1,26 @@
+# Implementation ticket for j_scary_face -> j_bplus_scary_face_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_scary_face"
+vanilla_name: "Scary Face"
+vanilla_rarity: "Common"
+vanilla_cost: 4
+archetype: "Rank-conditional"
+vanilla_effect: "Played face cards give +30 Chips when scored"
+vanilla_config: {"extra": 30}
+pattern: "Bigger number"
+plus_key: "j_bplus_scary_face_plus"
+plus_name: "Nightmare"
+plus_effect: "Played face cards give +60 Chips when scored"
+plus_config: {"extra": {"chips": 60}}
+plus_rarity: "Common"
+plus_cost: 4
+state_transfer: []
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "context.individual + cardarea G.play, other_card:is_face() -> chips = extra.chips (Pareidolia works through is_face)."
+acceptance_tests:
+  - "Score 2 face cards -> +60 + 60 Chips (vanilla: +30 + 30)"
+  - "Score a 7 -> no effect"
+status: "approved"
+art_status: "none"

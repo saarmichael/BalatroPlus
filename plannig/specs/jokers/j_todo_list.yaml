@@ -1,0 +1,29 @@
+# Implementation ticket for j_todo_list -> j_bplus_todo_list_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_todo_list"
+vanilla_name: "To Do List"
+vanilla_rarity: "Common"
+vanilla_cost: 4
+archetype: "Economy"
+vanilla_effect: "Earn $4 if poker hand is a <?>, poker hand changes at end of round"
+vanilla_config: {"extra": {"dollars": 4, "poker_hand": "High Card"}}
+pattern: "Bigger number + Relax condition"
+plus_key: "j_bplus_todo_list_plus"
+plus_name: "Wishlist"
+plus_effect: "Earn $5 if played hand contains the listed poker hand, poker hand changes at end of round"
+plus_config: {"extra": {"dollars": 5, "poker_hand": "High Card"}}
+plus_rarity: "Common"
+plus_cost: 4
+state_transfer:
+  - "to_do_poker_hand -> extra.poker_hand"
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "Scoring: context.joker_main (or before) when next(context.poker_hands[extra.poker_hand]) -> dollars = extra.dollars. Vanilla checks context.scoring_name == hand exactly; Wishlist uses 'contains'. Hand pick: same as vanilla (random visible hand, not the current one, seed 'bplus_wishlist'), at creation and at end of round (not blueprint). Vanilla keeps the hand in ability.to_do_poker_hand; state_transfer moves it so the listed hand doesn't change on upgrade."
+acceptance_tests:
+  - "Listed hand Pair, play a Full House -> +$5 (vanilla To Do List: $0)"
+  - "Listed hand Pair, play a Pair -> +$5"
+  - "Listed hand Flush, play a Pair -> $0"
+  - "Upgrade To Do List listing Two Pair -> Wishlist lists Two Pair"
+status: "approved"
+art_status: "none"

@@ -1,0 +1,26 @@
+# Implementation ticket for j_fortune_teller -> j_bplus_fortune_teller_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_fortune_teller"
+vanilla_name: "Fortune Teller"
+vanilla_rarity: "Common"
+vanilla_cost: 6
+archetype: "Scaling Mult"
+vanilla_effect: "+1 Mult per Tarot card used this run (Currently +0)"
+vanilla_config: {"extra": 1}
+pattern: "Bigger number"
+plus_key: "j_bplus_fortune_teller_plus"
+plus_name: "Oracle"
+plus_effect: "+2 Mult per Tarot card used this run"
+plus_config: {"extra": {"mult_per": 2}}
+plus_rarity: "Common"
+plus_cost: 6
+state_transfer: []
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "context.joker_main when G.GAME.consumeable_usage_total.tarot > 0 -> mult = extra.mult_per * that count. Also show the +N message when a Tarot is used (context.using_consumeable, not blueprint), like vanilla. Reads a run-wide count, nothing is stored on the card, so not blocked on Q1."
+acceptance_tests:
+  - "Used 3 Tarot cards this run -> +2 * 3 = 6 Mult (vanilla: +3)"
+  - "No Tarots used -> no effect"
+status: "approved"
+art_status: "none"

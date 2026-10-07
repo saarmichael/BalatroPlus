@@ -1,0 +1,26 @@
+# Implementation ticket for j_hallucination -> j_bplus_hallucination_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_hallucination"
+vanilla_name: "Hallucination"
+vanilla_rarity: "Common"
+vanilla_cost: 4
+archetype: "Probability"
+vanilla_effect: "1 in 2 chance to create a Tarot card when any Booster Pack is opened (Must have room)"
+vanilla_config: {"extra": 2}
+pattern: "Better odds"
+plus_key: "j_bplus_hallucination_plus"
+plus_name: "Fever Dream"
+plus_effect: "Create a Tarot card when any Booster Pack is opened (Must have room)"
+plus_config: {"extra": {}}
+plus_rarity: "Common"
+plus_cost: 4
+state_transfer: []
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "Same as vanilla Hallucination (context.open_booster, needs a free consumable slot) but always creates the Tarot: no roll, so Oops! All 6s doesn't matter and the description has no '1 in X'."
+acceptance_tests:
+  - "Open a Booster Pack with a free slot -> 1 Tarot created"
+  - "Open a Booster Pack with full slots -> nothing created"
+status: "approved"
+art_status: "none"

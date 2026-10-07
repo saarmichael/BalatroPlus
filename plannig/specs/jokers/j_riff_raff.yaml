@@ -1,0 +1,27 @@
+# Implementation ticket for j_riff_raff -> j_bplus_riff_raff_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_riff_raff"
+vanilla_name: "Riff-Raff"
+vanilla_rarity: "Common"
+vanilla_cost: 6
+archetype: "Card generation"
+vanilla_effect: "When Blind is selected, create 2 Common Jokers (Must have room)"
+vanilla_config: {"extra": 2}
+pattern: "Second effect"
+plus_key: "j_bplus_riff_raff_plus"
+plus_name: "Nobleman"
+plus_effect: "When Blind is selected, create 2 upgraded Common Jokers (Must have room)"
+plus_config: {"extra": {"jokers": 2}}
+plus_rarity: "Common"
+plus_cost: 6
+state_transfer: []
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "Like vanilla Riff-Raff (context.setting_blind, not getting_sliced; create min(extra.jokers, free joker slots) using G.GAME.joker_buffer). Each created joker is a random Common joker that has a '+' version (its key is in BPlus.upgrade_map), picked with the normal pool rules (unlocked, no duplicates unless Showman/Salesman); create it and call BPlus.upgrade_card on it (fresh card, starts from its own initial values). If no such Common joker is available, create a normal Common joker instead. Depends on BPlus.upgrade_card and upgrade_map (Phase 3); the planned 'one version per joker' rule may later limit the pool."
+acceptance_tests:
+  - "Select Blind with 2 free slots -> 2 Common '+' jokers created (all from upgrade_map)"
+  - "Only 1 free slot -> 1 created"
+  - "Joker slots full -> nothing"
+status: "approved"
+art_status: "none"

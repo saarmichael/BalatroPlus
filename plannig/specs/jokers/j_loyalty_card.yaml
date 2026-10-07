@@ -1,0 +1,28 @@
+# Implementation ticket for j_loyalty_card -> j_bplus_loyalty_card_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_loyalty_card"
+vanilla_name: "Loyalty Card"
+vanilla_rarity: "Uncommon"
+vanilla_cost: 5
+archetype: "xMult"
+vanilla_effect: "X4 Mult every 6 hands played 5 remaining"
+vanilla_config: {"extra": {"Xmult": 4, "every": 5, "remaining": "5 remaining"}}
+pattern: "Relax condition"
+plus_key: "j_bplus_loyalty_card_plus"
+plus_name: "Membership Card"
+plus_effect: "X4 Mult every 3 hands played"
+plus_config: {"extra": {"Xmult": 4, "every": 2, "remaining": "2 remaining"}}
+plus_rarity: "Uncommon"
+plus_cost: 5
+state_transfer:
+  - "hands_played_at_create"
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "Same logic as vanilla with extra.every = 2 (vanilla's every = 5 means every 6 hands, so 2 means every 3 hands): loyalty_remaining = (every - 1 - (G.GAME.hands_played - hands_played_at_create)) % (every + 1); trigger when == every; juice when 0. Init loyalty_remaining = every in set_ability/add_to_deck. Card:set_ability resets ability.hands_played_at_create, so the upgrade must restore it (state_transfer), otherwise the count restarts."
+acceptance_tests:
+  - "Play 3 hands -> X4 on hand 3 only (vanilla Loyalty Card: hand 6)"
+  - "Play 6 hands -> X4 on hands 3 and 6"
+  - "Loyalty Card played 2 hands, then upgraded -> the next hand (3rd overall) gives X4 (count kept)"
+status: "approved"
+art_status: "none"

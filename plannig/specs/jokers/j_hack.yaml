@@ -1,0 +1,26 @@
+# Implementation ticket for j_hack -> j_bplus_hack_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_hack"
+vanilla_name: "Hack"
+vanilla_rarity: "Uncommon"
+vanilla_cost: 6
+archetype: "Retrigger"
+vanilla_effect: "Retrigger each played 2, 3, 4, or 5"
+vanilla_config: {"extra": 1}
+pattern: "Extra retrigger (chance)"
+plus_key: "j_bplus_hack_plus"
+plus_name: "Jerry Seinfeld"
+plus_effect: "Retrigger each played 2, 3, 4, or 5, with a 1 in 2 chance to retrigger it again"
+plus_config: {"extra": {"retriggers": 1, "odds": 2}}
+plus_rarity: "Uncommon"
+plus_cost: 6
+state_transfer: []
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "Same condition as vanilla: context.repetition, cardarea G.play, other_card:get_id() is 2, 3, 4 or 5. Retrigger: context.repetition -> { repetitions = extra.retriggers + (bonus and 1 or 0) }, bonus = SMODS.pseudorandom_probability(card, 'bplus_jerry_seinfeld', 1, extra.odds), rolled separately for each card. loc_vars via SMODS.get_probability_vars (Oops! All 6s makes it 2 in 2 = always)."
+acceptance_tests:
+  - "With Oops! All 6s: a scored 5 scores 1 + 2 times"
+  - "A scored 6 -> no retrigger"
+status: "approved"
+art_status: "none"

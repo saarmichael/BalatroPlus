@@ -1,0 +1,27 @@
+# Implementation ticket for j_mime -> j_bplus_mime_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_mime"
+vanilla_name: "Mime"
+vanilla_rarity: "Uncommon"
+vanilla_cost: 5
+archetype: "Retrigger"
+vanilla_effect: "Retrigger all card held in hand abilities"
+vanilla_config: {"extra": 1}
+pattern: "Extra retrigger (chance)"
+plus_key: "j_bplus_mime_plus"
+plus_name: "Marcel Marceau"
+plus_effect: "Retrigger all card held in hand abilities, with a 1 in 2 chance to retrigger them again"
+plus_config: {"extra": {"retriggers": 1, "odds": 2}}
+plus_rarity: "Uncommon"
+plus_cost: 5
+state_transfer: []
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "Same condition as vanilla: context.repetition, cardarea G.hand, (next(context.card_effects[1]) or #context.card_effects > 1). Retrigger: context.repetition -> { repetitions = extra.retriggers + (bonus and 1 or 0) }, bonus = SMODS.pseudorandom_probability(card, 'bplus_marcel_marceau', 1, extra.odds), rolled separately for each card. loc_vars via SMODS.get_probability_vars (Oops! All 6s makes it 2 in 2 = always)."
+acceptance_tests:
+  - "With Oops! All 6s: hold one Steel card -> Steel triggers 1 + 2 times = X1.5 * 1.5 * 1.5"
+  - "Without Oops!: seeded run, many held Steel cards -> some trigger twice, some three times"
+  - "Held card with no ability -> no retrigger"
+status: "approved"
+art_status: "none"

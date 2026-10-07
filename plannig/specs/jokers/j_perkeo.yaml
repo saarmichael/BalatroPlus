@@ -1,0 +1,27 @@
+# Implementation ticket for j_perkeo -> j_bplus_perkeo_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_perkeo"
+vanilla_name: "Perkeo"
+vanilla_rarity: "Legendary"
+vanilla_cost: 20
+archetype: "Legendary"
+vanilla_effect: "Creates a Negative copy of 1 random consumable card in your possession at the end of the shop"
+vanilla_config: {}
+pattern: "Second effect"
+plus_key: "j_bplus_perkeo_plus"
+plus_name: "Perkeo+"
+plus_effect: "Creates a Negative copy of 1 random consumable card in your possession at the end of the shop. 1 in 2 chance to create one more"
+plus_config: {"extra": {"odds": 2}}
+plus_rarity: "Legendary"
+plus_cost: 20
+state_transfer: []
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "Same as vanilla Perkeo (context.ending_shop: copy a random consumable from G.consumeables, set_edition negative). Then SMODS.pseudorandom_probability(card, 'bplus_perkeo', 1, extra.odds): on success make a second Negative copy of another random consumable you hold (picked independently, may be the same card, chosen from the cards held before this shop's copies)."
+acceptance_tests:
+  - "End shop holding 1 Tarot, with Oops! All 6s -> 2 Negative copies"
+  - "Seeded run, several shops -> sometimes 1 copy, sometimes 2"
+  - "No consumables held -> nothing"
+status: "approved"
+art_status: "none"

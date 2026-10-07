@@ -1,0 +1,25 @@
+# Implementation ticket for j_gift -> j_bplus_gift_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_gift"
+vanilla_name: "Gift Card"
+vanilla_rarity: "Uncommon"
+vanilla_cost: 6
+archetype: "Economy"
+vanilla_effect: "Add $1 of sell value to every Joker and Consumable card at end of round"
+vanilla_config: {"extra": 1}
+pattern: "Bigger number"
+plus_key: "j_bplus_gift_plus"
+plus_name: "Bond"
+plus_effect: "Add $2 of sell value to every Joker and Consumable card at end of round"
+plus_config: {"extra": {"sell_gain": 2}}
+plus_rarity: "Uncommon"
+plus_cost: 6
+state_transfer: []
+blueprint_compat: false
+eternal_compat: true
+perishable_compat: true
+impl_notes: "Same as vanilla Gift Card: at end of round (main_eval, not blueprint) every card in G.jokers and G.consumeables gets ability.extra_value += extra.sell_gain and set_cost()."
+acceptance_tests:
+  - "Hold Bond + a Joker (sell $1) + a Tarot (sell $1), end round -> Joker sells for $1 + 2, Tarot for $1 + 2"
+status: "approved"
+art_status: "none"

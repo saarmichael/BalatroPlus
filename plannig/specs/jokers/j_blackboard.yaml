@@ -1,0 +1,28 @@
+# Implementation ticket for j_blackboard -> j_bplus_blackboard_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_blackboard"
+vanilla_name: "Blackboard"
+vanilla_rarity: "Uncommon"
+vanilla_cost: 6
+archetype: "Suit-conditional"
+vanilla_effect: "X3 Mult if all cards held in hand are Spades or Clubs"
+vanilla_config: {"extra": 3}
+pattern: "Bigger number + Relax condition"
+plus_key: "j_bplus_blackboard_plus"
+plus_name: "Smartboard"
+plus_effect: "X4 Mult if most cards held in hand are Spades or Clubs"
+plus_config: {"extra": {"Xmult": 4}}
+plus_rarity: "Uncommon"
+plus_cost: 6
+state_transfer: []
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "context.joker_main. Count held cards with is_suit('Clubs', nil, true) or is_suit('Spades', nil, true) (flush_calc=true, like vanilla, so debuffed cards still count). Trigger when black * 2 > total (strict majority) OR total == 0 (vanilla triggers on an empty hand; keeps the upgrade never worse)."
+acceptance_tests:
+  - "Hold 5 Spades/Clubs + 3 Hearts -> X4"
+  - "Hold 4 Spades + 4 Hearts (exactly half) -> no trigger"
+  - "Hold only Hearts -> no trigger"
+  - "Hold all Spades -> X4 (vanilla Blackboard: X3)"
+status: "approved"
+art_status: "none"

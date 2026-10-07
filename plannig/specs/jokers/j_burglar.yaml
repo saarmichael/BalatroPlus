@@ -1,0 +1,25 @@
+# Implementation ticket for j_burglar -> j_bplus_burglar_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_burglar"
+vanilla_name: "Burglar"
+vanilla_rarity: "Uncommon"
+vanilla_cost: 6
+archetype: "Hands & discards"
+vanilla_effect: "When Blind is selected, gain +3 Hands and lose all discards"
+vanilla_config: {"extra": 3}
+pattern: "Bigger number"
+plus_key: "j_bplus_burglar_plus"
+plus_name: "Cat Burglar"
+plus_effect: "When Blind is selected, gain +5 Hands and lose all discards"
+plus_config: {"extra": {"hands": 5}}
+plus_rarity: "Uncommon"
+plus_cost: 6
+state_transfer: []
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "Same as vanilla Burglar: context.setting_blind -> ease_hands_played(extra.hands) and ease_discard(-G.GAME.current_round.discards_left, nil, true), 'Hands' message. Blueprint copies add hands too, like vanilla."
+acceptance_tests:
+  - "Select Blind with 4 hands, 3 discards -> 4 + 5 = 9 hands, 0 discards (vanilla: 4 + 3 = 7)"
+status: "approved"
+art_status: "none"

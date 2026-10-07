@@ -1,0 +1,27 @@
+# Implementation ticket for j_cartomancer -> j_bplus_cartomancer_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_cartomancer"
+vanilla_name: "Cartomancer"
+vanilla_rarity: "Uncommon"
+vanilla_cost: 6
+archetype: "Card generation"
+vanilla_effect: "Create a Tarot card when Blind is selected (Must have room)"
+vanilla_config: {}
+pattern: "Second effect"
+plus_key: "j_bplus_cartomancer_plus"
+plus_name: "Clairvoyant"
+plus_effect: "Create a Tarot card when Blind is selected and when Blind is defeated (Must have room)"
+plus_config: {"extra": {}}
+plus_rarity: "Uncommon"
+plus_cost: 6
+state_transfer: []
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "Blind selected: same as vanilla Cartomancer (context.setting_blind, not getting_sliced, free consumable slot -> 1 Tarot, seed 'bplus_clairvoyant'). Blind defeated: context.end_of_round and context.main_eval (once per round, also after a Boss Blind) with a free slot -> 1 Tarot."
+acceptance_tests:
+  - "Select Blind -> 1 Tarot"
+  - "Win the round -> 1 more Tarot"
+  - "Slots full -> nothing created"
+status: "approved"
+art_status: "none"

@@ -1,0 +1,27 @@
+# Implementation ticket for j_ring_master -> j_bplus_ring_master_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_ring_master"
+vanilla_name: "Showman"
+vanilla_rarity: "Uncommon"
+vanilla_cost: 5
+archetype: "Rule change"
+vanilla_effect: "Joker, Tarot, Planet, and Spectral cards may appear multiple times"
+vanilla_config: {}
+pattern: "Second effect"
+plus_key: "j_bplus_ring_master_plus"
+plus_name: "Salesman"
+plus_effect: "Joker, Tarot, Planet, and Spectral cards may appear multiple times. Upgraded Jokers can appear in the shop, and appear more often"
+plus_config: {"extra": {}}
+plus_rarity: "Uncommon"
+plus_cost: 5
+state_transfer: []
+blueprint_compat: false
+eternal_compat: true
+perishable_compat: true
+impl_notes: "Brief M5. Showman part: smods decides duplicates in SMODS.showman(card_key) (smods/src/utils.lua), which only looks for j_ring_master; wrap it so it also returns true when Salesman is held. Upgrade part: raises the chance that a shop joker spawns as its '+' version, using the same shop-upgrade roll as M6 Craftsmanship (implement in Phase 5 with/after M6). Works alone: without Craftsmanship it gives a base rate; with Craftsmanship/Masterwork the rates stack. Base rate and stacking rule live in src/balance.lua (TBD, Q3). Not Blueprint-compatible (vanilla Showman isn't)."
+acceptance_tests:
+  - "Holding Salesman, a joker you already hold can appear in the shop (Showman effect)"
+  - "Salesman without Craftsmanship: upgraded jokers appear in the shop at the base rate from balance.lua (statistical check over many seeded rerolls)"
+  - "Salesman with Craftsmanship: upgraded jokers appear more often than with Craftsmanship alone"
+status: "approved"
+art_status: "none"

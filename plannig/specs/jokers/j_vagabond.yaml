@@ -1,0 +1,27 @@
+# Implementation ticket for j_vagabond -> j_bplus_vagabond_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_vagabond"
+vanilla_name: "Vagabond"
+vanilla_rarity: "Rare"
+vanilla_cost: 8
+archetype: "Card generation"
+vanilla_effect: "Create a Tarot card if hand is played with $4 or less"
+vanilla_config: {"extra": 4}
+pattern: "Relax condition"
+plus_key: "j_bplus_vagabond_plus"
+plus_name: "Nomad"
+plus_effect: "Create a Tarot card if hand is played with $6 or less"
+plus_config: {"extra": {"dollars": 6}}
+plus_rarity: "Rare"
+plus_cost: 8
+state_transfer: []
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "Same as vanilla Vagabond: context.joker_main, a free consumable slot, G.GAME.dollars <= extra.dollars -> create 1 Tarot (seed 'bplus_nomad'). '$6 or less' is 'under $7'."
+acceptance_tests:
+  - "Play a hand with $6 -> 1 Tarot (vanilla needs $4 or less)"
+  - "Play a hand with $7 -> nothing"
+  - "Slots full -> nothing"
+status: "approved"
+art_status: "none"

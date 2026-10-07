@@ -1,0 +1,30 @@
+# Implementation ticket for j_marble -> j_bplus_marble_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_marble"
+vanilla_name: "Marble Joker"
+vanilla_rarity: "Uncommon"
+vanilla_cost: 6
+archetype: "Deck manipulation"
+vanilla_effect: "Adds one Stone card to deck when Blind is selected"
+vanilla_config: {"extra": 1}
+pattern: "Replace effect"
+plus_key: "j_bplus_marble_plus"
+plus_name: "Medusa"
+plus_effect: "If first hand of round has only 1 card, turn it into a Stone card"
+plus_config: {"extra": {}}
+plus_rarity: "Uncommon"
+plus_cost: 6
+state_transfer: []
+blueprint_compat: false
+eternal_compat: true
+perishable_compat: true
+impl_notes: "Replaces Marble Joker's effect: it no longer adds a Stone card when Blind is selected (human decision, knowingly breaks the 'never worse' guideline). context.before (not blueprint) when G.GAME.current_round.hands_played == 0 and #context.full_hand == 1 -> full_hand[1]:set_ability(G.P_CENTERS.m_stone, nil, true), like vanilla Midas Mask does for Gold. It runs in context.before, the same context as DNA, so the joker order decides: Medusa left of DNA -> card turns to Stone first and DNA copies the Stone card; DNA left of Medusa -> DNA copies the normal card into hand, then the played card turns to Stone. The converted card scores as Stone in that same hand. Any existing enhancement is replaced (as Midas Mask does). blueprint_compat false: a copy would only re-convert the same card, so it does nothing (vanilla Midas Mask is false for the same reason)."
+acceptance_tests:
+  - "Select Blind -> no Stone card added (unlike Marble Joker)"
+  - "First hand is a single 7 -> it becomes a Stone card and scores as one"
+  - "First hand has 2 cards -> nothing turns to Stone"
+  - "Second hand of the round is a single card -> nothing turns to Stone"
+  - "Medusa left of DNA, first hand a single 7 -> played card and its copy are both Stone"
+  - "DNA left of Medusa, first hand a single 7 -> copy in hand is a normal 7, played card is Stone"
+status: "approved"
+art_status: "none"

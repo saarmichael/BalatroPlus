@@ -1,0 +1,27 @@
+# Implementation ticket for j_bloodstone -> j_bplus_bloodstone_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_bloodstone"
+vanilla_name: "Bloodstone"
+vanilla_rarity: "Uncommon"
+vanilla_cost: 7
+archetype: "Suit-conditional"
+vanilla_effect: "1 in 2 chance for played cards with Heart suit to give X1.5 Mult when scored"
+vanilla_config: {"extra": {"odds": 2, "Xmult": 1.5}}
+pattern: "Better odds"
+plus_key: "j_bplus_bloodstone_plus"
+plus_name: "Fire Opal"
+plus_effect: "2 in 3 chance for played cards with Heart suit to give X1.5 Mult when scored"
+plus_config: {"extra": {"num": 2, "odds": 3, "Xmult": 1.5}}
+plus_rarity: "Uncommon"
+plus_cost: 7
+state_transfer: []
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "context.individual + G.play, is_suit('Hearts') and SMODS.pseudorandom_probability(card, 'bplus_fire_opal', extra.num, extra.odds) -> { xmult = extra.Xmult }. loc_vars via SMODS.get_probability_vars(card, extra.num, extra.odds, 'bplus_fire_opal')."
+acceptance_tests:
+  - "With Oops! All 6s (4 in 3): play 5 Hearts -> X1.5 five times"
+  - "Description shows '2 in 3' (with Oops!: '4 in 3')"
+  - "Seeded run, 30 scored Hearts -> both hits and misses occur"
+status: "approved"
+art_status: "none"

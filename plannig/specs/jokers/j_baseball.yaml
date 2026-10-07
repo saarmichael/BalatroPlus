@@ -1,0 +1,27 @@
+# Implementation ticket for j_baseball -> j_bplus_baseball_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_baseball"
+vanilla_name: "Baseball Card"
+vanilla_rarity: "Rare"
+vanilla_cost: 8
+archetype: "xMult"
+vanilla_effect: "Uncommon Jokers each give X1.5 Mult"
+vanilla_config: {"extra": 1.5}
+pattern: "Bigger number"
+plus_key: "j_bplus_baseball_plus"
+plus_name: "Slabbed Baseball Card"
+plus_effect: "Uncommon Jokers each give X2 Mult"
+plus_config: {"extra": {"Xmult": 2}}
+plus_rarity: "Rare"
+plus_cost: 8
+state_transfer: []
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "context.other_joker, other_joker.config.center.rarity == 2 and other_joker ~= card -> xmult = extra.Xmult (same as vanilla). '+' jokers keep their vanilla rarity, so Uncommon '+' jokers count too."
+acceptance_tests:
+  - "With 2 Uncommon jokers -> X2 * X2"
+  - "With only Common jokers -> no effect"
+  - "An Uncommon '+' joker (e.g. Smartboard) also gets X2"
+status: "approved"
+art_status: "none"

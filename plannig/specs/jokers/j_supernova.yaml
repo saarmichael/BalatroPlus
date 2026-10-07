@@ -1,0 +1,26 @@
+# Implementation ticket for j_supernova -> j_bplus_supernova_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_supernova"
+vanilla_name: "Supernova"
+vanilla_rarity: "Common"
+vanilla_cost: 5
+archetype: "Scaling Mult"
+vanilla_effect: "Adds the number of times poker hand has been played this run to Mult"
+vanilla_config: {"extra": 1}
+pattern: "Bigger number"
+plus_key: "j_bplus_supernova_plus"
+plus_name: "Hypernova"
+plus_effect: "Adds double the number of times poker hand has been played this run to Mult"
+plus_config: {"extra": {"mult_per": 2}}
+plus_rarity: "Common"
+plus_cost: 5
+state_transfer: []
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "context.joker_main -> mult = extra.mult_per * G.GAME.hands[context.scoring_name].played (the count already includes the current hand, same as vanilla). Reads a run-wide count, nothing is stored on the card, so not blocked on Q1."
+acceptance_tests:
+  - "Play a Pair for the 3rd time this run -> +2 * 3 = 6 Mult (vanilla: +3)"
+  - "First Flush of the run -> +2 * 1 = 2 Mult"
+status: "approved"
+art_status: "none"

@@ -1,0 +1,26 @@
+# Implementation ticket for j_seeing_double -> j_bplus_seeing_double_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_seeing_double"
+vanilla_name: "Seeing Double"
+vanilla_rarity: "Uncommon"
+vanilla_cost: 6
+archetype: "Suit-conditional"
+vanilla_effect: "X2 Mult if played hand has a scoring Club card and a scoring card of any other suit"
+vanilla_config: {"extra": 2}
+pattern: "Bigger number"
+plus_key: "j_bplus_seeing_double_plus"
+plus_name: "Chameleon"
+plus_effect: "X3 Mult if played hand has a scoring Club card and a scoring card of any other suit"
+plus_config: {"extra": {"Xmult": 3}}
+plus_rarity: "Uncommon"
+plus_cost: 6
+state_transfer: []
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "context.joker_main, same suit-counting as vanilla Seeing Double (Wild cards fill Clubs first)."
+acceptance_tests:
+  - "Scoring Pair: Club + Heart -> X3 (vanilla: X2)"
+  - "Scoring Pair: two Clubs -> no trigger"
+status: "approved"
+art_status: "none"

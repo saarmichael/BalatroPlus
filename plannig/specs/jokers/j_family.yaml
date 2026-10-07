@@ -1,0 +1,27 @@
+# Implementation ticket for j_family -> j_bplus_family_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_family"
+vanilla_name: "The Family"
+vanilla_rarity: "Rare"
+vanilla_cost: 8
+archetype: "Hand-type-conditional"
+vanilla_effect: "X4 Mult if played hand contains a Four of a Kind"
+vanilla_config: {"Xmult": 4, "type": "Four of a Kind"}
+pattern: "Bigger number"
+plus_key: "j_bplus_family_plus"
+plus_name: "Jackson Joker"
+plus_effect: "X5 Mult if played hand contains a Four of a Kind"
+plus_config: {"extra": {"Xmult": 5, "type": "Four of a Kind"}}
+plus_rarity: "Rare"
+plus_cost: 8
+state_transfer: []
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "context.joker_main and next(context.poker_hands[extra.type]) -> { xmult = extra.Xmult }. Same 'contains' rule as vanilla. Vanilla keeps its value in ability.t_mult/t_chips/x_mult; ours lives in extra."
+acceptance_tests:
+  - "Play a Four of a Kind -> X5 Mult (vanilla: X4 Mult)"
+  - "Play a Five of a Kind (contains a Four of a Kind) -> X5 Mult"
+  - "Play a Three of a Kind -> no effect"
+status: "approved"
+art_status: "none"

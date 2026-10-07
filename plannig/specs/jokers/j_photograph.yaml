@@ -1,0 +1,26 @@
+# Implementation ticket for j_photograph -> j_bplus_photograph_plus.
+# Generated from plannig/design/jokers.csv by tools/export_specs.py. Edit the CSV, not this file.
+vanilla_key: "j_photograph"
+vanilla_name: "Photograph"
+vanilla_rarity: "Common"
+vanilla_cost: 5
+archetype: "Rank-conditional"
+vanilla_effect: "First played face card gives X2 Mult when scored"
+vanilla_config: {"extra": 2}
+pattern: "Bigger number"
+plus_key: "j_bplus_photograph_plus"
+plus_name: "Selfie"
+plus_effect: "First played face card gives X4 Mult when scored"
+plus_config: {"extra": {"Xmult": 4}}
+plus_rarity: "Common"
+plus_cost: 5
+state_transfer: []
+blueprint_compat: true
+eternal_compat: true
+perishable_compat: true
+impl_notes: "context.individual + cardarea G.play: find the first is_face() card in context.scoring_hand; if it is other_card -> xmult = extra.Xmult (same as vanilla). Retriggers of that card apply again, like vanilla."
+acceptance_tests:
+  - "Score a Pair of Kings -> only the first King gives X4 (vanilla: X2)"
+  - "No face cards scored -> no effect"
+status: "approved"
+art_status: "none"
