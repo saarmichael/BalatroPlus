@@ -23,5 +23,5 @@ impl_notes: "Same as vanilla: context.discard, on the last card of context.full_
 acceptance_tests:
   - "Discard 3 face cards -> +$6 (vanilla: +$5)"
   - "Discard 2 face cards and a 7 -> $0"
-status: "approved"
+status: "tested"
 art_status: "none"

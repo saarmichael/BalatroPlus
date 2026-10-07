@@ -23,5 +23,5 @@ impl_notes: "Reuse vanilla's G.GAME.current_round.idol_card (vanilla resets it e
 acceptance_tests:
   - "Chosen card is a 7: play a Pair of 7s in two suits -> X2 * X2"
   - "Play a different rank -> no effect"
-status: "approved"
+status: "tested"
 art_status: "none"

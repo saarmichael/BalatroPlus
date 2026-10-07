@@ -23,5 +23,5 @@ impl_notes: "context.joker_main when G.GAME.current_round.discards_left > 0 -> c
 acceptance_tests:
   - "Play with 3 discards left -> +60 * 3 = 180 Chips (vanilla: 30 * 3)"
   - "Play with 0 discards left -> no effect"
-status: "approved"
+status: "tested"
 art_status: "none"

@@ -24,5 +24,5 @@ acceptance_tests:
   - "Round 1: +5 hand size; after 2 rounds: +4; after 4 rounds: +3"
   - "Destroyed after 10 rounds (5 * 2)"
   - "Turtle Bean partly used up, upgrade -> Magic Bean starts fresh at +5 hand size"
-status: "approved"
+status: "tested"
 art_status: "none"

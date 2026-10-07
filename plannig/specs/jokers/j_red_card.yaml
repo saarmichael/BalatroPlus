@@ -24,5 +24,5 @@ impl_notes: "Same as vanilla: context.skipping_booster (not blueprint) -> extra.
 acceptance_tests:
   - "Skip 2 Booster Packs -> +5 + 5 = 10 Mult (vanilla: 3 + 3)"
   - "Red Card at +6 Mult, upgrade -> Crimson Card keeps +6 Mult, later gains use the '+' rate"
-status: "approved"
+status: "tested"
 art_status: "none"

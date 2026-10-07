@@ -25,5 +25,5 @@ acceptance_tests:
   - "3 hands without face cards -> +2 + 2 + 2 = 6 Mult"
   - "Then a hand with a scoring face card -> Mult resets to 0"
   - "Ride the Bus at +6 Mult, upgrade -> Express Bus keeps +6 Mult, later gains use the '+' rate"
-status: "approved"
+status: "tested"
 art_status: "none"

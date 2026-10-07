@@ -23,5 +23,5 @@ impl_notes: "context.joker_main when G.GAME.consumeable_usage_total.tarot > 0 ->
 acceptance_tests:
   - "Used 3 Tarot cards this run -> +2 * 3 = 6 Mult (vanilla: +3)"
   - "No Tarots used -> no effect"
-status: "approved"
+status: "tested"
 art_status: "none"

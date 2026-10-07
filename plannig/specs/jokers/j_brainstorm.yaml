@@ -23,5 +23,5 @@ impl_notes: "Like Architect but targets G.jokers.cards[1] and [2]: SMODS.bluepri
 acceptance_tests:
   - "Joker+, Joker, ..., Hive Mind -> copies +20 and +4"
   - "Hive Mind is leftmost -> copies only the 2nd joker"
-status: "approved"
+status: "tested"
 art_status: "none"

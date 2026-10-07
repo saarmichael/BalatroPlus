@@ -24,5 +24,5 @@ acceptance_tests:
   - "Lose with 30% of required chips -> saved"
   - "Seeded run, saved several times -> sometimes destroyed, sometimes not"
   - "Lose with 20% -> game over"
-status: "approved"
+status: "tested"
 art_status: "none"

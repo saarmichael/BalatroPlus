@@ -25,5 +25,5 @@ acceptance_tests:
   - "Play 4 cards twice -> +16 + 16 = 32 Chips (vanilla: 4 + 4)"
   - "Play 5 cards -> no gain"
   - "Square Joker at +30 Chips, upgrade -> Square Joker Squared keeps +30, next gain +16: 30 + 16"
-status: "approved"
+status: "tested"
 art_status: "none"

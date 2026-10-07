@@ -23,5 +23,5 @@ impl_notes: "context.joker_main -> chips = extra.chips_per * max(0, G.GAME.dolla
 acceptance_tests:
   - "With $20 -> +5 * 20 = 100 Chips (vanilla: 2 * 20)"
   - "In debt (Credit Card at -$5) -> no effect"
-status: "approved"
+status: "tested"
 art_status: "none"

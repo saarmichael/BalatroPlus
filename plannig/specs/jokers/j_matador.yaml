@@ -23,5 +23,5 @@ impl_notes: "Same as vanilla Matador: when G.GAME.blind.triggered after a played
 acceptance_tests:
   - "Play a hand that triggers The Psychic (fewer than 5 cards) -> +$20 (vanilla: +$8)"
   - "Boss ability not triggered -> $0"
-status: "approved"
+status: "tested"
 art_status: "none"

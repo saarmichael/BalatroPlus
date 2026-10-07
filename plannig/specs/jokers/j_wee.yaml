@@ -25,5 +25,5 @@ acceptance_tests:
   - "Score a Pair of 2s -> gains +16 + 16 = 32 Chips (vanilla: 8 + 8)"
   - "Score a 3 -> no gain"
   - "Wee Joker at +30 Chips, upgrade -> Wee Wee Joker keeps +30, next gain +16: 30 + 16"
-status: "approved"
+status: "tested"
 art_status: "none"

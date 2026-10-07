@@ -23,5 +23,5 @@ impl_notes: "context.joker_main, same suit-counting as vanilla Seeing Double (Wi
 acceptance_tests:
   - "Scoring Pair: Club + Heart -> X3 (vanilla: X2)"
   - "Scoring Pair: two Clubs -> no trigger"
-status: "approved"
+status: "tested"
 art_status: "none"

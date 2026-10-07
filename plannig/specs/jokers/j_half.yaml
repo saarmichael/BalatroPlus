@@ -24,5 +24,5 @@ acceptance_tests:
   - "Play 4 cards -> +40 Mult"
   - "Play 5 cards -> +0 Mult"
   - "Play 1 card -> +40 Mult"
-status: "approved"
+status: "tested"
 art_status: "none"

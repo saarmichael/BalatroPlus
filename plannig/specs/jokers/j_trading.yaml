@@ -23,5 +23,5 @@ impl_notes: "Same as vanilla Trading Card (not blueprint): first discard (discar
 acceptance_tests:
   - "First discard is 1 card -> card destroyed, +$6 (vanilla: +$3)"
   - "First discard is 2 cards -> nothing"
-status: "approved"
+status: "tested"
 art_status: "none"

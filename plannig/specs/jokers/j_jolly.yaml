@@ -24,5 +24,5 @@ acceptance_tests:
   - "Play a Pair -> +20 Mult (vanilla: +8 Mult)"
   - "Play a Full House (contains a Pair) -> +20 Mult"
   - "Play a High Card -> no effect"
-status: "approved"
+status: "tested"
 art_status: "none"

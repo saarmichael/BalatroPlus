@@ -22,5 +22,5 @@ carpenter_compat: true
 impl_notes: "calc_dollar_bonus: count entries in G.GAME.consumeable_usage with set == 'Planet' -> extra.dollars * count, only if count > 0 (same as vanilla)."
 acceptance_tests:
   - "Used Mercury, Venus, and Mercury again -> 2 unique, end round -> $2 * 2 = $4 (vanilla: $2)"
-status: "approved"
+status: "tested"
 art_status: "none"

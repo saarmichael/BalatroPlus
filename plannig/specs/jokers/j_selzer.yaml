@@ -25,5 +25,5 @@ acceptance_tests:
   - "With Oops! All 6s: each scored card scores 1 + 2 times"
   - "After 10 hands the card is destroyed"
   - "Seltzer with 4 hands left, upgrade -> Fizzy Bubbelech has 4 hands left"
-status: "approved"
+status: "tested"
 art_status: "none"

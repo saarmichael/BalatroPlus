@@ -22,5 +22,5 @@ carpenter_compat: true
 impl_notes: "context.individual + G.play, is_suit('Clubs') -> { mult = extra.mult }."
 acceptance_tests:
   - "Play a Pair of Clubs -> joker adds +15 + 15 Mult (vanilla: +7 + 7)"
-status: "approved"
+status: "tested"
 art_status: "none"

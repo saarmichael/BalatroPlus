@@ -23,5 +23,5 @@ impl_notes: "Same as vanilla Burnt Joker (context.pre_discard, first discard of 
 acceptance_tests:
   - "First discard is a Pair -> Pair goes up 2 levels (vanilla: 1)"
   - "Second discard of the round -> nothing"
-status: "approved"
+status: "tested"
 art_status: "none"

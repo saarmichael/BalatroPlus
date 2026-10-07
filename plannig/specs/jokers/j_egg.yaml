@@ -23,5 +23,5 @@ impl_notes: "Same as vanilla with extra.sell_gain: at end of round (not blueprin
 acceptance_tests:
   - "End 2 rounds -> sell value = base sell value + 5 + 5"
   - "Egg after 2 rounds (+3 + 3 sell value), upgrade -> Free Range Egg keeps that sell value, then +5 per round"
-status: "approved"
+status: "tested"
 art_status: "none"

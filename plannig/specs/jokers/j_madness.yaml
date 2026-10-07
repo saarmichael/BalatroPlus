@@ -26,5 +26,5 @@ acceptance_tests:
   - "Select Boss Blind -> no gain, nothing destroyed"
   - "Only Eternal jokers besides it -> gains, nothing destroyed"
   - "Madness at X1.5, upgrade -> Lunacy keeps X1.5, next gain +0.75: X(1.5 + 0.75)"
-status: "approved"
+status: "tested"
 art_status: "none"

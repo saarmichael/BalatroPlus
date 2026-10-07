@@ -24,5 +24,5 @@ impl_notes: "Same as vanilla Hologram: context.playing_card_added (not blueprint
 acceptance_tests:
   - "Add 2 cards (e.g. Certificate twice) -> X(1 + 0.35 * 2) = X1.7 (vanilla: X1.5)"
   - "Hologram at X1.5, upgrade -> Holodeck keeps X1.5, next gain +0.35: X(1.5 + 0.35)"
-status: "approved"
+status: "tested"
 art_status: "none"

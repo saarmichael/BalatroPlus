@@ -26,5 +26,5 @@ acceptance_tests:
   - "Play a Full House -> gains +4"
   - "Play a Pair -> no gain"
   - "Spare Trousers at +6 Mult, upgrade -> Three-Piece Suit keeps +6 Mult, later gains use the '+' rate"
-status: "approved"
+status: "tested"
 art_status: "none"

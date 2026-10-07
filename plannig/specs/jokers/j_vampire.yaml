@@ -25,5 +25,5 @@ acceptance_tests:
   - "Play 2 scoring Steel cards -> X(1 + 0.2 * 2) = X1.4, both become plain cards (vanilla: X1.2)"
   - "Play plain cards -> no gain"
   - "Vampire at X1.5, upgrade -> Dracula keeps X1.5, next gain +0.2: X(1.5 + 0.2)"
-status: "approved"
+status: "tested"
 art_status: "none"

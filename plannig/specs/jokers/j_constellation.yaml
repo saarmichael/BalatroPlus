@@ -25,5 +25,5 @@ acceptance_tests:
   - "Use 3 Planet cards -> X(1 + 0.2 * 3) = X1.6 (vanilla: X1.3)"
   - "Use a Tarot -> no gain"
   - "Constellation at X1.5, upgrade -> Galaxy keeps X1.5, next gain +0.2: X(1.5 + 0.2)"
-status: "approved"
+status: "tested"
 art_status: "none"

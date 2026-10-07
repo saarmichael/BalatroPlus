@@ -23,5 +23,5 @@ impl_notes: "context.joker_main when (G.GAME.starting_deck_size - #G.playing_car
 acceptance_tests:
   - "Remove 5 cards from a 52-card deck -> +8 * 5 = 40 Mult"
   - "Full 52-card deck -> +0 Mult"
-status: "approved"
+status: "tested"
 art_status: "none"

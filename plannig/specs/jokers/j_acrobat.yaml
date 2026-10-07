@@ -23,5 +23,5 @@ impl_notes: "context.joker_main when G.GAME.current_round.hands_left == 0 -> xmu
 acceptance_tests:
   - "Play the last hand of the round -> X4 (vanilla Acrobat: X3)"
   - "Play a hand with hands left -> no effect"
-status: "approved"
+status: "tested"
 art_status: "none"

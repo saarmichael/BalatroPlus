@@ -22,5 +22,5 @@ carpenter_compat: true
 impl_notes: "context.individual + G.play, is_suit('Spades') -> { chips = extra.chips }."
 acceptance_tests:
   - "Play a Pair of Spades -> joker adds +80 + 80 Chips (vanilla: +50 + 50)"
-status: "approved"
+status: "tested"
 art_status: "none"

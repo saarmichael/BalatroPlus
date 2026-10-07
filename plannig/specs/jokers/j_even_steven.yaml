@@ -23,5 +23,5 @@ impl_notes: "context.individual + cardarea G.play, get_id() <= 10 and get_id() %
 acceptance_tests:
   - "Score a 10 and a 4 -> +8 + 8 Mult (vanilla: +4 + 4)"
   - "Score a Queen -> no effect"
-status: "approved"
+status: "tested"
 art_status: "none"

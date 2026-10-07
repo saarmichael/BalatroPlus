@@ -25,5 +25,5 @@ acceptance_tests:
   - "Only 1 free slot -> 1 Spectral created"
   - "Slots full -> 6 still destroyed, nothing created"
   - "Second hand of round a single 6 -> nothing"
-status: "approved"
+status: "tested"
 art_status: "none"

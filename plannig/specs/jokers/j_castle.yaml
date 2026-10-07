@@ -25,5 +25,5 @@ acceptance_tests:
   - "Listed suit Hearts: discard 3 Hearts -> +6 * 3 = 18 Chips (vanilla: 3 * 3)"
   - "Discard other suits -> no gain"
   - "Castle at +30 Chips, upgrade -> Citadel keeps +30, next gain +6: 30 + 6"
-status: "approved"
+status: "tested"
 art_status: "none"

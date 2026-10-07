@@ -24,5 +24,5 @@ acceptance_tests:
   - "Hand size 8 + 2 = 10 (vanilla: 8 + 1)"
   - "Sell it -> hand size back to 8"
   - "Upgrade Juggler -> hand size goes from 9 to 10"
-status: "approved"
+status: "tested"
 art_status: "none"

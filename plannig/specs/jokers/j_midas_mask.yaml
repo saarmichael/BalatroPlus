@@ -24,5 +24,5 @@ acceptance_tests:
   - "Play a scoring Pair of 7s -> both become Gold"
   - "Play a Pair of 7s with a kicker -> kicker (not scored) stays as it is"
   - "Scoring Glass King -> becomes Gold"
-status: "approved"
+status: "tested"
 art_status: "none"

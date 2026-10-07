@@ -26,5 +26,5 @@ acceptance_tests:
   - "Held: Joker+ and Joker -> always picks Joker (the eligible one): result Joker+, Joker+, Joker+"
   - "All other jokers already upgraded or not upgradable -> one of them is picked at random and duplicated"
   - "Invisible Joker at 1/2, upgrade -> Phantom at 1/2"
-status: "approved"
+status: "tested"
 art_status: "none"

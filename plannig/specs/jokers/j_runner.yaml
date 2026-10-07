@@ -25,5 +25,5 @@ acceptance_tests:
   - "Play 2 Straights -> +30 + 30 = 60 Chips (vanilla: 15 + 15)"
   - "Play a Pair -> no gain"
   - "Runner at +30 Chips, upgrade -> Sprinter keeps +30, next gain +30: 30 + 30"
-status: "approved"
+status: "tested"
 art_status: "none"

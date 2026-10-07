@@ -23,5 +23,5 @@ impl_notes: "Same as vanilla Certificate (context.first_hand_drawn), done extra.
 acceptance_tests:
   - "Start a round -> hand has 8 + 2 cards, both new cards have a seal"
   - "Deck size grows by 2 per round"
-status: "approved"
+status: "tested"
 art_status: "none"

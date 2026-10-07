@@ -25,5 +25,5 @@ acceptance_tests:
   - "Joker to the right sells for $3, select Blind -> it is destroyed, Mult = 0 + 3 * 3 = 9 (vanilla: 2 * 3 = 6)"
   - "Eternal joker to the right -> nothing happens"
   - "Ceremonial Dagger at +6 Mult, upgrade -> Sacrificial Dagger keeps +6 Mult, later gains use the '+' rate"
-status: "approved"
+status: "tested"
 art_status: "none"

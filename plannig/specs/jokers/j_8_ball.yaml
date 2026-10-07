@@ -25,5 +25,5 @@ acceptance_tests:
   - "With Oops! All 6s (2 in 4 each): every scored 8 creates exactly one card"
   - "Consumable slots full -> nothing created"
   - "Description shows '1 in 4' twice (with Oops!: '2 in 4')"
-status: "approved"
+status: "tested"
 art_status: "none"

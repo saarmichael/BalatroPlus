@@ -23,5 +23,5 @@ impl_notes: "Same as vanilla Hiker: context.individual + G.play -> other_card.ab
 acceptance_tests:
   - "Score a 5 twice in two hands -> it gives 5 + 10 chips the second time, then has +20 permanent chips"
   - "(vanilla Hiker: +5 per score)"
-status: "approved"
+status: "tested"
 art_status: "none"

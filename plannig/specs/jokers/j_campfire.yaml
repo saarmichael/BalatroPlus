@@ -25,5 +25,5 @@ acceptance_tests:
   - "Sell 3 cards -> X(1 + 0.4 * 3) = X2.2 (vanilla: X1.75)"
   - "Defeat the Boss Blind -> back to X1"
   - "Campfire at X1.5, upgrade -> Burning Man keeps X1.5, next gain +0.4: X(1.5 + 0.4)"
-status: "approved"
+status: "tested"
 art_status: "none"

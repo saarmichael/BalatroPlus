@@ -23,5 +23,5 @@ impl_notes: "context.joker_main, condition G.GAME.current_round.discards_left ==
 acceptance_tests:
   - "Use all discards, then play -> +35 Mult"
   - "Play with 1 discard left -> +0 Mult"
-status: "approved"
+status: "tested"
 art_status: "none"

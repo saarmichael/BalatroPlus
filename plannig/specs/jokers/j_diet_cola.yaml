@@ -22,5 +22,5 @@ carpenter_compat: true
 impl_notes: "Same as vanilla Diet Cola (context.selling_self): add_tag(Tag('tag_double')) extra.tags times, play_sound('generic1')."
 acceptance_tests:
   - "Sell it -> 2 Double Tags added (vanilla: 1)"
-status: "approved"
+status: "tested"
 art_status: "none"

@@ -24,5 +24,5 @@ acceptance_tests:
   - "End round with 3 discards left and none used -> $2 * 3 = $6 (same as vanilla)"
   - "Use 1 of 3 discards, end round -> $2 * 2 = $4 (vanilla: $0)"
   - "End round with 0 discards left -> $0"
-status: "approved"
+status: "tested"
 art_status: "none"

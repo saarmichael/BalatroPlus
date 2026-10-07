@@ -25,5 +25,5 @@ acceptance_tests:
   - "Most played is Pair; play 2 Flushes -> X(1 + 0.4 * 2) = X1.8 (vanilla: X1.4)"
   - "Then play a Pair -> resets to X1"
   - "Obelisk at X1.5, upgrade -> Pyramid keeps X1.5, next gain +0.4: X(1.5 + 0.4)"
-status: "approved"
+status: "tested"
 art_status: "none"

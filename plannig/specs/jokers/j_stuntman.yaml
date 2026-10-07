@@ -24,5 +24,5 @@ acceptance_tests:
   - "Play any hand -> +350 Chips (vanilla: +250)"
   - "Hand size is 8 - 1 = 7 (vanilla: 8 - 2 = 6)"
   - "Upgrade Stuntman -> hand size goes from 6 to 7"
-status: "approved"
+status: "tested"
 art_status: "none"

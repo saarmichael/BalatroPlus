@@ -23,5 +23,5 @@ impl_notes: "context.individual + cardarea G.play, other_card:get_id() in {14, 2
 acceptance_tests:
   - "Score an Ace and an 8 -> +13 + 13 Mult (vanilla: +8 + 8)"
   - "Score a 4 -> no effect"
-status: "approved"
+status: "tested"
 art_status: "none"

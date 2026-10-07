@@ -23,5 +23,5 @@ impl_notes: "Same as vanilla Business Card: context.individual + G.play, other_c
 acceptance_tests:
   - "With Oops! All 6s: score 2 face cards -> +$3 + $3 (vanilla: +$2 + $2)"
   - "Score a 7 -> $0"
-status: "approved"
+status: "tested"
 art_status: "none"

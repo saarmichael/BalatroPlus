@@ -25,5 +25,5 @@ acceptance_tests:
   - "End a non-boss round -> +$1"
   - "Defeat a Boss Blind -> payout becomes $1 + 4 = $5 for the following rounds"
   - "Rocket paying $5 (after 2 Bosses), upgrade -> Spaceship pays $5, after the next Boss $5 + 4 = $9"
-status: "approved"
+status: "tested"
 art_status: "none"

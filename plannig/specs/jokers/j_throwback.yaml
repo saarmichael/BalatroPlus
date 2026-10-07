@@ -23,5 +23,5 @@ impl_notes: "context.joker_main when G.GAME.skips > 0 -> xmult = 1 + extra.Xmult
 acceptance_tests:
   - "Skipped 2 Blinds this run -> X(1 + 1 * 2) = X3 (vanilla: X1.5)"
   - "No skips -> no effect"
-status: "approved"
+status: "tested"
 art_status: "none"

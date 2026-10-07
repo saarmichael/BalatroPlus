@@ -23,5 +23,5 @@ impl_notes: "Same as vanilla: add_to_deck G.GAME.interest_amount += extra.intere
 acceptance_tests:
   - "End round with $25 -> interest (1 + 2) * 5 = $15 (vanilla To the Moon: (1 + 1) * 5 = $10)"
   - "Sell it -> interest back to $1 per $5"
-status: "approved"
+status: "tested"
 art_status: "none"

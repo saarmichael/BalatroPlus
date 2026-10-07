@@ -25,5 +25,5 @@ acceptance_tests:
   - "Hold 4 Spades + 4 Hearts (exactly half) -> no trigger"
   - "Hold only Hearts -> no trigger"
   - "Hold all Spades -> X4 (vanilla Blackboard: X3)"
-status: "approved"
+status: "tested"
 art_status: "none"

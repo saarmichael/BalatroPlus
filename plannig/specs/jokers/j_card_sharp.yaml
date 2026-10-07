@@ -23,5 +23,5 @@ impl_notes: "context.joker_main when G.GAME.hands[context.scoring_name].played_t
 acceptance_tests:
   - "Play a Pair, then another Pair -> second hand X4"
   - "Play a Pair, then a Flush -> no effect"
-status: "approved"
+status: "tested"
 art_status: "none"

@@ -26,5 +26,5 @@ acceptance_tests:
   - "Then 1 discard -> 6 - 1 = 5 Mult"
   - "Mult never goes below 0"
   - "Green Joker at +6 Mult, upgrade -> Evergreen Joker keeps +6 Mult, later gains use the '+' rate"
-status: "approved"
+status: "tested"
 art_status: "none"

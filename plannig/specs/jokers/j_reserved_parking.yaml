@@ -23,5 +23,5 @@ impl_notes: "Same as vanilla Reserved Parking: context.individual + cardarea G.h
 acceptance_tests:
   - "With Oops! All 6s: hold 2 face cards and play -> +$3 + $3 (vanilla: +$1 + $1)"
   - "Hold no face cards -> $0"
-status: "approved"
+status: "tested"
 art_status: "none"

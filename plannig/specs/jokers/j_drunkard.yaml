@@ -23,5 +23,5 @@ impl_notes: "add_to_deck: G.GAME.round_resets.discards += extra.d_size and ease_
 acceptance_tests:
   - "Discards per round 3 + 2 = 5 (vanilla: 3 + 1)"
   - "Sell it -> back to 3"
-status: "approved"
+status: "tested"
 art_status: "none"

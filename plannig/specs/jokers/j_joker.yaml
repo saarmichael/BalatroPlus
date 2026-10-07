@@ -22,5 +22,5 @@ carpenter_compat: true
 impl_notes: "context.joker_main -> { mult = extra.mult }. Vanilla keeps its value in ability.mult; ours lives in extra."
 acceptance_tests:
   - "Joker+ alone, play a Pair of 2s -> joker adds +20 Mult (vanilla Joker: +4)"
-status: "approved"
+status: "tested"
 art_status: "none"

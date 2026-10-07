@@ -23,5 +23,5 @@ impl_notes: "context.individual + cardarea G.play: find the first is_face() card
 acceptance_tests:
   - "Score a Pair of Kings -> only the first King gives X4 (vanilla: X2)"
   - "No face cards scored -> no effect"
-status: "approved"
+status: "tested"
 art_status: "none"

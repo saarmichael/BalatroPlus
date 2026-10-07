@@ -24,5 +24,5 @@ acceptance_tests:
   - "First round -> +50 Mult, next round +45"
   - "Destroyed at the end of round 10 (50 / 5 = 10)"
   - "Popcorn partly used up, upgrade -> Nacho Chips starts fresh at +50 Mult"
-status: "approved"
+status: "tested"
 art_status: "none"

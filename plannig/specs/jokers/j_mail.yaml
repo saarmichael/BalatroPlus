@@ -23,5 +23,5 @@ impl_notes: "Same as vanilla Mail-In Rebate: context.discard, not debuffed, othe
 acceptance_tests:
   - "Listed rank is 7: discard two 7s -> +$6 + $6 (vanilla: +$5 + $5)"
   - "Discard other ranks -> $0"
-status: "approved"
+status: "tested"
 art_status: "none"

@@ -26,5 +26,5 @@ acceptance_tests:
   - "Listed hand Pair, play a Pair -> +$5"
   - "Listed hand Flush, play a Pair -> $0"
   - "Upgrade To Do List listing Two Pair -> Wishlist lists Two Pair"
-status: "approved"
+status: "tested"
 art_status: "none"

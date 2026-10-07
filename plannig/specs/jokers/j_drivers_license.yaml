@@ -23,5 +23,5 @@ impl_notes: "Count cards in G.playing_cards whose config.center ~= G.P_CENTERS.c
 acceptance_tests:
   - "10 Enhanced cards in deck -> X3 (vanilla needs 16)"
   - "9 Enhanced cards -> no effect"
-status: "approved"
+status: "tested"
 art_status: "none"

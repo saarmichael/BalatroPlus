@@ -23,5 +23,5 @@ impl_notes: "Boss part: same as vanilla Chicot (context.setting_blind, boss -> G
 acceptance_tests:
   - "Small Blind needing 300 -> needs 300 * 0.75 = 225"
   - "Boss Blind: ability disabled and required chips * 0.75"
-status: "approved"
+status: "tested"
 art_status: "none"

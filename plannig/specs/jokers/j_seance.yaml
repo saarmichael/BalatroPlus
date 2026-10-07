@@ -23,5 +23,5 @@ impl_notes: "Same condition as vanilla Seance (context.joker_main, next(context.
 acceptance_tests:
   - "Play a Straight Flush with 2 free slots -> 2 Spectral cards (vanilla: 1)"
   - "Play a Flush -> nothing"
-status: "approved"
+status: "tested"
 art_status: "none"

@@ -24,5 +24,5 @@ acceptance_tests:
   - "First hand is a single King -> 2 Kings added to deck and to hand (deck 52 + 2 = 54)"
   - "First hand has 2 cards -> no copies"
   - "Second hand of the round is a single card -> no copies"
-status: "approved"
+status: "tested"
 art_status: "none"

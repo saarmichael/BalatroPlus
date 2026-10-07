@@ -23,5 +23,5 @@ impl_notes: "context.individual + cardarea G.play, other_card:is_face() -> mult 
 acceptance_tests:
   - "Score 2 face cards -> +10 + 10 Mult (vanilla: +5 + 5)"
   - "Score a 7 -> no effect"
-status: "approved"
+status: "tested"
 art_status: "none"

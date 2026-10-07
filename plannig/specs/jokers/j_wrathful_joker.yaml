@@ -23,5 +23,5 @@ impl_notes: "context.individual + cardarea G.play, other_card:is_suit('Spades') 
 acceptance_tests:
   - "Play a Pair of Spades -> joker adds +5 + 5 Mult (vanilla: +3 + 3)"
   - "Play a Pair with no Spades -> joker adds +0 Mult"
-status: "approved"
+status: "tested"
 art_status: "none"

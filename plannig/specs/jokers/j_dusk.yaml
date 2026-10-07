@@ -24,5 +24,5 @@ acceptance_tests:
   - "With Oops! All 6s: final hand, each scored card scores 1 + 2 times"
   - "Hand with hands left -> no retrigger"
   - "Without Oops!: seeded final hand of 5 cards -> each card retriggered 1 or 2 times, both seen"
-status: "approved"
+status: "tested"
 art_status: "none"

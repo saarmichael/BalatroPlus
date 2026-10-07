@@ -23,5 +23,5 @@ impl_notes: "Same condition as vanilla: context.repetition, cardarea G.play, oth
 acceptance_tests:
   - "With Oops! All 6s: a scored 5 scores 1 + 2 times"
   - "A scored 6 -> no retrigger"
-status: "approved"
+status: "tested"
 art_status: "none"

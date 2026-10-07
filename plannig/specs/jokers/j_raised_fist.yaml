@@ -24,5 +24,5 @@ acceptance_tests:
   - "Hold a 3 and a King -> +4 * 3 = 12 Mult"
   - "Hold only Aces -> +4 * 11 = 44 Mult"
   - "Lowest held card debuffed -> +0 Mult and Debuffed message"
-status: "approved"
+status: "tested"
 art_status: "none"

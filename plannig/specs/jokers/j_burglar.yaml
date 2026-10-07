@@ -22,5 +22,5 @@ carpenter_compat: true
 impl_notes: "Same as vanilla Burglar: context.setting_blind -> ease_hands_played(extra.hands) and ease_discard(-G.GAME.current_round.discards_left, nil, true), 'Hands' message. Blueprint copies add hands too, like vanilla."
 acceptance_tests:
   - "Select Blind with 4 hands, 3 discards -> 4 + 5 = 9 hands, 0 discards (vanilla: 4 + 3 = 7)"
-status: "approved"
+status: "tested"
 art_status: "none"

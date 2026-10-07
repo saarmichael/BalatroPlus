@@ -24,5 +24,5 @@ acceptance_tests:
   - "Play a Flush -> +25 Mult (vanilla: +10 Mult)"
   - "Play a Straight Flush (contains a Flush) -> +25 Mult"
   - "Play a High Card -> no effect"
-status: "approved"
+status: "tested"
 art_status: "none"

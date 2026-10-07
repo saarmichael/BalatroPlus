@@ -22,5 +22,5 @@ carpenter_compat: true
 impl_notes: "Same as vanilla Golden Ticket: context.individual + G.play, other_card is Gold (config.center == G.P_CENTERS.m_gold) -> dollars = extra.dollars (with dollar_buffer)."
 acceptance_tests:
   - "Score 2 Gold cards -> +$5 + $5 (vanilla: +$4 + $4)"
-status: "approved"
+status: "tested"
 art_status: "none"

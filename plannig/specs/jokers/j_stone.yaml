@@ -23,5 +23,5 @@ impl_notes: "Count Stone cards (config.center == G.P_CENTERS.m_stone) in G.playi
 acceptance_tests:
   - "3 Stone cards in deck -> +50 * 3 = 150 Chips (vanilla: 25 * 3)"
   - "No Stone cards -> no effect"
-status: "approved"
+status: "tested"
 art_status: "none"

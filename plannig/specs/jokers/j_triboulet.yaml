@@ -24,5 +24,5 @@ acceptance_tests:
   - "Score a Jack -> X2 (vanilla: nothing)"
   - "Score a King and a Queen -> X2 * X2"
   - "Score a 10 -> nothing"
-status: "approved"
+status: "tested"
 art_status: "none"

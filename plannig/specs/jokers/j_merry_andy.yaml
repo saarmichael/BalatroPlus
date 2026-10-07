@@ -23,5 +23,5 @@ impl_notes: "add_to_deck: G.GAME.round_resets.discards += extra.d_size, ease_dis
 acceptance_tests:
   - "Discards per round 3 + 4 = 7, hand size 8 - 1 = 7 (vanilla: 3 + 3 discards)"
   - "Upgrade Merry Andy -> discards 6 -> 7, hand size stays 7"
-status: "approved"
+status: "tested"
 art_status: "none"

@@ -23,5 +23,5 @@ impl_notes: "context.joker_main -> #G.jokers.cards * extra.mult (counts itself, 
 acceptance_tests:
   - "3 jokers incl. this one -> +10 * 3 = 30 Mult"
   - "Alone -> +10 * 1 = 10 Mult"
-status: "approved"
+status: "tested"
 art_status: "none"

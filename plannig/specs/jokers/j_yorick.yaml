@@ -25,5 +25,5 @@ impl_notes: "Like vanilla Yorick with a 14-card period: context.discard (not blu
 acceptance_tests:
   - "Discard 14 cards -> X2; 28 cards -> X3 (vanilla needs 23 per step)"
   - "Yorick at X2 with 17 of 23 remaining, upgrade -> Yorick+ at X2 with ((17 - 1) % 14) + 1 = 3 of 14 remaining; 3 more discards -> X3"
-status: "approved"
+status: "tested"
 art_status: "none"

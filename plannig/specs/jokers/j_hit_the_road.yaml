@@ -25,5 +25,5 @@ acceptance_tests:
   - "Discard 2 Jacks -> X(1 + 1 * 2) = X3 (vanilla: X2)"
   - "Next round -> back to X1"
   - "Hit the Road at X1.5, upgrade -> Hit the Road+ keeps X1.5, next gain +1: X(1.5 + 1)"
-status: "approved"
+status: "tested"
 art_status: "none"

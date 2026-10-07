@@ -24,5 +24,5 @@ acceptance_tests:
   - "Discard 5 cards -> X3 - 5 * 0.01 = X2.95"
   - "Destroyed after 200 discarded cards ((3 - 1) / 0.01 = 200)"
   - "Ramen partly used up, upgrade -> Tonkotsu starts fresh at X3"
-status: "approved"
+status: "tested"
 art_status: "none"

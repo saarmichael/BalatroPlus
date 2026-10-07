@@ -24,5 +24,5 @@ acceptance_tests:
   - "5 slots, Joker Mold alone -> X1.5 * (4 + 1) = X7.5 (vanilla Stencil: X5)"
   - "5 slots, 4 jokers incl. Mold -> X1.5 * (1 + 1) = X3"
   - "All slots full -> no effect"
-status: "approved"
+status: "tested"
 art_status: "none"

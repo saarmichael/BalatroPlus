@@ -23,5 +23,5 @@ impl_notes: "Same as vanilla Baron: context.individual + cardarea G.hand (not en
 acceptance_tests:
   - "Hold 2 Kings -> X2 * X2 (vanilla: X1.5 * X1.5)"
   - "Hold no Kings -> no effect"
-status: "approved"
+status: "tested"
 art_status: "none"

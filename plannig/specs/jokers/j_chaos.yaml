@@ -23,5 +23,5 @@ impl_notes: "Vanilla: add_to_deck adds 1 free reroll and calls calculate_reroll_
 acceptance_tests:
   - "Enter a shop -> first 2 rerolls are free, third costs money"
   - "Buy Krusty mid-shop -> 2 free rerolls become available immediately"
-status: "approved"
+status: "tested"
 art_status: "none"

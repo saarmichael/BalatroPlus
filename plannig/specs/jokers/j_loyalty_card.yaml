@@ -25,5 +25,5 @@ acceptance_tests:
   - "Play 3 hands -> X4 on hand 3 only (vanilla Loyalty Card: hand 6)"
   - "Play 6 hands -> X4 on hands 3 and 6"
   - "Loyalty Card played 2 hands, then upgraded -> the next hand (3rd overall) gives X4 (count kept)"
-status: "approved"
+status: "tested"
 art_status: "none"

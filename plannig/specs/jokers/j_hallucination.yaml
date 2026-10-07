@@ -23,5 +23,5 @@ impl_notes: "Same as vanilla Hallucination (context.open_booster, needs a free c
 acceptance_tests:
   - "Open a Booster Pack with a free slot -> 1 Tarot created"
   - "Open a Booster Pack with full slots -> nothing created"
-status: "approved"
+status: "tested"
 art_status: "none"

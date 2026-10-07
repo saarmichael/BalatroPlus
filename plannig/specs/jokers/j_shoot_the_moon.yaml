@@ -23,5 +23,5 @@ impl_notes: "Same as vanilla Shoot the Moon: context.individual + cardarea G.han
 acceptance_tests:
   - "Hold 2 Queens -> +21 + 21 Mult (vanilla: +13 + 13)"
   - "Hold no Queens -> no effect"
-status: "approved"
+status: "tested"
 art_status: "none"

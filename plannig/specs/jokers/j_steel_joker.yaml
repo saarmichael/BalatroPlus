@@ -23,5 +23,5 @@ impl_notes: "Count Steel cards (config.center == G.P_CENTERS.m_steel) in G.playi
 acceptance_tests:
   - "3 Steel cards in deck -> X(1 + 0.4 * 3) = X2.2 (vanilla: X1.6)"
   - "No Steel cards -> no effect"
-status: "approved"
+status: "tested"
 art_status: "none"

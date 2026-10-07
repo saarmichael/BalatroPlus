@@ -23,5 +23,5 @@ impl_notes: "context.joker_main -> mult = extra.mult_per * G.GAME.hands[context.
 acceptance_tests:
   - "Play a Pair for the 3rd time this run -> +2 * 3 = 6 Mult (vanilla: +3)"
   - "First Flush of the run -> +2 * 1 = 2 Mult"
-status: "approved"
+status: "tested"
 art_status: "none"

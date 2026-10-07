@@ -27,5 +27,5 @@ acceptance_tests:
   - "Second hand of the round is a single card -> nothing turns to Stone"
   - "Medusa left of DNA, first hand a single 7 -> played card and its copy are both Stone"
   - "DNA left of Medusa, first hand a single 7 -> copy in hand is a normal 7, played card is Stone"
-status: "approved"
+status: "tested"
 art_status: "none"

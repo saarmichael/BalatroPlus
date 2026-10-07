@@ -23,5 +23,5 @@ impl_notes: "context.joker_main -> extra.mult * floor((G.GAME.dollars + (G.GAME.
 acceptance_tests:
   - "With $10 -> +2 * floor(10 / 3) = 6 Mult"
   - "With $2 -> +0 Mult"
-status: "approved"
+status: "tested"
 art_status: "none"

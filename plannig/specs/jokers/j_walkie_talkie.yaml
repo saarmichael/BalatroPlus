@@ -24,5 +24,5 @@ acceptance_tests:
   - "Score a 10 -> +100 Chips and +4 Mult (vanilla: +10 Chips, +4 Mult)"
   - "Score a 4 -> +10 Chips and +40 Mult (vanilla: +10 Chips, +4 Mult)"
   - "Score a 7 -> no effect"
-status: "approved"
+status: "tested"
 art_status: "none"
