@@ -1,5 +1,10 @@
 local T = BPlus.test
 
+local function jd_select(specs)
+    G.hand:unhighlight_all()
+    for _, c in ipairs(T.hand_cards(specs)) do G.hand:add_to_highlighted(c, true) end
+end
+
 T.test('Perfect Storm: Ace and 8 pairs score -> +13 four times (vanilla: +8)', function()
     T.start_run({ jokers = { 'bplus_fibonacci_plus' }, ante = 3 })
     T.select_blind()
@@ -35,4 +40,19 @@ T.test('Perfect Storm: vanilla not forced keeps vanilla numbers', function()
     local r = T.play({ 'AS', 'AH', '8S', '8H' })
     T.eq(r.chips, 20 + 11 + 11 + 8 + 8)
     T.eq(r.mult, 2 + 8 + 8 + 8 + 8)
+end)
+
+T.test('Perfect Storm JokerDisplay: "+" shows the "+" numbers; vanilla forced to "+" shows them too; "+" forced to base shows vanilla numbers', function()
+    T.start_run({ ante = 4, jokers = { 'bplus_fibonacci_plus', 'fibonacci' } })
+    T.select_blind()
+    T.set_hand({ '8S','8H','KD','QC','JC' })
+    jd_select({ '8S','8H' })
+    local d = T.joker_display('bplus_fibonacci_plus')
+    T.eq(d.text, '+' .. (13 * 2))
+    T.eq(d.reminder, '(Ace,2,3,5,8)')
+    T.eq(T.joker_display('fibonacci').text, '+' .. (8 * 2))
+    T.force_behavior('fibonacci', 'plus')
+    T.eq(T.joker_display('fibonacci').text, '+' .. (13 * 2))
+    T.force_behavior('bplus_fibonacci_plus', 'base')
+    T.eq(T.joker_display('bplus_fibonacci_plus').text, '+' .. (8 * 2))
 end)
