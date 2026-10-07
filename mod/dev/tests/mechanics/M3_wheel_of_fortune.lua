@@ -94,20 +94,12 @@ T.test('Wheel of Fortune: Ride the Bus keeps +2 Mult when upgraded and then gain
     T.eq(hand().mult, 1 + 2 + 2)
 end)
 
-T.test('Wheel of Fortune: Ice Cream value is kept when upgraded (if it has a + version)', function()
-    if not BPlus.upgrade_map['j_ice_cream'] then
-        T.start_run({ jokers = { 'ice_cream' }, consumables = { 'wheel_of_fortune' } })
-        T.falsy(BPlus.is_eligible(G.jokers.cards[1]), 'no + version yet, not eligible')
-        return
-    end
+T.test('Wheel of Fortune: Ice Cream upgraded -> Chocolate Bar starts fresh at +150 Chips', function()
     T.start_run({ ante = 3, hands = 6, jokers = { 'ice_cream' }, consumables = { 'wheel_of_fortune' } })
     T.select_blind()
     local function hand() T.set_hand({ '2S', '3H', '5C', '7D', '9H' }); return T.play({ '9H' }) end
-    local first = hand()
+    T.eq(hand().chips, 5 + 9 + 100)
     forced(true, 0.10, wheel)
-    T.eq(G.jokers.cards[1].config.center.key, BPlus.upgrade_map['j_ice_cream'])
-    -- Chocolate Bar has no state_transfer (decaying state restarts, Q4): it starts fresh at its own 150 Chips.
-    local plus = G.P_CENTERS[BPlus.upgrade_map['j_ice_cream']]
-    local expected = next(plus.bplus.state_transfer) and (first.chips - 5) or (5 + 9 + plus.config.extra.chips)
-    T.eq(hand().chips, expected)
+    T.eq(G.jokers.cards[1].config.center.key, 'j_bplus_ice_cream_plus')
+    T.eq(hand().chips, 5 + 9 + 150)
 end)
