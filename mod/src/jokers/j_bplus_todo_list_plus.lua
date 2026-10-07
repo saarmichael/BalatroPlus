@@ -34,6 +34,26 @@ BPlus.Joker({
         return { vars = { card.ability.extra.dollars, localize(card.ability.extra.poker_hand, 'poker_hands') } }
     end,
 
+    joker_display_def = function(JokerDisplay)
+        return {
+            text = {
+                { text = '+$' },
+                { ref_table = 'card.joker_display_values', ref_value = 'dollars', retrigger_type = 'mult' },
+            },
+        text_config = { colour = G.C.GOLD },
+            reminder_text = {
+                { text = '(' },
+                { ref_table = 'card.joker_display_values', ref_value = 'poker_hand', colour = G.C.ORANGE },
+                { text = ')' },
+            },
+            calc_function = function(card)
+                local text = JokerDisplay.evaluate_hand()
+                card.joker_display_values.dollars = text == card.ability.extra.poker_hand and card.ability.extra.dollars or 0
+                card.joker_display_values.poker_hand = localize(card.ability.extra.poker_hand, 'poker_hands')
+            end,
+        }
+    end,
+
     set_ability = function(self, card, initial, delay_sprites)
         local hand = pick_hand(card, card.ability.extra.poker_hand)
         if hand then card.ability.extra.poker_hand = hand end
