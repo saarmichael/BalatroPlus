@@ -68,3 +68,19 @@ T.test('Citadel: forced to base gains the vanilla rate and keeps its value', fun
     gain(1)
     near(T.joker('bplus_castle_plus').ability.extra.chips, 0 + 6 + 3 + 6)
 end)
+
+T.test('Citadel JokerDisplay: +36 (Hearts); vanilla forced to "+" and "+" forced to base keep the stored value', function()
+    T.start_run({ jokers = { 'bplus_castle_plus', 'castle' }, ante = 3 })
+    G.GAME.current_round.castle_card.suit = 'Hearts'   -- setup: the listed suit
+    T.joker(1).ability.extra.chips = 36
+    T.joker(2).ability.extra.chips = 9
+    local d = T.joker_display('bplus_castle_plus')
+    T.eq(d.text, '+36')
+    T.eq(d.reminder, '(Hearts)')
+    T.eq(T.joker_display('castle').text, '+9')
+    T.force_behavior('castle', 'plus')
+    T.eq(T.joker_display('castle').text, '+9')
+    T.eq(T.joker_display('castle').reminder, '(Hearts)')
+    T.force_behavior('bplus_castle_plus', 'base')
+    T.eq(T.joker_display('bplus_castle_plus').text, '+36')
+end)

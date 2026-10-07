@@ -21,6 +21,29 @@ BPlus.Joker({
             colours = { G.C.SUITS[suit] } } }
     end,
 
+    joker_display_def = function(JokerDisplay)
+        return {
+            text = {
+                { text = '+' },
+                { ref_table = 'card.ability.extra', ref_value = 'chips', retrigger_type = 'mult' },
+            },
+            text_config = { colour = G.C.CHIPS },
+            reminder_text = {
+                { text = '(' },
+                { ref_table = 'card.joker_display_values', ref_value = 'castle_card_suit' },
+                { text = ')' },
+            },
+            calc_function = function(card)
+                card.joker_display_values.castle_card_suit = localize(G.GAME.current_round.castle_card.suit, 'suits_plural')
+            end,
+            style_function = function(card, text, reminder_text, extra)
+                if reminder_text and reminder_text.children[2] then
+                    reminder_text.children[2].config.colour = lighten(G.C.SUITS[G.GAME.current_round.castle_card.suit], 0.35)
+                end
+            end,
+        }
+    end,
+
     calculate = function(self, card, context)
         if context.discard and not context.blueprint and not context.other_card.debuff
             and context.other_card:is_suit(G.GAME.current_round.castle_card.suit) then
