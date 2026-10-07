@@ -54,7 +54,7 @@ T.test('Veteran Deck: Ride the Bus keeps +2 Mult and gains at the + rate', funct
     end)
 end)
 
-T.test('Veteran Deck: Ice Cream (95 -> 90 Chips after two rounds) upgrades to a fresh +150 Chips', function()
+T.test('Veteran Deck: Ice Cream (100 -> 95 Chips after two rounds) upgrades to a fresh +150 Chips', function()
     with_rounds(2, function()
         T.start_run({ deck = 'b_bplus_veteran', ante = 3, jokers = { 'ice_cream' } })
         local function hand() T.set_hand({ '2S', '3H', '5C', '7D', '9H' }); return T.play({ '9H' }) end
