@@ -1,0 +1,25 @@
+local T = BPlus.test
+
+T.test('Self-Made: with $10 -> +2 * floor(10 / 3) = 6 Mult', function()
+    T.start_run({ jokers = { 'bplus_bootstraps_plus' }, dollars = 10, hands = 5, ante = 3 })
+    T.select_blind()
+    T.set_hand({ '2S', '3H', '7C', '5D', '9D' })
+    T.eq(T.play({ '2S' }).mult, 1 + 2 * math.floor(10 / 3))
+end)
+
+T.test('Self-Made: with $2 -> +0 Mult', function()
+    T.start_run({ jokers = { 'bplus_bootstraps_plus' }, dollars = 2, hands = 5, ante = 3 })
+    T.select_blind()
+    T.set_hand({ '2S', '3H', '7C', '5D', '9D' })
+    T.eq(T.play({ '2S' }).mult, 1 + 0)
+end)
+
+T.test('Self-Made: Bootstraps forced to "+" counts every $3 (vanilla every $5)', function()
+    T.start_run({ jokers = { 'bootstraps' }, dollars = 10, hands = 5, ante = 3 })
+    T.select_blind()
+    T.set_hand({ '2S', '3H', '7C', '5D', '9D' })
+    T.eq(T.play({ '2S' }).mult, 1 + 2 * math.floor(10 / 5))
+    T.force_behavior('bootstraps', 'plus')
+    T.set_hand({ '2S', '3H', '7C', '5D', '9D' })
+    T.eq(T.play({ '2S' }).mult, 1 + 2 * math.floor(10 / 3))
+end)
