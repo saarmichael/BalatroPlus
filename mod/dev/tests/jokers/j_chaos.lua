@@ -1,0 +1,40 @@
+local T = BPlus.test
+
+local function money() return G.GAME.dollars end
+
+T.test('Krusty the Clown: first 2 rerolls are free, third costs money', function()
+    T.start_run({ dollars = 0, jokers = { 'bplus_chaos_plus' } })
+    T.to_shop()
+    T.eq(G.GAME.current_round.free_rerolls, 2)
+    local start = money()
+    T.reroll(); T.reroll()
+    T.eq(money(), start)
+    T.eq(G.GAME.current_round.free_rerolls, 0)
+    T.reroll()
+    T.eq(money(), start - 5)
+end)
+
+T.test('Krusty the Clown: vanilla Chaos gives 1 free reroll', function()
+    T.start_run({ dollars = 0, jokers = { 'chaos' } })
+    T.to_shop()
+    T.eq(G.GAME.current_round.free_rerolls, 1)
+end)
+
+T.test('Krusty the Clown: upgrade Chaos mid-shop -> 2 free rerolls available immediately', function()
+    T.start_run({ dollars = 0, jokers = { 'chaos' } })
+    T.to_shop()
+    T.eq(G.GAME.current_round.free_rerolls, 1)
+    T.upgrade('chaos')
+    T.eq(G.GAME.current_round.free_rerolls, 2)
+    T.eq(G.GAME.round_resets.free_rerolls, 2)
+end)
+
+T.test('Krusty the Clown: Chaos forced to "+" -> 2 free rerolls; sold -> 0', function()
+    T.start_run({ dollars = 0, jokers = { 'chaos' } })
+    T.force_behavior('chaos', 'plus')
+    T.to_shop()
+    T.eq(G.GAME.current_round.free_rerolls, 2)
+    T.sell('chaos')
+    T.eq(G.GAME.current_round.free_rerolls, 0)
+    T.eq(G.GAME.round_resets.free_rerolls, 0)
+end)
