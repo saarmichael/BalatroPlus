@@ -93,3 +93,12 @@ T.test('Salesman: vanilla Showman forced to "+" gives the rate; "+" forced to ba
     T.eq(S.rate(), 0)
     T.truthy(pool_has('j_joker'), 'Showman effect kept')
 end)
+
+T.test('Salesman JokerDisplay: shows nothing, like vanilla (also forced to base / plus)', function()
+    T.start_run({ jokers = { 'bplus_ring_master_plus', 'ring_master' } })
+    T.eq(T.joker_display('bplus_ring_master_plus').text, '')
+    T.force_behavior('ring_master', 'plus')
+    T.eq(T.joker_display('ring_master').text, '')
+    T.force_behavior('bplus_ring_master_plus', 'base')
+    T.eq(T.joker_display('bplus_ring_master_plus').text, '')
+end)

@@ -18,6 +18,10 @@ BPlus.Joker({
     loc_vars = function(self, info_queue, card)
         return { vars = { BPlus.balance.salesman.upgrade_rate * 100 } }
     end,
+
+    joker_display_def = function(JokerDisplay)
+        return {} -- vanilla Showman shows nothing either
+    end,
 })
 
 -- Showman effect: smods decides duplicates in SMODS.showman and only looks for j_ring_master.
