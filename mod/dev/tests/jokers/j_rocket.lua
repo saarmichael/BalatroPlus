@@ -43,3 +43,18 @@ T.test('Spaceship: forced to base gains +2 per Boss and keeps its value', functi
     defeat_boss()
     T.eq(T.joker(1).ability.extra.dollars, 5 + 2)
 end)
+
+T.test('Spaceship JokerDisplay: +$1 (Round); after a Boss +$5; stored payout kept across forced behaviours', function()
+    T.start_run({ jokers = { 'bplus_rocket_plus', 'rocket' } })
+    local d = T.joker_display('bplus_rocket_plus')
+    T.eq(d.text, '+$1')
+    T.eq(d.reminder, '(Round)')
+    T.joker(1).ability.extra.dollars = 1 + 4
+    T.joker(2).ability.extra.dollars = 1 + 2
+    T.eq(T.joker_display('bplus_rocket_plus').text, '+$' .. (1 + 4))
+    T.eq(T.joker_display('rocket').text, '+$' .. (1 + 2))
+    T.force_behavior('rocket', 'plus')
+    T.eq(T.joker_display('rocket').text, '+$' .. (1 + 2))
+    T.force_behavior('bplus_rocket_plus', 'base')
+    T.eq(T.joker_display('bplus_rocket_plus').text, '+$' .. (1 + 4))
+end)
