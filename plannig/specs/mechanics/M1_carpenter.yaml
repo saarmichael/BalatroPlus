@@ -1,0 +1,37 @@
+# Implementation ticket for mechanic M1 Carpenter (decision D12 in plannig/DECISIONS.md).
+id: "M1"
+name: "Carpenter"
+kind: "joker (not a '+' joker: it has no '+' version and is never eligible)"
+file: "mod/src/mechanics/M1_carpenter.lua"
+key: "j_bplus_carpenter"
+numbers:
+  rarity: "BPlus.balance.carpenter.rarity   # 2 = Uncommon"
+  cost: "BPlus.balance.carpenter.cost       # $8"
+  blueprint_compat: false
+behavior: >
+  Blueprint-style. The joker to Carpenter's right behaves as its '+' version (BPlus behaviour provider,
+  priority 100, answers 'plus'). Not permanent: when Carpenter moves, is sold or is debuffed, the joker returns
+  to its base behaviour. Card shape never changes. The affected joker shows a purple "+" badge in its tooltip.
+  Carpenter shows Blueprint-style 'compatible' / 'incompatible' text (green/red) in the joker area.
+  Compatible = a right neighbour exists, is eligible (has a '+' version, is not '+' already) and its '+' version
+  has carpenter_compat = true, and Carpenter is not debuffed.
+  If the right joker is Blueprint / Brainstorm it behaves as Blueprint+ / Brainstorm+ (needs B10; until those
+  exist it is simply 'incompatible').
+  Growing jokers keep their stored value; only the rate changes (behavior.lua state_transfer sync).
+edge_cases:
+  - "Carpenter in last slot or right joker missing -> incompatible, nothing happens."
+  - "Right joker already '+' or without a '+' version -> incompatible."
+  - "carpenter_compat = false joker (shrinking, Egg, Seltzer) on the right -> incompatible, unchanged."
+  - "Carpenter debuffed -> right joker back to base."
+  - "Two Carpenters in a row: the second sees a Carpenter (no '+' version) on its right -> incompatible."
+  - "The Rust (priority 200) overrides Carpenter while its blind is active."
+  - "Only the left neighbour matters: Carpenter affects exactly the joker directly to its right."
+acceptance_tests:
+  - "Joker right of Carpenter scores +20 Mult instead of +4 (+ badge flagged via ability.bplus_behaving)"
+  - "Joker on the LEFT of Carpenter is unaffected (+4)"
+  - "Moving Carpenter away (selling it) returns the joker to +4"
+  - "Debuffed Carpenter does nothing"
+  - "Carpenter sees 'compatible' for an eligible joker and 'incompatible' for a non-upgradable joker or the last slot"
+  - "Ride the Bus with +3 stored under Carpenter keeps its value and gains +2 instead of +1"
+  - "Carpenter is never eligible for upgrade"
+  - "A '+' joker to the right is untouched (stays '+')"
