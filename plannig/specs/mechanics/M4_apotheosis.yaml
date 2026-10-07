@@ -1,0 +1,19 @@
+# Ticket: M4 Apotheosis (new Spectral). Decision D9.
+id: M4
+name: "Apotheosis"
+file: mod/src/mechanics/M4_apotheosis.lua
+behaviour: >
+  Spectral, cost balance.apotheosis.cost (like Hex). Upgrades one random eligible joker with BPlus.upgrade_card and
+  destroys every other joker that is not Eternal. Text: "Upgrade a random Joker, destroy all other Jokers".
+numbers:
+  - balance.apotheosis.cost
+can_use: "an eligible joker exists"
+edge_cases:
+  - "Eternal jokers survive; the upgraded joker survives even when Eternal"
+  - "ineligible jokers (no + version or already +) are destroyed too, but cannot be chosen"
+acceptance_tests:
+  - "with Joker + Greedy Joker + Four Fingers: exactly one eligible is upgraded, all others destroyed"
+  - "Eternal joker survives"
+  - "cannot be used with no eligible joker"
+  - "Ride the Bus at +2 keeps +2 and gains at + rate afterwards"
+  - "Ice Cream (shrinking): upgraded per its state_transfer (empty: restarts at the + value)"
