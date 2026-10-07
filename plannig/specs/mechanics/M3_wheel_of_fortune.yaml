@@ -1,0 +1,25 @@
+# Ticket: M3 Wheel of Fortune (changed vanilla Tarot). Decision D8.
+id: M3
+name: "The Wheel of Fortune (changed)"
+file: mod/src/mechanics/M3_wheel_of_fortune.lua
+behaviour: >
+  SMODS.take_ownership('c_wheel_of_fortune') with its own use/can_use. Success chance and "Nope!" are vanilla
+  (SMODS.pseudorandom_probability 1 in extra, Oops! All 6s applies). On success the outcome is picked first among
+  outcomes that have a valid joker (upgrade: an eligible joker, edition outcomes: a joker without an edition),
+  weighted by balance.wheel_of_fortune shares renormalised over the available outcomes; then a random valid joker.
+numbers:
+  - balance.wheel_of_fortune.upgrade / foil / holo / polychrome  (shares, sum 1)
+can_use: "true if any eligible joker OR any edition-less joker exists"
+edge_cases:
+  - "only edition-less ineligible jokers: only edition outcomes are possible (shares renormalised to foil/holo/poly)"
+  - "only eligible jokers that already have an edition: only the upgrade outcome is possible"
+  - "no valid joker for any outcome: cannot be used"
+  - "upgrade keeps state (BPlus.upgrade_card state_transfer), e.g. Ride the Bus value"
+acceptance_tests:
+  - "success, roll in the upgrade share: the only eligible Joker becomes its + version"
+  - "success, roll in a foil / holo / polychrome share: the edition-less Joker gets that edition"
+  - "outcome renormalisation: no eligible joker -> upgrade is never picked; only-edition-holding eligible joker -> always upgrade"
+  - "failure: Nope!, nothing changes"
+  - "cannot be used with no valid joker"
+  - "Ride the Bus at +2 upgraded by Wheel keeps +2 and then gains at the + rate"
+  - "Ice Cream (shrinking): upgraded per its state_transfer (empty: restarts at the + value); not eligible if no + version"
