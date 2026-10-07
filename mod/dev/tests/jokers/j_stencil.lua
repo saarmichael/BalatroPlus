@@ -57,3 +57,12 @@ T.test('Joker Mold: forced to base scores the vanilla Stencil X(4 + 1) = X5', fu
     T.select_blind()
     T.eq(play_one().mult, 1 * (4 + 1))
 end)
+
+T.test('Joker Mold JokerDisplay: X1.5 * (3 empty + 2 stencils) = X7.5; vanilla forced to "+" shows X7.5; "+" forced to base shows X5', function()
+    T.start_run({ jokers = { 'bplus_stencil_plus', 'stencil' }, ante = 3 })
+    T.eq(T.joker_display('bplus_stencil_plus').text, 'X' .. (1.5 * (3 + 2)))
+    T.force_behavior('stencil', 'plus')
+    T.eq(T.joker_display('stencil').text, 'X' .. (1.5 * (3 + 2)))
+    T.force_behavior('bplus_stencil_plus', 'base')
+    T.eq(T.joker_display('bplus_stencil_plus').text, 'X' .. (3 + 2))
+end)

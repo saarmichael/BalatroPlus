@@ -31,6 +31,23 @@ BPlus.Joker({
         return { vars = { card.ability.extra.Xmult_per, card.ability.extra.Xmult_per * n } }
     end,
 
+    joker_display_def = function(JokerDisplay)
+        return {
+            text = {
+                {
+                    border_nodes = {
+                        { text = 'X' },
+                        { ref_table = 'card.joker_display_values', ref_value = 'x_mult', retrigger_type = 'exp' },
+                    },
+                },
+            },
+            calc_function = function(card)
+                local n, empty = stencil_count()
+                card.joker_display_values.x_mult = empty > 0 and card.ability.extra.Xmult_per * n or 1
+            end,
+        }
+    end,
+
     calculate = function(self, card, context)
         if context.joker_main then
             local n, empty = stencil_count()
