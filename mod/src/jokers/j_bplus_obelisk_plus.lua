@@ -19,6 +19,36 @@ BPlus.Joker({
         return { vars = { card.ability.extra.Xmult_mod, card.ability.extra.Xmult } }
     end,
 
+    joker_display_def = function(JokerDisplay)
+        return {
+            text = {
+                {
+                    border_nodes = {
+                        { text = 'X' },
+                        { ref_table = 'card.joker_display_values', ref_value = 'x_mult', retrigger_type = 'exp' },
+                    },
+                },
+            },
+            calc_function = function(card)
+                local in_blind = G.GAME.blind and G.GAME.blind.in_blind or G.STATE == G.STATES.SELECTING_HAND or
+                    G.STATE == G.STATES.HAND_PLAYED or G.STATE == G.STATES.DRAW_TO_HAND
+                local hand = in_blind and G.hand.highlighted or {}
+                local text, _, _ = JokerDisplay.evaluate_hand(hand)
+                local play_more_than = 0
+                local hand_exists = text ~= 'Unknown' and G.GAME.hands and G.GAME.hands[text]
+                if hand_exists then
+                    for _, poker_hand in pairs(G.GAME.hands) do
+                        if poker_hand.played and poker_hand.played >= play_more_than and poker_hand.visible then
+                            play_more_than = poker_hand.played
+                        end
+                    end
+                end
+                card.joker_display_values.x_mult = (hand_exists and (G.GAME.hands[text].played >= play_more_than
+                    and 1 or card.ability.extra.Xmult + card.ability.extra.Xmult_mod) or card.ability.extra.Xmult)
+            end,
+        }
+    end,
+
     calculate = function(self, card, context)
         if context.before and not context.blueprint then
             local reset = true
