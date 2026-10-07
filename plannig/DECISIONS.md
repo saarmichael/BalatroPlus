@@ -88,6 +88,15 @@ M5 Salesman is the `j_ring_master` "+" row (`j_bplus_ring_master_plus`).
   with a natural hand); the 20% test still checks the game-over side of the 25% line.
 - Tonkotsu (Ramen+): destroy check uses a 1e-9 float tolerance.
 
+**D17. B10 judgment calls (accepted by orchestrator).**
+- Architect / Hive Mind show one compat badge: "compatible" if at least one of the two targets can be copied.
+- Chicot+: its 25% chip cut applies at `setting_blind`; a Chicot+ bought mid-blind disables an active Boss (as
+  vanilla) but doesn't cut that blind's chips.
+- Phantom (Invisible+): with no room or no other joker it shows the vanilla message and does nothing.
+- Yorick+ normalises its counter on the first discard after an upgrade/switch, as the ticket specifies.
+- Follow-up requested: Architect/Hive Mind copying retrigger jokers (repetitions through SMODS.merge_effects), and a
+  real Carpenter + Blueprint test.
+
 ## Questions from agents
 
 (none yet)
