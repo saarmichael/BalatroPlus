@@ -27,7 +27,15 @@ function dev.validate_scenario(s)
 end
 
 -- Start a fresh run with a scenario. Works from the main menu or mid-run.
-function dev.new_run(name)
+-- Starting a run overwrites the current profile's saved run, so this refuses to run on any profile
+-- but the test profile unless `opts.allow_player_profile` is set (./dev.sh scenario sets it: that is
+-- the human's own manual tool).
+function dev.new_run(name, opts)
+    local test_profile = BPlus.test and BPlus.test.config.profile or 3
+    if G.SETTINGS.profile ~= test_profile and not (opts and opts.allow_player_profile) then
+        error(('dev.new_run refused: profile %s is a player profile (tests use profile %s). '
+            .. 'Use a test (T.start_run) instead.'):format(tostring(G.SETTINGS.profile), tostring(test_profile)), 2)
+    end
     local scenario = dev.validate_scenario(dev.load_scenario(name))
     dev.pending_scenario = scenario
     if scenario.deck then

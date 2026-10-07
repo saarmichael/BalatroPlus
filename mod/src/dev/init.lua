@@ -53,3 +53,6 @@ function Game:update(dt)
 end
 
 dev.log('Dev toolkit loaded')
+
+-- T.force_behavior: a test-only behaviour override that beats every mechanic.
+BPlus.add_behavior_provider(1000, function(card) return card.bplus_forced end)

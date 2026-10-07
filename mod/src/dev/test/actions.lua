@@ -373,3 +373,27 @@ function T.to_shop()
 end
 
 function T.state() return dev.state() end
+
+-- Upgrades and behaviour -------------------------------------------------------------
+
+-- Permanent upgrade through the real entry point (BPlus.upgrade_card). Returns the card.
+function T.upgrade(key_or_index)
+    local card = require_card({ 'jokers' }, key_or_index, 'upgrade')
+    if not BPlus.upgrade_card(card) then T.fail('upgrade: ' .. card.config.center.key .. ' is not eligible') end
+    T.wait_idle()
+    return card
+end
+
+-- Make an owned joker behave as its "+" version ('plus', what Carpenter does), as its vanilla
+-- version ('base', what The Rust does), or normally again (nil). Overrides every mechanic.
+-- Use it to test a joker's alternate behaviour without depending on Carpenter / The Rust.
+function T.force_behavior(key_or_index, mode)
+    local card = require_card({ 'jokers' }, key_or_index, 'force_behavior')
+    card.bplus_forced = mode
+    BPlus.sync_behavior(card)
+    if mode and not card.ability.bplus_behaving then
+        T.fail(('force_behavior: %s cannot behave as %s'):format(card.config.center.key, mode))
+    end
+    T.wait_idle()
+    return card
+end

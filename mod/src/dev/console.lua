@@ -57,7 +57,7 @@ local SUBCOMMANDS = {
     run = {
         usage = 'run [scenario]           new run with dev/scenario.lua or dev/scenarios/<name>.lua',
         run = function(args)
-            dev.new_run(args[1])
+            dev.new_run(args[1], { allow_player_profile = true })
             return 'Started run' .. (args[1] and (' with scenario ' .. args[1]) or '')
         end,
     },
@@ -106,7 +106,7 @@ local function keybind(key, action)
     })
 end
 
-keybind('n', function() dev.new_run() end) -- new run with dev/scenario.lua
+keybind("n", function() dev.new_run(nil, { allow_player_profile = true }) end) -- new run with dev/scenario.lua
 keybind('w', function() dev.win_blind() end)
 keybind('m', function()
     dev.set_infinite_money(not dev.run_state().money_floor)

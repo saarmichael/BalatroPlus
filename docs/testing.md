@@ -23,6 +23,17 @@ FAIL  framework.lua > scenario can force the boss blind (0.2s)
       game: state=BLIND_SELECT ante=1 round=0 dollars=4 hands_left=4 jokers=
 ```
 
+## Sharing the game
+
+There is one game, so commands that talk to it (`test`, `eval`, `scenario`, `state`, `start`, `stop`,
+`restart`) take a lock and queue: `Waiting for the game (in use by pid ...)` means another terminal or agent is
+running. Each run restarts the game if any mod code changed since launch, including other people's edits. A test
+run therefore loads everyone's current files; a file that fails to load is skipped and shown as
+`WARN  mod file skipped at load: <file>: <error>` at the top of the output.
+
+Batch your work: write several jokers, then run their tests together (`./dev.sh test j_ride_the_bus` or a
+broader filter). Don't loop single tests.
+
 ## Isolation
 
 - Tests run on **profile 3**, a dedicated test profile with everything unlocked. The player's profile and
@@ -69,6 +80,9 @@ Guidelines:
 | `shop_queue` | Forced into the next shop joker slots, in order |
 | `shop_pool` | Every shop joker slot (including rerolls) drawn from this list |
 
+Jokers given by a scenario never get a random edition unless you set `edition`, and `stickers` are always
+applied (forced). "+" jokers are given as `'bplus_joker_plus'` or `'j_bplus_joker_plus'`.
+
 Card keys may omit their prefix (`'blueprint'` = `'j_blueprint'`, `'pluto'` = `'c_pluto'`).
 Vanilla keys are in `~/Library/Application Support/Balatro/Mods/lovely/dump/game.lua`.
 
@@ -102,6 +116,8 @@ affordable, no slot...) and call `T.fail` with a clear message instead of doing 
 | `T.pick(key_or_index)` / `T.skip_pack()` | inside an opened booster pack |
 | `T.set_hand(specs)` | rewrites the hand to exactly these cards; extras go back to the deck |
 | `T.joker(k)`, `T.consumable(k)`, `T.find(area, k)` | look up owned cards (nil if absent) |
+| `T.upgrade(k)` | permanent upgrade of an owned joker via `BPlus.upgrade_card`; fails if not eligible; returns the card |
+| `T.force_behavior(k, mode)` | make an owned joker behave as `'plus'` (what Carpenter does), `'base'` (what The Rust does) or normally (`nil`) |
 
 **Card specs** (hand cards in `set_hand`, `play`, `discard`, `use` targets): rank + suit, `'AS'`,
 `'10H'` (or `'TH'`), `'2C'`; or a table `{ 'KH', enhancement = 'glass', edition = 'foil', seal = 'Red' }`.

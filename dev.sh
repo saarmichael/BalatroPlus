@@ -24,6 +24,29 @@ REMOTE_DIR="$SAVE_DIR/bplus_dev"
 LAUNCH_STAMP="$REMOTE_DIR/launched_at"
 GAME_PROCESS="Balatro.app/Contents/MacOS/love"
 
+# One game, many callers: commands that talk to the game take a lock so parallel agents/terminals
+# queue instead of clobbering each other's runs. Stale locks (dead holder) are taken over.
+LOCK_DIR="$SAVE_DIR/bplus_dev/game.lock"
+acquire_game_lock() {
+  [ -n "${BPLUS_LOCK_HELD:-}" ] && return 0
+  mkdir -p "$SAVE_DIR/bplus_dev"
+  local waited=0
+  until mkdir "$LOCK_DIR" 2>/dev/null; do
+    local holder; holder="$(cat "$LOCK_DIR/pid" 2>/dev/null || true)"
+    if [ -n "$holder" ] && ! kill -0 "$holder" 2>/dev/null; then
+      rm -rf "$LOCK_DIR"; continue
+    fi
+    if [ $waited -eq 0 ]; then echo "Waiting for the game (in use by pid ${holder:-?}: $(cat "$LOCK_DIR/what" 2>/dev/null || echo '?'))..." >&2; fi
+    sleep 1; waited=$((waited + 1))
+    if [ $waited -gt 3600 ]; then echo "Gave up waiting for the game lock after 1h" >&2; exit 3; fi
+  done
+  echo $$ > "$LOCK_DIR/pid"
+  echo "$*" > "$LOCK_DIR/what"
+  export BPLUS_LOCK_HELD=1
+  trap 'rm -rf "$LOCK_DIR"' EXIT
+  trap 'rm -rf "$LOCK_DIR"; exit 130' INT TERM
+}
+
 game_running() { pgrep -f "$GAME_PROCESS" >/dev/null; }
 
 launch() {
@@ -154,6 +177,10 @@ run_tests() {
 }
 
 case "${1:-}" in
+  run|start|stop|restart|test|eval|scenario|state) acquire_game_lock "$@" ;;
+esac
+
+case "${1:-}" in
   link)
     target="$MODS_DIR/$MOD_NAME"
     if [ -L "$target" ] && [ "$(readlink "$target")" = "$REPO/mod" ]; then echo "Already linked: $target -> $REPO/mod"
@@ -181,7 +208,9 @@ case "${1:-}" in
   eval)
     if [ "${2:-}" = "-f" ]; then remote_eval "$(cat "$3")"; else remote_eval "${2:?usage: ./dev.sh eval '<lua>'}"; fi
     ;;
-  scenario) remote_eval "dev.new_run(${2:+\"$2\"})" ;;
+  scenario)
+    name_arg="nil"; [ -n "${2:-}" ] && name_arg="\"$2\""
+    remote_eval "dev.new_run($name_arg, { allow_player_profile = true })" ;;
   state) remote_eval "dev.state()" ;;
   *)
     sed -n '2,15p' "$0"; exit 1

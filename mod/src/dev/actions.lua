@@ -47,6 +47,10 @@ function dev.give(spec)
     for k, v in pairs(spec) do t[k] = v end
     t.key = dev.resolve_key(t.key)
     t.edition = resolve_edition(t.edition)
+    -- vanilla stickers have should_apply = false, so they only stick when forced
+    -- deterministic tests: no random edition unless one is asked for
+    if t.edition == nil and t.no_edition == nil then t.no_edition = true end
+    if t.stickers and t.force_stickers == nil then t.force_stickers = true end
     if G.P_CENTERS[t.key].set == 'Voucher' then return dev.redeem_voucher(t.key) end
     return SMODS.add_card(t)
 end

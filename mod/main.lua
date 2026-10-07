@@ -9,6 +9,17 @@ function BPlus.load(path)
     return chunk()
 end
 
+BPlus.load('src/core.lua')
+BPlus.balance = BPlus.load('src/balance.lua')
+BPlus.load('src/upgrade.lua')
+BPlus.load('src/behavior.lua')
+
+SMODS.Atlas({ key = 'placeholder', path = 'placeholder.png', px = 71, py = 95 })
+
+-- One file per "+" joker (each registers itself through BPlus.Joker), then the upgrade mechanics.
+BPlus.load_dir('src/jokers')
+BPlus.load_dir('src/mechanics')
+
 if BPlus.config.dev_mode then
     BPlus.load('src/dev/init.lua')
 end

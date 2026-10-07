@@ -164,6 +164,7 @@ local function main(opts)
     local tests = discover(opts.filter)
     emit(('Running %d test(s)%s on profile %d at speed x%d'):format(
         #tests, opts.filter and (' matching "' .. opts.filter .. '"') or '', T.config.profile, opts.speed or T.config.speed))
+    for _, e in ipairs(BPlus.load_errors) do emit('WARN  mod file skipped at load: ' .. e) end
 
     run.saved = { profile = G.SETTINGS.profile, speed = G.SETTINGS.GAMESPEED }
     if G.SETTINGS.profile ~= T.config.profile then switch_profile(T.config.profile) end
