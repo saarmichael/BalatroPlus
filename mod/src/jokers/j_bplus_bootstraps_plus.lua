@@ -18,6 +18,20 @@ BPlus.Joker({
         return { vars = { e.mult, e.dollars, e.mult * math.floor(((G.GAME.dollars or 0) + (G.GAME.dollar_buffer or 0)) / e.dollars) } }
     end,
 
+    joker_display_def = function(JokerDisplay)
+        return {
+            text = {
+                { text = '+' },
+                { ref_table = 'card.joker_display_values', ref_value = 'mult', retrigger_type = 'mult' },
+            },
+            text_config = { colour = G.C.MULT },
+            calc_function = function(card)
+                card.joker_display_values.mult = card.ability.extra.mult *
+                    math.floor(((G.GAME.dollars or 0) + (G.GAME.dollar_buffer or 0)) / card.ability.extra.dollars)
+            end,
+        }
+    end,
+
     calculate = function(self, card, context)
         if context.joker_main then
             local e = card.ability.extra

@@ -23,3 +23,13 @@ T.test('Self-Made: Bootstraps forced to "+" counts every $3 (vanilla every $5)',
     T.set_hand({ '2S', '3H', '7C', '5D', '9D' })
     T.eq(T.play({ '2S' }).mult, 1 + 2 * math.floor(10 / 3))
 end)
+
+T.test('Self-Made JokerDisplay: $10 -> +6; vanilla forced to "+" shows +6; "+" forced to base shows +4', function()
+    T.start_run({ jokers = { 'bplus_bootstraps_plus', 'bootstraps' }, dollars = 10, hands = 5, ante = 3 })
+    T.eq(T.joker_display('bplus_bootstraps_plus').text, '+' .. 2 * math.floor(10 / 3))
+    T.eq(T.joker_display('bootstraps').text, '+' .. 2 * math.floor(10 / 5))
+    T.force_behavior('bootstraps', 'plus')
+    T.eq(T.joker_display('bootstraps').text, '+' .. 2 * math.floor(10 / 3))
+    T.force_behavior('bplus_bootstraps_plus', 'base')
+    T.eq(T.joker_display('bplus_bootstraps_plus').text, '+' .. 2 * math.floor(10 / 5))
+end)
