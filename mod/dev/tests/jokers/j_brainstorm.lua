@@ -1,0 +1,35 @@
+local T = BPlus.test
+
+local function pair2()
+    T.set_hand({ '2S', '2H', '7C', '5D', '3D' })
+    return T.play({ '2S', '2H' })
+end
+
+T.test('Hive Mind: Joker+, Joker, ..., Hive Mind -> copies +20 and +4', function()
+    T.start_run({ jokers = { 'bplus_joker_plus', 'joker', 'popcorn', 'bplus_brainstorm_plus' }, ante = 3 })
+    T.select_blind()
+    local r = pair2()
+    T.eq(r.chips, 10 + 2 + 2)
+    -- popcorn: +20 Mult at the start (vanilla Popcorn)
+    T.eq(r.mult, 2 + 20 + 4 + 20 + 4 + 20)
+end)
+
+T.test('Hive Mind: Hive Mind is leftmost -> copies only the 2nd joker', function()
+    T.start_run({ jokers = { 'bplus_brainstorm_plus', 'bplus_joker_plus', 'joker' }, ante = 3 })
+    T.select_blind()
+    T.eq(pair2().mult, 2 + 20 + 4 + 20)
+end)
+
+T.test('Hive Mind: vanilla Brainstorm forced to "+" copies the 2 leftmost jokers', function()
+    T.start_run({ jokers = { 'bplus_joker_plus', 'joker', 'brainstorm' }, ante = 3 })
+    T.select_blind()
+    T.force_behavior('brainstorm', 'plus')
+    T.eq(pair2().mult, 2 + 20 + 4 + 20 + 4)
+end)
+
+T.test('Hive Mind: Hive Mind forced to base copies only the leftmost joker', function()
+    T.start_run({ jokers = { 'bplus_joker_plus', 'joker', 'bplus_brainstorm_plus' }, ante = 3 })
+    T.select_blind()
+    T.force_behavior(3, 'base')
+    T.eq(pair2().mult, 2 + 20 + 4 + 20)
+end)
