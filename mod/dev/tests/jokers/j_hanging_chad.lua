@@ -1,0 +1,27 @@
+local T = BPlus.test
+
+T.test('Defibrillator: play a Pair -> first scored card scores 1 + 3 = 4 times (vanilla: 3), second card once', function()
+    T.start_run({ jokers = { 'bplus_hanging_chad_plus' } })
+    T.select_blind()
+    T.set_hand({ '9S', '9H', '2C', '5D', '3D' })
+    local r = T.play({ '9S', '9H' })
+    T.eq(r.chips, 10 + 9 * (1 + 3) + 9)
+    T.eq(r.mult, 2)
+end)
+
+T.test('Hanging Chad (vanilla): first scored card scores 1 + 2 = 3 times', function()
+    T.start_run({ jokers = { 'hanging_chad' } })
+    T.select_blind()
+    T.set_hand({ '9S', '9H', '2C', '5D', '3D' })
+    local r = T.play({ '9S', '9H' })
+    T.eq(r.chips, 10 + 9 * (1 + 2) + 9)
+end)
+
+T.test('Defibrillator: Hanging Chad forced to "+" -> first card scores 4 times', function()
+    T.start_run({ jokers = { 'hanging_chad' } })
+    T.select_blind()
+    T.force_behavior('hanging_chad', 'plus')
+    T.set_hand({ '9S', '9H', '2C', '5D', '3D' })
+    local r = T.play({ '9S', '9H' })
+    T.eq(r.chips, 10 + 9 * (1 + 3) + 9)
+end)
