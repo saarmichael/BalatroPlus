@@ -9,8 +9,6 @@ function BPlus.load(path)
     return chunk()
 end
 
-BPlus.load('src/vouchers.lua')
-
 if BPlus.config.dev_mode then
     BPlus.load('src/dev/init.lua')
 end
