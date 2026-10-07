@@ -45,3 +45,18 @@ T.test('Architect: Architect forced to base copies just one joker', function()
     T.select_blind()
     T.eq(pair2().mult, 2 + 20 + 20 + 4)
 end)
+
+T.test('Architect: copies the retriggers of two Hacks (2 originals + 2 copies)', function()
+    T.start_run({ jokers = { 'bplus_blueprint_plus', 'hack', 'hack' }, ante = 3 })
+    T.select_blind()
+    local r = pair2()
+    -- each 2 scores once + 2 (originals) + 2 (copies) = 5 times
+    T.eq(r.chips, 10 + 2 * 5 + 2 * 5)
+    T.eq(r.mult, 2)
+end)
+
+T.test('Architect: real Carpenter left of a vanilla Blueprint -> Blueprint copies two jokers', function()
+    T.start_run({ jokers = { 'bplus_carpenter', 'blueprint', 'bplus_joker_plus', 'joker' }, ante = 3 })
+    T.select_blind()
+    T.eq(pair2().mult, 2 + 20 + 4 + 20 + 4)
+end)
