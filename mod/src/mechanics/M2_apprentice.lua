@@ -28,6 +28,28 @@ SMODS.Joker({
         return { vars = { card.ability.extra.rounds, card.ability.extra.count } }
     end,
 
+    joker_display_def = function(JokerDisplay)
+        return {
+            reminder_text = {
+                { text = '(' },
+                { ref_table = 'card.joker_display_values', ref_value = 'active' },
+                { text = ')' },
+            },
+            calc_function = function(card)
+                local e = card.ability.extra
+                card.joker_display_values.is_active = e.count >= e.rounds
+                card.joker_display_values.active = card.joker_display_values.is_active and localize('jdis_active')
+                    or (e.count .. '/' .. e.rounds)
+            end,
+            style_function = function(card, text, reminder_text, extra)
+                if reminder_text and reminder_text.children and reminder_text.children[2] then
+                    reminder_text.children[2].config.colour = card.joker_display_values.is_active and G.C.GREEN
+                        or G.C.UI.TEXT_INACTIVE
+                end
+            end,
+        }
+    end,
+
     calculate = function(self, card, context)
         if context.blueprint then return end
         if context.end_of_round and context.game_over == false and context.main_eval

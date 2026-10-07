@@ -88,3 +88,10 @@ T.test('Apprentice: Ice Cream upgraded -> Chocolate Bar starts fresh at +150 Chi
     T.leave_shop(); T.select_blind()
     T.eq(hand().chips, 5 + 9 + 150)
 end)
+
+T.test('Apprentice JokerDisplay: (0/3) -> (1/3) after a round', function()
+    T.start_run({ jokers = { 'bplus_apprentice' } })
+    T.eq(T.joker_display('bplus_apprentice').reminder, '(0/3)')
+    round()
+    T.eq(T.joker_display('bplus_apprentice').reminder, '(1/3)')
+end)
