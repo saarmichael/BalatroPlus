@@ -1,0 +1,15 @@
+id: M8
+name: Workshop Pack
+kind: booster                    # p_bplus_workshop_normal / jumbo / mega
+files: [mod/src/mechanics/m8_workshop_pack.lua]
+behaviour:
+  - Joker pack like Buffoon packs. Normal $4 choose 1 of 2; Jumbo $6 choose 1 of 4; Mega $8 choose 2 of 4. Two normal variants (weight 0.6 each), one jumbo (0.6), one mega (0.15), like the Buffoon packs.
+  - Each joker in the pack is upgraded (fresh "+") with probability 1 in balance.workshop_pack.odds, via SMODS.pseudorandom_probability seed bplus_workshop_pack. Only eligible jokers can be upgraded.
+numbers: [balance.workshop_pack.odds, balance.workshop_pack.packs]
+edge_cases:
+  - Oops! All 6s raises the odds (smods probability helper).
+  - Tests force the roll with BPlus.shop_upgrade.force.
+acceptance_tests:
+  - Opening a normal Workshop Pack with forced roll: 2 jokers, all "+" (when eligible)
+  - Forced no-roll: all vanilla
+  - Sizes/choices/prices for normal, jumbo, mega
