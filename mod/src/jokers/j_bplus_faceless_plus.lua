@@ -18,6 +18,27 @@ BPlus.Joker({
         return { vars = { card.ability.extra.dollars, card.ability.extra.faces } }
     end,
 
+    joker_display_def = function(JokerDisplay)
+        return {
+            text = {
+                { text = '+$' },
+                { ref_table = 'card.joker_display_values', ref_value = 'dollars', retrigger_type = 'mult' },
+            },
+        text_config = { colour = G.C.GOLD },
+            calc_function = function(card)
+                local count = 0
+                local in_blind = G.GAME.blind and G.GAME.blind.in_blind or G.STATE == G.STATES.SELECTING_HAND
+                    or G.STATE == G.STATES.HAND_PLAYED or G.STATE == G.STATES.DRAW_TO_HAND
+                local hand = in_blind and G.hand.highlighted or {}
+                for _, c in pairs(hand) do
+                    if c.facing and c.facing ~= 'back' and c:is_face() then count = count + 1 end
+                end
+                card.joker_display_values.dollars = (G.GAME.current_round.discards_left > 0
+                    and count >= card.ability.extra.faces) and card.ability.extra.dollars or 0
+            end,
+        }
+    end,
+
     calculate = function(self, card, context)
         if context.discard and context.other_card == context.full_hand[#context.full_hand] then
             local faces = 0

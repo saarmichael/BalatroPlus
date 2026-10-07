@@ -32,3 +32,22 @@ T.test('Undercover Joker: Faceless forced to "+" pays $6', function()
     T.discard({ 'KS', 'QH', 'JD' })
     T.eq(G.GAME.dollars, 6)
 end)
+
+-- Only sets the UI selection (nothing is played); JokerDisplay reads G.hand.highlighted.
+local function highlight(specs)
+    for _, c in ipairs(T.hand_cards(specs)) do G.hand:add_to_highlighted(c, true) end
+end
+
+T.test('Undercover Joker JokerDisplay: +$0 -> 3 faces selected +$6; vanilla forced to "+" +$6; "+" forced to base +$5', function()
+    T.start_run({ jokers = { 'bplus_faceless_plus', 'faceless' }, ante = 3 })
+    T.select_blind()
+    T.set_hand({ 'KS', 'KH', 'KD', '5C', '5D', '2C', '3C', '4C' })
+    T.eq(T.joker_display('bplus_faceless_plus').text, '+$0')
+    highlight({ 'KS', 'KH', 'KD' })
+    T.eq(T.joker_display('bplus_faceless_plus').text, '+$6')
+    T.eq(T.joker_display('faceless').text, '+$5')
+    T.force_behavior('faceless', 'plus')
+    T.eq(T.joker_display('faceless').text, '+$6')
+    T.force_behavior('bplus_faceless_plus', 'base')
+    T.eq(T.joker_display('bplus_faceless_plus').text, '+$5')
+end)
