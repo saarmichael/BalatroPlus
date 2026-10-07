@@ -1,0 +1,36 @@
+local T = BPlus.test
+
+local function pair_level() return G.GAME.hands['Pair'].level end
+
+T.test('Scorched Joker: first discard is a Pair -> Pair goes up 2 levels (vanilla: 1)', function()
+    T.start_run({ jokers = { 'bplus_burnt_plus' }, hands = 5, discards = 3, ante = 3 })
+    T.select_blind()
+    T.eq(pair_level(), 1)
+    T.set_hand({ '2S', '2H', '7C', '5D', '9D' })
+    T.discard({ '2S', '2H' })
+    T.eq(pair_level(), 1 + 2)
+end)
+
+T.test('Scorched Joker: second discard of the round -> nothing', function()
+    T.start_run({ jokers = { 'bplus_burnt_plus' }, hands = 5, discards = 3, ante = 3 })
+    T.select_blind()
+    T.set_hand({ '2S', '2H', '7C', '5D', '9D' })
+    T.discard({ '2S', '2H' })
+    T.set_hand({ '3S', '3H', '7C', '5D', '9D' })
+    T.discard({ '3S', '3H' })
+    T.eq(pair_level(), 1 + 2)
+end)
+
+T.test('Scorched Joker: Burnt Joker gives 1 level, forced to "+" gives 2', function()
+    T.start_run({ jokers = { 'burnt' }, hands = 5, discards = 3, ante = 3 })
+    T.select_blind()
+    T.set_hand({ '2S', '2H', '7C', '5D', '9D' })
+    T.discard({ '2S', '2H' })
+    T.eq(pair_level(), 1 + 1)
+    T.start_run({ jokers = { 'burnt' }, hands = 5, discards = 3, ante = 3 })
+    T.force_behavior('burnt', 'plus')
+    T.select_blind()
+    T.set_hand({ '2S', '2H', '7C', '5D', '9D' })
+    T.discard({ '2S', '2H' })
+    T.eq(pair_level(), 1 + 2)
+end)
