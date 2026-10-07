@@ -119,6 +119,24 @@ M5 Salesman is the `j_ring_master` "+" row (`j_bplus_ring_master_plus`).
 - Follow-up requested: Architect/Hive Mind copying retrigger jokers (repetitions through SMODS.merge_effects), and a
   real Carpenter + Blueprint test.
 
+## Orchestrator decisions (JokerDisplay + art pass, 2026-10-08)
+
+**D18. JokerDisplay definitions live in each joker's `BPlus.Joker{}` call** as `joker_display_def = function(JokerDisplay)
+return {...} end` (JokerDisplay's own API for mod objects). No separate definitions file, so batch agents only touch
+their own joker files. Shared helpers (if any) go in `core.lua`. Mechanic jokers (Carpenter, Apprentice) get
+definitions too.
+
+**D19. (FLAGGED for review) "+" art = the vanilla joker's own sprite + a "+" overlay.** `BPlus.Joker` defaults the
+atlas/pos (and soul_pos for legendaries) to the vanilla joker's, replacing the placeholder. The overlay is a custom
+shader drawn like an edition but visibly different from Foil/Holo/Polychrome/Negative; if a shader proves
+impractical, a half-transparent "+" graphic drawn on top instead. It must stack with real editions. The overlay
+follows **behaviour**, like the "+" tooltip badge: a vanilla joker next to Carpenter shows it; a "+" joker under The
+Rust doesn't. Carpenter/Apprentice keep placeholder art and no overlay.
+
+**D20. (FLAGGED for review) JokerDisplay shows what the joker currently behaves as**: next to Carpenter a vanilla
+joker displays its "+" numbers; under The Rust a "+" joker displays vanilla numbers. Implemented once in the shared
+code (JokerDisplay's per-card update runs under the behaviour swap), not per joker.
+
 ## Questions from agents
 
 (none yet)
