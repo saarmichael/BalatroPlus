@@ -1,5 +1,27 @@
 # Decisions log (build of the "+" jokers and mechanics, started 2026-10-07)
 
+## Summary (orchestrator, 2026-10-08) — read this first
+
+**Built** on `build/plus-jokers` (not merged; not pushed):
+- All **141 "+" jokers** (every `upgradable = yes` row), one commit per joker, each with in-game tests.
+  CSV status `tested` for all 141; specs regenerated. The 9 `upgradable = no` jokers have no "+" version.
+- All **10 mechanics** M1-M10 with tickets in `plannig/specs/mechanics/`, code in `mod/src/mechanics/`, tests in
+  `mod/dev/tests/mechanics/`: Carpenter, Apprentice, Wheel of Fortune change, Apotheosis, Salesman (= Showman+),
+  Craftsmanship/Masterwork, Masterwork Tag, Workshop Pack, Veteran Deck, The Rust. Numbers in `balance.lua`.
+- **Final full suite: 705 passed, 0 failed, 0 errors.** `./dev.sh check` clean.
+
+**Shared-code changes during the build:** `BPlus.upgrade_card(card, { fresh = true })` for shop/pack upgrades (MC);
+`behavior.lua` now runs deferred events and `Card:update` under a behaviour swap (BUG-1, BUG-6) — vanilla code that
+reads `self.ability` later or per frame works when Carpenter/The Rust switch a joker.
+
+**For your review:** decisions D8-D17 below (mechanics details, accepted deviations from tickets), questions
+Q-B9-1 and Q-B5-1 (both answered), and `plannig/BUGS.md` (all fixed except two cosmetic commit-message issues,
+won't fix).
+
+**Left / set aside:** JokerDisplay support (separate pass); "one version per joker" enforcement (brief: later);
+placeholder art everywhere; no real playthrough / balance testing yet (tests are scripted scenarios). Commit
+messages of 7 B3 jokers say "ASS" for "PASS" and B2/B4 commits lack PASS lines (BUG-2/3, no history rewrite).
+
 Questions that came up during implementation and the answer used. The orchestrator (Claude) answered them while
 the human was away; **review these**. Format: question, answer, who asked, files affected.
 
