@@ -33,3 +33,13 @@ T.test('Never Misprint: Misprint forced to "+" stays within 10 to 50', function(
         T.truthy(m >= 10 and m <= 50, 'mult ' .. tostring(m))
     end
 end)
+
+T.test('Never Misprint JokerDisplay: shows "+" and a scrolling 10 to 50 range; forced behaviours keep the "+"', function()
+    T.start_run({ jokers = { 'bplus_misprint_plus', 'misprint' }, hands = 5, ante = 3 })
+    T.eq(T.joker_display('bplus_misprint_plus').text, '+') -- the number is a DynaText node
+    T.eq(T.joker_display('misprint').text, '+')
+    T.force_behavior('misprint', 'plus')
+    T.eq(T.joker_display('misprint').text, '+')
+    T.force_behavior('bplus_misprint_plus', 'base')
+    T.eq(T.joker_display('bplus_misprint_plus').text, '+')
+end)
