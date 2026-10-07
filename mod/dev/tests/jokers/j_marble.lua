@@ -80,3 +80,12 @@ T.test('Medusa: Marble Joker forced to "+" -> no Stone on blind select, single 7
     T.eq(r.chips, 5 + 50)
     T.eq(stones(), 1)
 end)
+
+T.test('Medusa JokerDisplay: shows nothing, like vanilla (also forced to base / plus)', function()
+    T.start_run({ jokers = { 'bplus_marble_plus', 'marble' } })
+    T.eq(T.joker_display('bplus_marble_plus').text, '')
+    T.force_behavior('marble', 'plus')
+    T.eq(T.joker_display('marble').text, '')
+    T.force_behavior('bplus_marble_plus', 'base')
+    T.eq(T.joker_display('bplus_marble_plus').text, '')
+end)

@@ -13,6 +13,10 @@ BPlus.Joker({
     blueprint_compat = false, eternal_compat = true, perishable_compat = true,
     bplus = { vanilla_key = 'j_marble', state_transfer = {}, carpenter_compat = true },
 
+    joker_display_def = function(JokerDisplay)
+        return {} -- vanilla Marble Joker shows nothing either
+    end,
+
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = G.P_CENTERS.m_stone
         return { vars = {} }
