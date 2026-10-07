@@ -19,6 +19,20 @@ BPlus.Joker({
         return { vars = { card.ability.extra.mult, math.max(0, card.ability.extra.mult * missing), G.GAME.starting_deck_size } }
     end,
 
+    joker_display_def = function(JokerDisplay)
+        return {
+            text = {
+                { text = '+' },
+                { ref_table = 'card.joker_display_values', ref_value = 'mult', retrigger_type = 'mult' },
+            },
+            text_config = { colour = G.C.MULT },
+            calc_function = function(card)
+                card.joker_display_values.mult = math.max(0,
+                    card.ability.extra.mult * (G.playing_cards and (G.GAME.starting_deck_size - #G.playing_cards) or 0))
+            end,
+        }
+    end,
+
     calculate = function(self, card, context)
         if context.joker_main then
             local missing = G.GAME.starting_deck_size - #G.playing_cards
