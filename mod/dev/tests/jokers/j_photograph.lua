@@ -1,5 +1,10 @@
 local T = BPlus.test
 
+local function jd_select(specs)
+    G.hand:unhighlight_all()
+    for _, c in ipairs(T.hand_cards(specs)) do G.hand:add_to_highlighted(c, true) end
+end
+
 T.test('Selfie: Pair of Kings -> only the first King gives X4 (vanilla: X2)', function()
     T.start_run({ jokers = { 'bplus_photograph_plus' }, ante = 3 })
     T.select_blind()
@@ -35,4 +40,19 @@ T.test('Selfie: vanilla not forced keeps vanilla numbers', function()
     local r = T.play({ 'KS', 'KH' })
     T.eq(r.chips, 10 + 10 + 10)
     T.eq(r.mult, 2 * 2)
+end)
+
+T.test('Selfie JokerDisplay: "+" shows the "+" numbers; vanilla forced to "+" shows them too; "+" forced to base shows vanilla numbers', function()
+    T.start_run({ ante = 4, jokers = { 'bplus_photograph_plus', 'photograph' } })
+    T.select_blind()
+    T.set_hand({ 'KS','KH','2D','3C','5H' })
+    jd_select({ 'KS','KH' })
+    local d = T.joker_display('bplus_photograph_plus')
+    T.eq(d.text, 'X4')
+    T.eq(d.reminder, '(Face Cards)')
+    T.eq(T.joker_display('photograph').text, 'X2')
+    T.force_behavior('photograph', 'plus')
+    T.eq(T.joker_display('photograph').text, 'X4')
+    T.force_behavior('bplus_photograph_plus', 'base')
+    T.eq(T.joker_display('bplus_photograph_plus').text, 'X2')
 end)
