@@ -16,6 +16,16 @@ BPlus.Joker({
         return { vars = { card.ability.extra.chips, card.ability.extra.h_size } }
     end,
 
+    joker_display_def = function(JokerDisplay)
+        return {
+            text = {
+                { text = '+', colour = G.C.CHIPS },
+                { ref_table = 'card.ability.extra', ref_value = 'chips', colour = G.C.CHIPS, retrigger_type = 'mult' },
+            },
+            text_config = { colour = G.C.CHIPS },
+        }
+    end,
+
     calculate = function(self, card, context)
         if context.joker_main then
             return { chips = card.ability.extra.chips }
