@@ -18,6 +18,23 @@ BPlus.Joker({
         return { vars = { card.ability.extra.chips_per, card.ability.extra.chips_per * self.stone_count() } }
     end,
 
+    joker_display_def = function(JokerDisplay)
+        return {
+            text = {
+                { text = '+' },
+                { ref_table = 'card.joker_display_values', ref_value = 'chips', retrigger_type = 'mult' },
+            },
+            text_config = { colour = G.C.CHIPS },
+            calc_function = function(card)
+                local n = 0
+                for _, c in ipairs(G.playing_cards or {}) do
+                    if SMODS.has_enhancement(c, 'm_stone') then n = n + 1 end
+                end
+                card.joker_display_values.chips = card.ability.extra.chips_per * n
+            end,
+        }
+    end,
+
     calculate = function(self, card, context)
         if context.joker_main then
             local count = self.stone_count()
