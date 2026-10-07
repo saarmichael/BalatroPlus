@@ -13,6 +13,30 @@ BPlus.Joker({
         return { vars = { card.ability.extra.t_mult, localize(card.ability.extra.type, 'poker_hands') } }
     end,
 
+    joker_display_def = function(JokerDisplay)
+        return {
+            text = {
+                { text = '+' },
+                { ref_table = 'card.joker_display_values', ref_value = 'mult', retrigger_type = 'mult' },
+            },
+            text_config = { colour = G.C.MULT },
+            reminder_text = {
+                { text = '(' },
+                { ref_table = 'card.joker_display_values', ref_value = 'localized_text', colour = G.C.ORANGE },
+                { text = ')' },
+            },
+            calc_function = function(card)
+                local value = 0
+                local _, poker_hands, _ = JokerDisplay.evaluate_hand()
+                if poker_hands[card.ability.extra.type] and next(poker_hands[card.ability.extra.type]) then
+                    value = card.ability.extra.t_mult
+                end
+                card.joker_display_values.mult = value
+                card.joker_display_values.localized_text = localize(card.ability.extra.type, 'poker_hands')
+            end,
+        }
+    end,
+
     calculate = function(self, card, context)
         if context.joker_main and next(context.poker_hands[card.ability.extra.type]) then
             return { mult = card.ability.extra.t_mult }
