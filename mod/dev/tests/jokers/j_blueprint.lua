@@ -60,3 +60,14 @@ T.test('Architect: real Carpenter left of a vanilla Blueprint -> Blueprint copie
     T.select_blind()
     T.eq(pair2().mult, 2 + 20 + 4 + 20 + 4)
 end)
+
+T.test('Architect JokerDisplay: copies the display of the first compatible target (Knife Juggler is skipped); forced to base: (incompatible)', function()
+    T.start_run({ jokers = { 'bplus_blueprint_plus', 'juggler', 'joker', 'blueprint', 'joker' } })
+    T.joker_display('joker') -- the copied Joker's display must exist before Architect copies it
+    T.eq(T.joker_display('bplus_blueprint_plus').text, '+4')
+    T.eq(T.joker_display('blueprint').text, '+4')
+    T.force_behavior('blueprint', 'plus')
+    T.eq(T.joker_display('blueprint').text, '+4')
+    T.force_behavior('bplus_blueprint_plus', 'base')
+    T.eq(T.joker_display('bplus_blueprint_plus').reminder, '(incompatible)')
+end)
