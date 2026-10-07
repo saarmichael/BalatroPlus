@@ -15,6 +15,10 @@ BPlus.Joker({
         return { vars = { card.ability.extra.rerolls } }
     end,
 
+    joker_display_def = function(JokerDisplay)
+        return {}
+    end,
+
     add_to_deck = function(self, card, from_debuff)
         SMODS.change_free_rerolls(card.ability.extra.rerolls)
         calculate_reroll_cost(true)

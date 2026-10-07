@@ -38,3 +38,12 @@ T.test('Krusty the Clown: Chaos forced to "+" -> 2 free rerolls; sold -> 0', fun
     T.eq(G.GAME.current_round.free_rerolls, 0)
     T.eq(G.GAME.round_resets.free_rerolls, 0)
 end)
+
+T.test('Krusty the Clown JokerDisplay: shows nothing, also for vanilla forced to "+" and "+" forced to base', function()
+    T.start_run({ jokers = { 'bplus_chaos_plus', 'chaos' } })
+    T.eq(T.joker_display('bplus_chaos_plus').text, '')
+    T.force_behavior('chaos', 'plus')
+    T.eq(T.joker_display('chaos').text, '')
+    T.force_behavior('bplus_chaos_plus', 'base')
+    T.eq(T.joker_display('bplus_chaos_plus').text, '')
+end)
