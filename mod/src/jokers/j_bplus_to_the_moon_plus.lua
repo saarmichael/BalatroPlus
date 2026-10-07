@@ -17,6 +17,24 @@ BPlus.Joker({
         return { vars = { card.ability.extra.interest } }
     end,
 
+    joker_display_def = function(JokerDisplay)
+        return {
+            text = {
+                { text = '+$' },
+                { ref_table = 'card.joker_display_values', ref_value = 'dollars' },
+            },
+        text_config = { colour = G.C.GOLD },
+        reminder_text = {
+            { ref_table = 'card.joker_display_values', ref_value = 'localized_text' },
+        },
+            calc_function = function(card)
+                card.joker_display_values.dollars = math.max(
+                    math.min(math.floor(G.GAME.dollars / 5), G.GAME.interest_cap / 5), 0) * card.ability.extra.interest
+                card.joker_display_values.localized_text = '(' .. localize('k_round') .. ')'
+            end,
+        }
+    end,
+
     add_to_deck = function(self, card, from_debuff)
         G.GAME.interest_amount = G.GAME.interest_amount + card.ability.extra.interest
     end,
