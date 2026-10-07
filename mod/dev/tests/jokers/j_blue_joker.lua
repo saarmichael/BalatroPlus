@@ -1,0 +1,30 @@
+local T = BPlus.test
+-- T.set_hand leaves exactly 5 cards in hand, so 52 - 5 = 47 cards remain in the deck.
+
+T.test('Deep Blue: set_hand leaves 5 in hand, so 52 - 5 = 47 cards in deck -> +3 * 47 Chips', function()
+    T.start_run({ jokers = { 'bplus_blue_joker_plus' }, ante = 3 })
+    T.select_blind()
+    T.set_hand({ 'AS', '9C', '6D', '3H', '2S' })
+    local r = T.play({ 'AS' })
+    T.eq(r.chips, 5 + 11 + 3 * 47)
+    T.eq(r.mult, 1)
+end)
+
+T.test('Deep Blue: vanilla forced to "+" matches (vanilla 1, "+" 1 mult)', function()
+    T.start_run({ jokers = { 'blue_joker' }, ante = 3 })
+    T.select_blind()
+    T.set_hand({ 'AS', '9C', '6D', '3H', '2S' })
+    T.force_behavior('blue_joker', 'plus')
+    local r = T.play({ 'AS' })
+    T.eq(r.chips, 5 + 11 + 3 * 47)
+    T.eq(r.mult, 1)
+end)
+
+T.test('Deep Blue: vanilla not forced keeps vanilla numbers', function()
+    T.start_run({ jokers = { 'blue_joker' }, ante = 3 })
+    T.select_blind()
+    T.set_hand({ 'AS', '9C', '6D', '3H', '2S' })
+    local r = T.play({ 'AS' })
+    T.eq(r.chips, 5 + 11 + 2 * 47)
+    T.eq(r.mult, 1)
+end)
