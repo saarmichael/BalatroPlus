@@ -1,0 +1,26 @@
+local T = BPlus.test
+
+T.test('Jerry Seinfeld: with Oops! All 6s, a scored 5 scores 1 + 2 times', function()
+    T.start_run({ jokers = { 'oops', 'bplus_hack_plus' } })
+    T.select_blind()
+    T.set_hand({ '5S', '9H' })
+    local r = T.play({ '5S' })
+    T.eq(r.chips, 5 + 5 * 3)
+end)
+
+T.test('Jerry Seinfeld: a scored 6 -> no retrigger', function()
+    T.start_run({ jokers = { 'oops', 'bplus_hack_plus' } })
+    T.select_blind()
+    T.set_hand({ '6S', '9H' })
+    local r = T.play({ '6S' })
+    T.eq(r.chips, 5 + 6)
+end)
+
+T.test('Jerry Seinfeld: Hack forced to "+" with Oops! All 6s -> a scored 2 scores 1 + 2 times', function()
+    T.start_run({ jokers = { 'oops', 'hack' } })
+    T.select_blind()
+    T.force_behavior('hack', 'plus')
+    T.set_hand({ '2S', '9H' })
+    local r = T.play({ '2S' })
+    T.eq(r.chips, 5 + 2 * 3)
+end)
