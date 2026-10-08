@@ -56,3 +56,4 @@ Columns: id, found by, blocking?, status, description.
   while the earnings rows were still being added by non-blocking events: the game crashed (`round_eval` nil at
   common_events.lua:1197) and the suite hung. Fixed: `T.cash_out` waits for the real Cash Out button first
   (framework tests: 11 passed).
+- **BUG-RA-1** (found by the RA batch, 2026-10) `T.cash_out()` times out ("timed out waiting for the Cash Out button", state=ROUND_EVAL) after `T.win_blind()` in a normal round; `copy/blueprint_sweep.lua` full rounds fail the same way, so it is not specific to Architect / Hive Mind. The RA sweep (`copy/plus_copy_sweep.lua`) ends the round at ROUND_EVAL instead of cashing out.

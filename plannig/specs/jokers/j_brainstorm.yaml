@@ -10,8 +10,8 @@ vanilla_config: {}
 pattern: "Bigger number"
 plus_key: "j_bplus_brainstorm_plus"
 plus_name: "Hive Mind"
-plus_effect: "Copies the ability of the 2 leftmost Jokers"
-plus_config: {"extra": {"copies": 2}}
+plus_effect: "Copies the upgraded ability of the leftmost Joker"
+plus_config: {"extra": {}}
 plus_rarity: "Rare"
 plus_cost: 10
 state_transfer: []
@@ -19,9 +19,11 @@ blueprint_compat: true
 eternal_compat: true
 perishable_compat: true
 carpenter_compat: true
-impl_notes: "Like Architect but targets G.jokers.cards[1] and [2]: SMODS.blueprint_effect for each, SMODS.merge_effects. If Hive Mind itself is one of the two leftmost, that slot copies nothing (SMODS.blueprint_effect returns nothing for copier == copied), same as vanilla Brainstorm being leftmost. Carpenter turns Brainstorm into this joker (brief M1). Name: 'hive mind' is the English for the Hebrew 'כוורת מוחות'."
+impl_notes: "Copy rule (D23, adjusted): target '+' joker and blueprint_compat -> copy it; target vanilla whose '+' version is carpenter_compat and blueprint_compat -> run the target's '+' ability on it with context.blueprint set (BPlus.plus_calculate, stored values via state_transfer, no state change); otherwise target blueprint_compat (vanilla rule, e.g. Popcorn, Gros Michel) -> copy its regular ability; else incompatible. Implemented in BPlus.copy_plus (j_bplus_blueprint_plus.lua): mode(), effect(). Chains/cycles end through the context.blueprint count like SMODS.blueprint_effect. Compat UI and JokerDisplay follow the same rule (a vanilla target shows its '+' display via a proxy). The Rust makes it vanilla Blueprint/Brainstorm. carpenter_compat = true: the '+' can run on vanilla Blueprint/Brainstorm (then it copies from the Blueprint's position). Target: G.jokers.cards[1]; nothing when Hive Mind itself is leftmost."
 acceptance_tests:
-  - "Joker+, Joker, ..., Hive Mind -> copies +20 and +4"
-  - "Hive Mind is leftmost -> copies only the 2nd joker"
+  - "Hive Mind with vanilla Joker leftmost copies +20"
+  - "Hive Mind leftmost itself copies nothing"
+  - "Architect leftmost: Hive Mind copies Architect's ability"
+  - "The Rust: Hive Mind copies the plain ability"
 status: "tested"
 art_status: "none"
