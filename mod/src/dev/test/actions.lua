@@ -299,6 +299,13 @@ end
 -- ROUND_EVAL -> SHOP. Returns the money gained.
 function T.cash_out()
     expect_state('ROUND_EVAL', 'cash_out')
+    -- the earnings rows are still being added by non-blocking events until the real Cash Out button exists;
+    -- cashing out earlier removes the round_eval UI under them and crashes the game (seen in a full-suite run)
+    T.wait_until(function()
+        for _, box in pairs(G.I.UIBOX) do
+            if box.get_UIE_by_ID and box:get_UIE_by_ID('cash_out_button') then return true end
+        end
+    end, 'the Cash Out button')
     local before = G.GAME.dollars
     G.FUNCS.cash_out({ config = {} })
     T.wait_idle()
