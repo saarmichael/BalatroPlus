@@ -109,6 +109,12 @@ function BPlus.with_center(card, center, fn)
         if v ~= nil then BPlus.set_path(view, p[2], BPlus.copy(v)) end
     end
 
+    -- vanilla only refreshes Loyalty Card's counter at joker_main; derive it so idle displays are right
+    if view.name == 'Loyalty Card' and view.extra and view.hands_played_at_create and G.GAME then
+        local every = view.extra.every
+        view.loyalty_remaining = (every - ((G.GAME.hands_played or 0) - view.hands_played_at_create)) % (every + 1)
+    end
+
     setmetatable(view, { __index = own })
     card.ability, card.config.center, card.bplus_in_alt = view, center, center.key
     alt_frames[#alt_frames + 1] = { card = card, center = center }

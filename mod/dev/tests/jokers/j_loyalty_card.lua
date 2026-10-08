@@ -76,5 +76,6 @@ T.test('Membership Card JokerDisplay: X1 (2 remaining) -> after 2 hands X4 (Acti
     T.eq(d.reminder, '(Active!)')
     T.force_behavior('bplus_loyalty_card_plus', 'base')
     d = T.joker_display('bplus_loyalty_card_plus')
-    T.eq(d.text, 'X1') -- vanilla's own loyalty_remaining counter is only refreshed by vanilla code, so no reminder check
+    T.eq(d.text, 'X1')
+    T.eq(d.reminder, '(3 remaining)') -- vanilla: every 5, 2 hands played -> 5 - 2
 end)
