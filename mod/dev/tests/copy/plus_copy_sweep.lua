@@ -40,6 +40,9 @@ local function round_without_errors()
     end
     T.play({ '2S', '2H' })
     if T.state_name() == 'SELECTING_HAND' then T.win_blind() end   -- a big copied effect may win it already
+    if T.state_name() ~= 'ROUND_EVAL' then return end   -- e.g. a one-hand copy ended the run
+    T.cash_out()
+    T.leave_shop()
 end
 
 for _, vk in ipairs(sorted_keys()) do

@@ -39,7 +39,7 @@ The brief's layout, mapped onto this repo:
 1. `src/core.lua` (helpers: `BPlus.dict`, dotted paths, `BPlus.load_dir`)
 2. `src/balance.lua` (every mechanic number, as `BPlus.balance`)
 3. `src/upgrade.lua` (`BPlus.Joker`, the upgrade map, `BPlus.upgrade_card`)
-4. `src/behavior.lua` (behaviour switching for Carpenter / The Rust, section 6)
+4. `src/behavior.lua` (behaviour switching for Architect / Hive Mind / The Rust, section 6)
 5. every file in `src/jokers/`, then every file in `src/mechanics/` (name order)
 6. dev toolkit
 
@@ -125,7 +125,7 @@ BPlus.Joker({
   (`find_joker('Showman')`, `next(SMODS.find_card('j_ring_master'))`, `self.ability.name == ...` in game code).
   When the "+" version must keep or extend such an effect, hook the game function in the joker's own file, and
   detect the joker with `BPlus.find_behaving('j_bplus_..._plus')`, not `SMODS.find_card`, so that a vanilla joker
-  next to Carpenter counts too and a "+" joker under The Rust doesn't.
+  copied by Architect / Hive Mind counts too and a "+" joker under The Rust doesn't.
 
 ## 5. `calculate` contexts
 
@@ -210,8 +210,8 @@ BPlus.upgrade_card(card)   -- returns true if upgraded
 - **Shrinking jokers:** `[]`. The "+" joker starts from its own starting values.
 - **Counters toward a step** (Yorick): copy the counter as is. The "+" joker normalises it to its own period in its own logic, `((remaining - 1) % period) + 1`, so the upgrade itself stays a plain path copy.
 
-**Behaviour switching (Carpenter, The Rust).** Built once, in `mod/src/behavior.lua`; joker files contain no
-Carpenter/Rust code. The brief's `base_calculate` / `plus_calculate` are generic:
+**Behaviour switching (Architect / Hive Mind, The Rust).** Built once, in `mod/src/behavior.lua`; joker files contain no
+copier/Rust code. Carpenter is no longer a provider (D22-D24). The brief's `base_calculate` / `plus_calculate` are generic:
 
 - `BPlus.plus_calculate(card, context)` runs the "+" joker's code on any card; `BPlus.base_calculate(card, context)`
   runs the vanilla code on any card.
@@ -228,8 +228,8 @@ Carpenter/Rust code. The brief's `base_calculate` / `plus_calculate` are generic
   Every hooked card function (`calculate_joker`, `calculate_dollar_bonus`, `add_to_deck`, `remove_from_deck`,
   `generate_UIBox_ability_table`) then follows the card's current behaviour. On a switch, deck effects (hand size,
   discards...) are removed under the old behaviour and re-added under the new one, like a debuff.
-- `bplus.carpenter_compat = false` (shrinking jokers, Egg, Seltzer) makes the joker ignore every provider.
-- Tests force a behaviour with `T.force_behavior(joker, 'plus' | 'base' | nil)`; it beats every mechanic. **Every joker
+- `bplus.carpenter_compat` (name kept) means "the '+' ability can be run on the vanilla card" (D23, used by Architect / Hive Mind). `false` (shrinking jokers, Egg, Seltzer) makes the joker ignore every provider.
+- Tests force a behaviour with `T.force_behavior(joker, 'plus' | 'base' | nil)`; it beats every mechanic; `'plus'` simulates Architect / Hive Mind running the "+" ability on the vanilla card, `'base'` simulates The Rust. **Every joker
   with `carpenter_compat = true` gets one test of the vanilla joker forced to `'plus'`, and for growing jokers one of
   the "+" joker forced to `'base'`** (stored value kept, rate changes).
 
@@ -321,7 +321,7 @@ end,
 ```
 
 - Behaviour switching is handled centrally (`behavior.lua`): JokerDisplay's init/calculate/update run under the
-  behaviour swap, and the display rebuilds when the behaviour changes. A vanilla joker next to Carpenter
+  behaviour swap, and the display rebuilds when the behaviour changes. A vanilla joker copied by Architect / Hive Mind
   uses the "+" definition and vice versa, so write the definition only against the "+" shape.
 - Numbers in `ref_value`s come from `card.ability.extra.*` (live), or from `calc_function` writing to
   `card.joker_display_values.*` (derived values). Never hard-code numbers.

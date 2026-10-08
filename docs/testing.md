@@ -124,7 +124,7 @@ affordable, no slot...) and call `T.fail` with a clear message instead of doing 
 | `T.set_hand(specs)` | rewrites the hand to exactly these cards; extras go back to the deck |
 | `T.joker(k)`, `T.consumable(k)`, `T.find(area, k)` | look up owned cards (nil if absent) |
 | `T.upgrade(k)` | permanent upgrade of an owned joker via `BPlus.upgrade_card`; fails if not eligible; returns the card |
-| `T.force_behavior(k, mode)` | make an owned joker behave as `'plus'` (what Carpenter does), `'base'` (what The Rust does) or normally (`nil`) |
+| `T.force_behavior(k, mode)` | make an owned joker behave as `'plus'` (the '+' ability runs on the vanilla card, as Architect / Hive Mind do), `'base'` (what The Rust does) or normally (`nil`) |
 
 | `T.joker_display(k, live)` | what JokerDisplay shows for an owned joker: `{ text, reminder, extra = {rows}, values }` (strings as rendered, e.g. `text = '+20'`). Forces a rebuild first; `live = true` skips that and reads what the game's own updates produced (call `T.wait_frames(10)` before it to test automatic refresh) |
 
