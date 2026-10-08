@@ -36,3 +36,13 @@ T.test('Slabbed Baseball Card: vanilla Baseball Card forced to "+" -> X2 * X2', 
     T.select_blind()
     T.eq(play_one().mult, 1 * 2 * 2)
 end)
+
+T.test('Slabbed Baseball Card JokerDisplay: reminder (2xUncommon); vanilla forced to "+" and "+" forced to base keep the reminder', function()
+    T.start_run({ jokers = { 'bplus_baseball_plus', 'four_fingers', 'pareidolia', 'baseball' }, ante = 3 })
+    T.eq(T.joker_display('bplus_baseball_plus').reminder, '(2xUncommon)')
+    T.eq(T.joker_display('four_fingers').values.x_mult, nil)
+    T.force_behavior('baseball', 'plus')
+    T.eq(T.joker_display('baseball').reminder, '(2xUncommon)')
+    T.force_behavior('bplus_baseball_plus', 'base')
+    T.eq(T.joker_display('bplus_baseball_plus').reminder, '(2xUncommon)')
+end)

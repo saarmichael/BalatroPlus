@@ -16,6 +16,32 @@ BPlus.Joker({
         return { vars = { card.ability.extra.Xmult } }
     end,
 
+    joker_display_def = function(JokerDisplay)
+        return {
+            reminder_text = {
+                { text = '(' },
+                { ref_table = 'card.joker_display_values', ref_value = 'count', colour = G.C.ORANGE },
+                { text = 'x' },
+                { ref_table = 'card.joker_display_values', ref_value = 'localized_text', colour = G.C.GREEN },
+                { text = ')' },
+            },
+            calc_function = function(card)
+                local count = 0
+                if G.jokers then
+                    for _, j in ipairs(G.jokers.cards) do
+                        if j ~= card and j:is_rarity('Uncommon') then count = count + 1 end
+                    end
+                end
+                card.joker_display_values.count = count
+                card.joker_display_values.localized_text = localize('k_uncommon')
+            end,
+            mod_function = function(card, mod_joker)
+                return { x_mult = (card ~= mod_joker and card:is_rarity('Uncommon')
+                    and mod_joker.ability.extra.Xmult ^ JokerDisplay.calculate_joker_triggers(mod_joker) or nil) }
+            end,
+        }
+    end,
+
     calculate = function(self, card, context)
         if context.other_joker and context.other_joker ~= card and context.other_joker:is_rarity('Uncommon') then
             G.E_MANAGER:add_event(Event({ func = function()
