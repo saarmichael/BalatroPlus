@@ -18,6 +18,16 @@ BPlus.Joker({
         return { vars = { card.ability.extra.mult_gain, localize('Two Pair', 'poker_hands'), card.ability.extra.mult } }
     end,
 
+    joker_display_def = function(JokerDisplay)
+        return {
+            text = {
+                { text = '+' },
+                { ref_table = 'card.ability.extra', ref_value = 'mult', retrigger_type = 'mult' },
+            },
+            text_config = { colour = G.C.MULT },
+        }
+    end,
+
     calculate = function(self, card, context)
         if context.before and not context.blueprint
             and (next(context.poker_hands['Two Pair']) or next(context.poker_hands['Full House'])) then
