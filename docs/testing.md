@@ -86,6 +86,12 @@ applied (forced). "+" jokers are given as `'bplus_joker_plus'` or `'j_bplus_joke
 Card keys may omit their prefix (`'blueprint'` = `'j_blueprint'`, `'pluto'` = `'c_pluto'`).
 Vanilla keys are in `~/Library/Application Support/Balatro/Mods/lovely/dump/game.lua`.
 
+Named scenarios live in `mod/dev/scenarios/<name>.lua` and start with `./dev.sh scenario <name>` (this uses the
+**active profile**: it is the human's manual tool, never run it from an agent). `example` is a minimal one;
+`showcase` is a hand-testing setup for the "+" mechanics: ante 1, $100, Craftsmanship redeemed, jokers Joker+,
+Ride the Bus+, Foil Canio+ and Blueprint, consumables Wheel of Fortune and
+Apotheosis. `mod/dev/tests/core/scenarios.lua` checks that it loads.
+
 ## API (`local T = BPlus.test`)
 
 Actions check preconditions like the real button would (wrong state, too many cards, not
