@@ -19,6 +19,16 @@ BPlus.Joker({
         return { vars = { card.ability.extra.sell_mult, card.ability.extra.mult } }
     end,
 
+    joker_display_def = function(JokerDisplay)
+        return {
+            text = {
+                { text = '+' },
+                { ref_table = 'card.ability.extra', ref_value = 'mult', retrigger_type = 'mult' },
+            },
+            text_config = { colour = G.C.MULT },
+        }
+    end,
+
     calculate = function(self, card, context)
         if context.setting_blind and not context.blueprint then
             local my_pos
