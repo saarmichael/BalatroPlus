@@ -17,6 +17,16 @@ BPlus.Joker({
         return { vars = { card.ability.extra.mult_gain, card.ability.extra.mult } }
     end,
 
+    joker_display_def = function(JokerDisplay)
+        return {
+            text = {
+                { text = '+' },
+                { ref_table = 'card.ability.extra', ref_value = 'mult', retrigger_type = 'mult' },
+            },
+            text_config = { colour = G.C.MULT },
+        }
+    end,
+
     calculate = function(self, card, context)
         if context.reroll_shop and not context.blueprint then
             SMODS.scale_card(card, {
