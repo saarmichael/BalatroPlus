@@ -17,6 +17,25 @@ BPlus.Joker({
         return { vars = { card.ability.extra.Xmult } }
     end,
 
+    joker_display_def = function(JokerDisplay)
+        return {
+            text = {
+                {
+                    border_nodes = {
+                        { text = 'X' },
+                        { ref_table = 'card.joker_display_values', ref_value = 'x_mult', retrigger_type = 'exp' },
+                    },
+                },
+            },
+            calc_function = function(card)
+                local text = JokerDisplay.evaluate_hand()
+                local ok = text ~= 'Unknown' and G.GAME.hands and G.GAME.hands[text]
+                    and G.GAME.hands[text].played_this_round > (next(G.play.cards) and 1 or 0)
+                card.joker_display_values.x_mult = ok and card.ability.extra.Xmult or 1
+            end,
+        }
+    end,
+
     calculate = function(self, card, context)
         if context.joker_main then
             local hand = G.GAME.hands[context.scoring_name]
