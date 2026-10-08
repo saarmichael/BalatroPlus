@@ -247,6 +247,30 @@ local function install_jokerdisplay()
     wrap('initialize_joker_display')
     wrap('calculate_joker_display')
     wrap('update_joker_display')
+
+    -- JokerDisplay also looks up retrigger_function / mod_function of the OTHER jokers by
+    -- their own center key. Run those scans with every switched joker shaped as the center it behaves as.
+    local function under_all_swaps(name)
+        local ref = JokerDisplay[name]
+        if not ref then return end
+        JokerDisplay[name] = function(...)
+            local args = { n = select('#', ...), ... }
+            local swaps = {}
+            for _, area in ipairs(JokerDisplay.get_display_areas()) do
+                for _, c in ipairs(area and area.cards or {}) do
+                    local center = alt_center(c)
+                    if center then swaps[#swaps + 1] = { c, center } end
+                end
+            end
+            local function run(i)
+                if i > #swaps then return ref(unpack(args, 1, args.n)) end
+                return BPlus.with_center(swaps[i][1], swaps[i][2], function() return run(i + 1) end)
+            end
+            return run(1)
+        end
+    end
+    for _, name in ipairs({ 'calculate_card_triggers', 'calculate_joker_modifiers',
+        'calculate_joker_triggers' }) do under_all_swaps(name) end
 end
 install_jokerdisplay()
 

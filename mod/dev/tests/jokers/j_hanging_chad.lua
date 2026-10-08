@@ -35,3 +35,21 @@ T.test('Defibrillator JokerDisplay: first scored card triggers 1 + 3 = 4 times, 
     T.eq(rawget(_G, 'JokerDisplay').calculate_card_triggers(b, { a, b }, false), 1)
     T.eq(T.joker_display('bplus_hanging_chad_plus').text, '')
 end)
+
+T.test('Defibrillator JokerDisplay: retrigger count follows the behaviour (vanilla 1 + 2 = 3; vanilla forced to "+" 1 + 3 = 4; "+" forced to base 1 + 2 = 3)', function()
+    T.start_run({ jokers = { 'hanging_chad' }, ante = 3 })
+    T.select_blind()
+    T.set_hand({ '9S', '9H', '4C', '5D', '2D' })
+    local a, b = G.hand.cards[1], G.hand.cards[2]
+    local JD = rawget(_G, 'JokerDisplay')
+    T.eq(JD.calculate_card_triggers(a, { a, b }, false), 1 + 2)
+    T.force_behavior('hanging_chad', 'plus')
+    T.eq(JD.calculate_card_triggers(a, { a, b }, false), 1 + 3)
+    T.eq(JD.calculate_card_triggers(b, { a, b }, false), 1)
+    T.start_run({ jokers = { 'bplus_hanging_chad_plus' }, ante = 3 })
+    T.select_blind()
+    T.set_hand({ '9S', '9H', '4C', '5D', '2D' })
+    a, b = G.hand.cards[1], G.hand.cards[2]
+    T.force_behavior('bplus_hanging_chad_plus', 'base')
+    T.eq(JD.calculate_card_triggers(a, { a, b }, false), 1 + 2)
+end)
