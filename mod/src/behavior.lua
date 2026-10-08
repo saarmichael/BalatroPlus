@@ -246,7 +246,7 @@ end
 -- currently behaves as (D20). Installed lazily because JokerDisplay may load after this file.
 local jd_installed = false
 local function install_jokerdisplay()
-    ---@diagnostic disable: undefined-field
+    ---@diagnostic disable: undefined-field, undefined-global
     if jd_installed or not (rawget(_G, 'JokerDisplay') and Card.update_joker_display and Card.calculate_joker_display
         and Card.initialize_joker_display) then return end
     jd_installed = true
