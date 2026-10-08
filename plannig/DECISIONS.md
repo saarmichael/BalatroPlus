@@ -165,6 +165,11 @@ joker to its right, Hive Mind's the leftmost joker, as in vanilla. They copy tha
   not blueprint-compatible, and jokers with no "+" version (orchestrator: including Gros Michel / Cavendish, which
   vanilla Blueprint can copy; rule = "they only ever copy '+' abilities").
 Under The Rust they act as vanilla Blueprint/Brainstorm (unchanged D13 behaviour).
+- **Amended by the human (2026-10-08): fall back to the base ability.** If the "+" ability can't be copied but the
+  target's regular ability can (vanilla Blueprint rule), they copy the regular ability. Order: "+" target ->
+  copy it; vanilla target with a copyable "+" (carpenter_compat + blueprint_compat) -> copy the "+" ability;
+  else target blueprint-compatible -> copy its regular ability (Popcorn, Gros Michel, Cavendish...); else
+  incompatible (only what vanilla Blueprint can't copy either). This replaces the "incompatible" bullet above.
 
 **D24. Consequences.** The Rust no longer interacts with Carpenter (D13's Carpenter clause is void). The behaviour
 "plus" view built for Carpenter is now used by Architect/Hive Mind to run a vanilla joker's "+" ability; the
