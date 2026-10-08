@@ -39,7 +39,7 @@ T.test('The Rust: Joker+ is back to +20 outside The Rust', function()
     T.eq(pair_of_twos().mult, 2 + 20)
 end)
 
-T.test('The Rust: a Joker upgraded by Carpenter acts as base', function()
+T.test('The Rust: Carpenter does not interact with it (neighbour is plain vanilla: +4)', function()
     rust_run({ 'carpenter', 'joker' })
     enter_boss()
     T.eq(pair_of_twos().mult, 2 + 4)

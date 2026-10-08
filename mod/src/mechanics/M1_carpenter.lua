@@ -1,37 +1,76 @@
--- Spec: plannig/specs/mechanics/M1_carpenter.yaml
--- Carpenter: the joker to its right behaves as its "+" version (temporary, nothing is changed on the card).
+-- Spec: plannig/specs/mechanics/M1_carpenter.yaml (redesigned by the human 2026-10-08, decision D22)
+-- Carpenter: sell it to create the "+" version of the last Joker sold (fresh, no edition, no stickers).
 local cfg = BPlus.balance.carpenter
 local CARPENTER_KEY = 'j_bplus_carpenter'
 
--- The card directly to the left of `card` in the joker area, or nil.
-local function left_neighbour(card)
-    if not (G.jokers and card.area == G.jokers) then return nil end
-    local cards = G.jokers.cards
-    for i, c in ipairs(cards) do
-        if c == card then return cards[i - 1] end
+BPlus.dict({
+    k_bplus_carpenter_none = 'Nothing to build',
+})
+
+-- The "+" key Carpenter would create right now (nil = nothing).
+function BPlus.carpenter_target()
+    local key = G.GAME and G.GAME.bplus_last_sold
+    if not key then return nil end
+    if BPlus.base_map[key] then return key end
+    return BPlus.upgrade_map[key]
+end
+
+local function target_name()
+    local key = BPlus.carpenter_target()
+    if not (key and G.P_CENTERS[key]) then return nil end
+    return localize({ type = 'name_text', set = 'Joker', key = key })
+end
+
+-- Called when a Carpenter is sold (before the sell itself runs).
+local function carpenter_sold(card)
+    local key = BPlus.carpenter_target()
+    if not key then
+        card_eval_status_text(card, 'extra', nil, nil, nil,
+            { message = localize('k_bplus_carpenter_none'), colour = G.C.RED })
+        return
     end
+    -- After the sale this card's slot is gone; a Negative Carpenter also takes a slot of the limit with it.
+    local limit_after = G.jokers.config.card_limit - ((card.edition and card.edition.negative) and 1 or 0)
+    if #G.jokers.cards - 1 >= limit_after then
+        card_eval_status_text(card, 'extra', nil, nil, nil,
+            { message = localize('k_no_room_ex'), colour = G.C.RED })
+        return
+    end
+    G.GAME.bplus_last_sold = nil -- consumed
+    G.E_MANAGER:add_event(Event({
+        trigger = 'immediate',
+        blocking = false,
+        func = function()
+            if not card.removed then return false end -- wait until the sold Carpenter is gone
+            local new = SMODS.add_card({ set = 'Joker', key = key, area = G.jokers, no_edition = true })
+            new:juice_up(0.8, 0.5)
+            play_sound('generic1')
+            return true
+        end,
+    }))
 end
 
--- Would a working Carpenter make `other` behave as "+"?
-local function carpenter_can_upgrade(other)
-    if not BPlus.is_eligible(other) then return false end
-    local plus = G.P_CENTERS[BPlus.upgrade_map[other.config.center.key]]
-    return plus.bplus.carpenter_compat and true or false
+local sell_ref = Card.sell_card
+function Card:sell_card()
+    if self.ability and self.ability.set == 'Joker' and G.GAME then
+        if self.config.center.key == CARPENTER_KEY then
+            carpenter_sold(self)
+        else
+            G.GAME.bplus_last_sold = self.config.center.key
+        end
+    end
+    return sell_ref(self)
 end
-
-BPlus.add_behavior_provider(100, function(card)
-    local left = left_neighbour(card)
-    if left and left.config.center.key == CARPENTER_KEY and not left.debuff then return 'plus' end
-end)
 
 SMODS.Joker({
     key = 'carpenter',
     loc_txt = {
         name = 'Carpenter',
         text = {
-            'Joker to the right',
-            'acts as its {C:attention}upgraded{}',
-            'version',
+            'Sell this card to create the',
+            '{C:attention}upgraded{} version of the',
+            'last {C:attention}Joker{} sold',
+            '{C:inactive}(Currently: {C:attention}#1#{C:inactive})',
         },
     },
     rarity = cfg.rarity, cost = cfg.cost,
@@ -40,73 +79,20 @@ SMODS.Joker({
     unlocked = true, discovered = false,
     config = {},
 
-    -- Blueprint-style compatible / incompatible tag (same UI code as Blueprint).
     loc_vars = function(self, info_queue, card)
-        card.ability.blueprint_compat_ui = card.ability.blueprint_compat_ui or ''
-        card.ability.blueprint_compat_check = nil
-        return {
-            main_end = (card.area and card.area == G.jokers) and {
-                { n = G.UIT.C, config = { align = 'bm', minh = 0.4 }, nodes = {
-                    { n = G.UIT.C, config = { ref_table = card, align = 'm', colour = G.C.JOKER_GREY, r = 0.05, padding = 0.06, func = 'blueprint_compat' }, nodes = {
-                        { n = G.UIT.T, config = { ref_table = card.ability, ref_value = 'blueprint_compat_ui', colour = G.C.UI.TEXT_LIGHT, scale = 0.32 * 0.8 } },
-                    } },
-                } },
-            } or nil,
-        }
+        return { vars = { target_name() or 'none' } }
     end,
 
     joker_display_def = function(JokerDisplay)
         return {
             reminder_text = {
                 { text = '(' },
-                { ref_table = 'card.joker_display_values', ref_value = 'compat_text' },
+                { ref_table = 'card.joker_display_values', ref_value = 'target' },
                 { text = ')' },
             },
             calc_function = function(card)
-                local ok = card.ability.blueprint_compat == 'compatible'
-                card.joker_display_values.compatible = ok
-                card.joker_display_values.compat_text = localize(ok and 'k_compatible' or 'k_incompatible')
-            end,
-            style_function = function(card, text, reminder_text, extra)
-                if reminder_text and reminder_text.children and reminder_text.children[2] then
-                    reminder_text.children[2].config.colour = card.joker_display_values.compatible and G.C.GREEN
-                        or G.C.RED
-                end
+                card.joker_display_values.target = target_name() or 'none'
             end,
         }
     end,
-
-    update = function(self, card, dt)
-        if not (G.jokers and card.area == G.jokers) then return end
-        local other
-        for i, c in ipairs(G.jokers.cards) do
-            if c == card then other = G.jokers.cards[i + 1] end
-        end
-        card.ability.blueprint_compat = (other and not card.debuff and carpenter_can_upgrade(other))
-            and 'compatible' or 'incompatible'
-    end,
 })
-
--- "+" badge on a joker that currently behaves as its "+" version -------------------------
-
-local process_loc_ref = BPlus.process_loc_text
-function BPlus.process_loc_text()
-    process_loc_ref()
-    G.localization.misc.labels.bplus_plus = '+'
-end
-
-local badge_colour_ref = get_badge_colour
-function get_badge_colour(key)
-    if key == 'bplus_plus' then return G.C.PURPLE end
-    return badge_colour_ref(key)
-end
-
-local aut_ref = Card.generate_UIBox_ability_table
-function Card:generate_UIBox_ability_table(...)
-    local aut = aut_ref(self, ...)
-    if type(aut) == 'table' and type(aut.badges) == 'table'
-        and self.ability and self.ability.bplus_behaving and BPlus.is_eligible(self) then
-        table.insert(aut.badges, 'bplus_plus')
-    end
-    return aut
-end

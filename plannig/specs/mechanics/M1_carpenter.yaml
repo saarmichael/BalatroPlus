@@ -1,4 +1,4 @@
-# Implementation ticket for mechanic M1 Carpenter (decision D12 in plannig/DECISIONS.md).
+# Implementation ticket for mechanic M1 Carpenter (decision D22 in plannig/DECISIONS.md; supersedes D12).
 id: "M1"
 name: "Carpenter"
 kind: "joker (not a '+' joker: it has no '+' version and is never eligible)"
@@ -9,29 +9,35 @@ numbers:
   cost: "BPlus.balance.carpenter.cost       # $8"
   blueprint_compat: false
 behavior: >
-  Blueprint-style. The joker to Carpenter's right behaves as its '+' version (BPlus behaviour provider,
-  priority 100, answers 'plus'). Not permanent: when Carpenter moves, is sold or is debuffed, the joker returns
-  to its base behaviour. Card shape never changes. The affected joker shows a purple "+" badge in its tooltip.
-  Carpenter shows Blueprint-style 'compatible' / 'incompatible' text (green/red) in the joker area.
-  Compatible = a right neighbour exists, is eligible (has a '+' version, is not '+' already) and its '+' version
-  has carpenter_compat = true, and Carpenter is not debuffed.
-  If the right joker is Blueprint / Brainstorm it behaves as Blueprint+ / Brainstorm+ (needs B10; until those
-  exist it is simply 'incompatible').
-  Growing jokers keep their stored value; only the rate changes (behavior.lua state_transfer sync).
+  Sell effect. The game remembers the last Joker sold in G.GAME.bplus_last_sold (center key), set when the
+  player sells any Joker except Carpenter (hook on Card:sell_card, so it works with no Carpenter held; Carpenter
+  may be bought after the sale). The record is saved with the run and survives shops and rounds.
+  Selling Carpenter creates the '+' version of the recorded Joker (the key itself if it is already '+') as a
+  fresh card via SMODS.add_card: starting '+' values (no state transfer), no edition, no stickers. The record
+  is then cleared (consumed). Carpenter is not a behaviour provider: no '+' badge, no neighbour switching, no
+  compatible/incompatible text.
+  Tooltip: "Sell this card to create the upgraded version of the last Joker sold (Currently: <name> / none)".
+  JokerDisplay: reminder "(<'+' joker name>)" or "(none)".
 edge_cases:
-  - "Carpenter in last slot or right joker missing -> incompatible, nothing happens."
-  - "Right joker already '+' or without a '+' version -> incompatible."
-  - "carpenter_compat = false joker (shrinking, Egg, Seltzer) on the right -> incompatible, unchanged."
-  - "Carpenter debuffed -> right joker back to base."
-  - "Two Carpenters in a row: the second sees a Carpenter (no '+' version) on its right -> incompatible."
-  - "The Rust (priority 200) overrides Carpenter while its blind is active."
-  - "Only the left neighbour matters: Carpenter affects exactly the joker directly to its right."
+  - "No record -> message 'Nothing to build', nothing created."
+  - "Recorded joker has no '+' version (e.g. Four Fingers) -> message, nothing created, record kept."
+  - "No room (Negative Carpenter while slots are full) -> 'No room!', nothing created, record kept."
+  - "Carpenter is never recorded as the last sold joker."
+  - "Sold joker was Foil / had stickers / had a grown value -> the created '+' joker is fresh."
+  - "Second Carpenter after use does nothing until another joker is sold."
+  - "The Rust does not interact with Carpenter."
 acceptance_tests:
-  - "Joker right of Carpenter scores +20 Mult instead of +4 (+ badge flagged via ability.bplus_behaving)"
-  - "Joker on the LEFT of Carpenter is unaffected (+4)"
-  - "Moving Carpenter away (selling it) returns the joker to +4"
-  - "Debuffed Carpenter does nothing"
-  - "Carpenter sees 'compatible' for an eligible joker and 'incompatible' for a non-upgradable joker or the last slot"
-  - "Ride the Bus with +3 stored under Carpenter keeps its value and gains +2 instead of +1"
-  - "Carpenter is never eligible for upgrade"
-  - "A '+' joker to the right is untouched (stays '+')"
+  - "Human example: Joker held, Carpenter in the shop: sell Joker, buy Carpenter, sell Carpenter -> Joker+ added"
+  - "Created Joker+ scores +20 Mult"
+  - "Last sold is a '+' joker -> fresh '+' joker back"
+  - "Record consumed: second Carpenter gives nothing"
+  - "Carpenter itself not recorded"
+  - "No record -> nothing"
+  - "Joker without '+' version -> nothing, record kept"
+  - "No edition even if the sold joker was Foil; no stickers"
+  - "Grown Ride the Bus (5) -> Express Bus starts at 0"
+  - "Record survives shop/round transitions"
+  - "Last sold = most recent"
+  - "No room -> nothing, record kept"
+  - "Carpenter never eligible for upgrade; no behaviour switching on neighbours"
+  - "Tooltip and JokerDisplay show the target or none"
