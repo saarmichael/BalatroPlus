@@ -25,8 +25,14 @@ BPlus.Joker({
                 { text = ')' , colour = G.C.UI.TEXT_INACTIVE },
             },
             calc_function = function(card)
-                card.joker_display_values.is_active = (G.GAME.blind and G.GAME.blind.get_type and
-                    (not G.GAME.blind.disabled) and (G.GAME.blind:get_type() == 'Boss')) and true or false
+                -- active whenever selling would disable a Boss: the current one, or the next (flag not yet set)
+                local blind = G.GAME.blind
+                local in_boss = G.GAME.facing_blind and blind and blind.get_type and blind:get_type() == 'Boss'
+                if in_boss then
+                    card.joker_display_values.is_active = not blind.disabled
+                else
+                    card.joker_display_values.is_active = not G.GAME.bplus_disable_next_boss
+                end
                 card.joker_display_values.active_text = localize(card.joker_display_values.is_active and 'jdis_active' or 'jdis_inactive')
             end,
             style_function = function(card, text, reminder_text, extra)
