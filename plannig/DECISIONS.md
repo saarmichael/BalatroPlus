@@ -1,5 +1,22 @@
 # Decisions log (build of the "+" jokers and mechanics, started 2026-10-07)
 
+## Update (orchestrator, 2026-10-08, second pass) — read this first
+
+- **JokerDisplay support** for all 141 "+" jokers + Carpenter + Apprentice (D18, D20, D21), tested.
+- **"+" art**: vanilla sprite + a visible "+" shader overlay with a corner emblem (D19); screenshots in
+  docs/screenshots/ (plus_art_v2.png, shop, collection).
+- **Redesigns by the human**: Carpenter is a sell effect on the last sold joker (D22); Architect / Hive Mind copy the
+  upgraded ability of their target, falling back to the regular ability (D23 + amendment). D24 lists the knock-on
+  effects (The Rust no longer interacts with Carpenter).
+- **Copy-joker coverage**: vanilla Blueprint/Brainstorm over every "+" joker (copy/blueprint_sweep, combos), and the
+  new Architect/Hive Mind rule over every joker plus lineups/cycles/chains (copy/plus_copy_*).
+- **Fixed**: a crash when a run is deleted with cards selected (real games too), JokerDisplay under The Rust, and
+  the rest of plannig/BUGS.md (Open: none).
+- **Final full suite: 1472 passed, 0 failed, 0 errors.** `./dev.sh check` clean.
+- **Try it**: switch to an empty profile slot, close the game, `./dev.sh scenario showcase`.
+- **Watch out**: Architect's JokerDisplay overrides `JokerDisplay.calculate_blueprint_copy` from its joker file; a
+  JokerDisplay update could break that display. Still not done: real art, "one version per joker", balance playtest.
+
 ## Summary (orchestrator, 2026-10-08) — read this first
 
 **Built** on `build/plus-jokers` (not merged; not pushed):
