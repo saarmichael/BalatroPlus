@@ -8,10 +8,7 @@ Columns: id, found by, blocking?, status, description.
 
 ## Open (fix in the end pass)
 
-- **BUG-EP2-2** (end pass, full suite) `jokers/j_brainstorm.lua > Hive Mind: copies Galaxy with its stored value and does not
-  grow it` fails with "cannot use c_venus right now" (j_brainstorm.lua:101). Belongs to the Architect / Hive Mind rebuild
-  (design change from the human, another agent owns j_bplus_brainstorm_plus.lua and its test, which have uncommitted
-  edits); not touched here.
+(none)
 
 ## Won't fix
 
@@ -22,6 +19,7 @@ Columns: id, found by, blocking?, status, description.
 
 ## Fixed
 
+- **BUG-EP2-2** (end pass) Hive Mind Galaxy/Constellation test failed with "cannot use c_venus right now". Obsolete: the Architect / Hive Mind rebuild (D23) replaced the test; `jokers/j_brainstorm` now passes (39 passed).
 - **BUG-1 / Q-B9-1** (B9) `BPlus.with_center` restored the card's own `ability` before deferred events ran, so
   vanilla code reading `self.ability` inside `G.E_MANAGER:add_event` saw the wrong shape (Cat Burglar under The
   Rust crashed). Fixed in 599356c: events queued during a swap run under the same swap.
@@ -59,6 +57,6 @@ Columns: id, found by, blocking?, status, description.
   while the earnings rows were still being added by non-blocking events: the game crashed (`round_eval` nil at
   common_events.lua:1197) and the suite hung. Fixed: `T.cash_out` waits for the real Cash Out button first
   (framework tests: 11 passed).
-- **BUG-RA-1** (found by the RA batch, 2026-10) `T.cash_out()` times out ("timed out waiting for the Cash Out button", state=ROUND_EVAL) after `T.win_blind()` in a normal round; `copy/blueprint_sweep.lua` full rounds fail the same way, so it is not specific to Architect / Hive Mind. The RA sweep (`copy/plus_copy_sweep.lua`) ends the round at ROUND_EVAL instead of cashing out.
+- **BUG-RA-1** (RA batch) `T.cash_out()` timed out at ROUND_EVAL. Fixed by the toolkit change in c5bb01c; `copy/plus_copy_sweep.lua` now cashes out and leaves the shop again (282 passed).
 - **BUG-EP2-3** (end pass, full suite) Veteran Deck Ride the Bus / Ice Cream tests assumed a 1-card hand scores in the
   third blind, but the seeded boss of that run is now The Psychic (score 0). Fixed by forcing `boss = 'club'` in both tests.
