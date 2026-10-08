@@ -38,7 +38,7 @@ end)
 
 T.test('Veteran Deck: Ride the Bus keeps +2 Mult and gains at the + rate', function()
     with_rounds(2, function()
-        T.start_run({ deck = 'b_bplus_veteran', ante = 3, jokers = { 'ride_the_bus' } })
+        T.start_run({ deck = 'b_bplus_veteran', ante = 3, boss = 'club', jokers = { 'ride_the_bus' } }) -- fixed boss: the seeded one can be The Psychic (1-card hands score 0)
         local function hand() T.set_hand({ '2S', '3H', '5C', '7D', '9H' }); return T.play({ '9H' }) end
         T.select_blind()
         T.eq(hand().mult, 1 + 1)
@@ -56,7 +56,7 @@ end)
 
 T.test('Veteran Deck: Ice Cream (100 -> 95 Chips after two rounds) upgrades to a fresh +150 Chips', function()
     with_rounds(2, function()
-        T.start_run({ deck = 'b_bplus_veteran', ante = 3, jokers = { 'ice_cream' } })
+        T.start_run({ deck = 'b_bplus_veteran', ante = 3, boss = 'club', jokers = { 'ice_cream' } })
         local function hand() T.set_hand({ '2S', '3H', '5C', '7D', '9H' }); return T.play({ '9H' }) end
         T.select_blind()
         T.eq(hand().chips, 5 + 9 + 100)
