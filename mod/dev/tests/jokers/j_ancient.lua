@@ -49,7 +49,7 @@ T.test('Ur-Joker: vanilla Ancient forced to "+" uses the Ur-Joker suit', functio
 end)
 
 local function highlight(...)
-    for _, c in ipairs(T.hand_cards({ ... })) do G.hand:add_to_highlighted(c, true) end
+    T.highlight({ ... })
 end
 
 T.test('Ur-Joker JokerDisplay: "+" shows X2.25(Hearts); vanilla forced to "+" matches; "+" forced to base shows vanilla X1', function()
@@ -73,5 +73,5 @@ T.test('Ur-Joker JokerDisplay: "+" shows X2.25(Hearts); vanilla forced to "+" ma
     d = T.joker_display('bplus_ancient_plus')
     T.eq(d.text, 'X1')
     T.eq(d.reminder, '(Spades)')
-    G.hand:unhighlight_all()
+    T.highlight({})
 end)

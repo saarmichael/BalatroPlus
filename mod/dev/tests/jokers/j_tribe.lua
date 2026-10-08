@@ -58,8 +58,7 @@ T.test('The Nation JokerDisplay: shows X3 (Flush) with a Flush selected, X1 with
     local d = T.joker_display('bplus_tribe_plus')
     T.eq(d.text, 'X1')
     T.eq(d.reminder, '(Flush)')
-    G.hand:unhighlight_all()
-    for _, c in ipairs(G.hand.cards) do G.hand:add_to_highlighted(c, true) end
+    T.highlight({ 1, 2, 3, 4, 5 })
     T.eq(T.joker_display('bplus_tribe_plus').text, 'X3')
     T.eq(T.joker_display('tribe').text, 'X2')
     T.force_behavior('tribe', 'plus')

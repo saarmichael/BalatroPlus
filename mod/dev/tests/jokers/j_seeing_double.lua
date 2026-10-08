@@ -28,7 +28,7 @@ T.test('Chameleon: vanilla forced to "+" gives X3', function()
 end)
 
 local function highlight(...)
-    for _, c in ipairs(T.hand_cards({ ... })) do G.hand:add_to_highlighted(c, true) end
+    T.highlight({ ... })
 end
 
 T.test('Chameleon JokerDisplay: "+" shows X3(Club+Other); vanilla forced to "+" matches; "+" forced to base shows vanilla X2', function()
@@ -50,5 +50,5 @@ T.test('Chameleon JokerDisplay: "+" shows X3(Club+Other); vanilla forced to "+" 
     d = T.joker_display('bplus_seeing_double_plus')
     T.eq(d.text, 'X2')
     T.eq(d.reminder, '(Club+Other)')
-    G.hand:unhighlight_all()
+    T.highlight({})
 end)

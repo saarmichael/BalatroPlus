@@ -1,8 +1,7 @@
 local T = BPlus.test
 
 local function jd_select(specs)
-    G.hand:unhighlight_all()
-    for _, c in ipairs(T.hand_cards(specs)) do G.hand:add_to_highlighted(c, true) end
+    T.highlight(specs)
 end
 
 T.test('Todd the Odd: Aces and 7s -> +67 Chips each (vanilla: +31)', function()

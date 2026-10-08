@@ -58,8 +58,7 @@ T.test('Wacky Joker JokerDisplay: shows +32 (Straight) with a Straight selected,
     local d = T.joker_display('bplus_crazy_plus')
     T.eq(d.text, '+0')
     T.eq(d.reminder, '(Straight)')
-    G.hand:unhighlight_all()
-    for _, c in ipairs(G.hand.cards) do G.hand:add_to_highlighted(c, true) end
+    T.highlight({ 1, 2, 3, 4, 5 })
     T.eq(T.joker_display('bplus_crazy_plus').text, '+32')
     T.eq(T.joker_display('crazy').text, '+12')
     T.force_behavior('crazy', 'plus')

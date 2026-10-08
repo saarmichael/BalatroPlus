@@ -58,8 +58,7 @@ T.test('The Dynamic Duo JokerDisplay: shows X3 (Pair) with a Pair selected, X1 w
     local d = T.joker_display('bplus_duo_plus')
     T.eq(d.text, 'X1')
     T.eq(d.reminder, '(Pair)')
-    G.hand:unhighlight_all()
-    for _, c in ipairs(G.hand.cards) do G.hand:add_to_highlighted(c, true) end
+    T.highlight({ 1, 2 })
     T.eq(T.joker_display('bplus_duo_plus').text, 'X3')
     T.eq(T.joker_display('duo').text, 'X2')
     T.force_behavior('duo', 'plus')

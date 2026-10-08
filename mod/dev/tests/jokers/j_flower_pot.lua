@@ -44,7 +44,7 @@ T.test('Flower Garden: vanilla forced to "+" triggers with 3 suits', function()
 end)
 
 local function highlight(...)
-    for _, c in ipairs(T.hand_cards({ ... })) do G.hand:add_to_highlighted(c, true) end
+    T.highlight({ ... })
 end
 
 T.test('Flower Garden JokerDisplay: "+" shows X3(3 Suits); vanilla forced to "+" matches; "+" forced to base shows vanilla X1', function()
@@ -66,5 +66,5 @@ T.test('Flower Garden JokerDisplay: "+" shows X3(3 Suits); vanilla forced to "+"
     d = T.joker_display('bplus_flower_pot_plus')
     T.eq(d.text, 'X1')
     T.eq(d.reminder, '(All Suits)')
-    G.hand:unhighlight_all()
+    T.highlight({})
 end)

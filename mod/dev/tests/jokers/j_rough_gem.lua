@@ -25,7 +25,7 @@ T.test('Gemstone: vanilla forced to "+" gives +$2 + $2', function()
 end)
 
 local function highlight(...)
-    for _, c in ipairs(T.hand_cards({ ... })) do G.hand:add_to_highlighted(c, true) end
+    T.highlight({ ... })
 end
 
 T.test('Gemstone JokerDisplay: "+" shows +$4(Diamonds); vanilla forced to "+" matches; "+" forced to base shows vanilla +$2', function()
@@ -47,5 +47,5 @@ T.test('Gemstone JokerDisplay: "+" shows +$4(Diamonds); vanilla forced to "+" ma
     d = T.joker_display('bplus_rough_gem_plus')
     T.eq(d.text, '+$2')
     T.eq(d.reminder, '(Diamonds)')
-    G.hand:unhighlight_all()
+    T.highlight({})
 end)

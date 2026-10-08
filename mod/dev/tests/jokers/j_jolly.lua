@@ -58,8 +58,7 @@ T.test('Merry Joker JokerDisplay: shows +20 (Pair) with a Pair selected, +0 with
     local d = T.joker_display('bplus_jolly_plus')
     T.eq(d.text, '+0')
     T.eq(d.reminder, '(Pair)')
-    G.hand:unhighlight_all()
-    for _, c in ipairs(G.hand.cards) do G.hand:add_to_highlighted(c, true) end
+    T.highlight({ 1, 2 })
     T.eq(T.joker_display('bplus_jolly_plus').text, '+20')
     T.eq(T.joker_display('jolly').text, '+8')
     T.force_behavior('jolly', 'plus')

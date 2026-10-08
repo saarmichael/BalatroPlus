@@ -1,8 +1,7 @@
 local T = BPlus.test
 
 local function jd_select(specs)
-    G.hand:unhighlight_all()
-    for _, c in ipairs(T.hand_cards(specs)) do G.hand:add_to_highlighted(c, true) end
+    T.highlight(specs)
 end
 
 T.test('Professor: 2 Aces -> +40 + 40 Chips and +10 + 10 Mult (vanilla: +20 / +4 each)', function()

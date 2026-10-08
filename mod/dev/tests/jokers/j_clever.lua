@@ -58,8 +58,7 @@ T.test('Brainy Joker JokerDisplay: shows +140 (Two Pair) with a Two Pair selecte
     local d = T.joker_display('bplus_clever_plus')
     T.eq(d.text, '+0')
     T.eq(d.reminder, '(Two Pair)')
-    G.hand:unhighlight_all()
-    for _, c in ipairs(G.hand.cards) do G.hand:add_to_highlighted(c, true) end
+    T.highlight({ 1, 2, 3, 4 })
     T.eq(T.joker_display('bplus_clever_plus').text, '+140')
     T.eq(T.joker_display('clever').text, '+80')
     T.force_behavior('clever', 'plus')

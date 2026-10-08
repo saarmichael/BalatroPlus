@@ -55,8 +55,7 @@ T.test('The Deity JokerDisplay: chosen 7, pair of 7s highlighted -> X4 (7); vani
     T.select_blind()
     pin_seven()
     T.set_hand({ '7S', '7H', '2D', '3C', '5H' })
-    G.hand:unhighlight_all()
-    for _, c in ipairs(T.hand_cards({ '7S', '7H' })) do G.hand:add_to_highlighted(c, true) end
+    T.highlight({ '7S', '7H' })
     local d = T.joker_display('bplus_idol_plus')
     T.eq(d.text, 'X' .. (2 * 2))
     T.eq(d.reminder, '(7)')

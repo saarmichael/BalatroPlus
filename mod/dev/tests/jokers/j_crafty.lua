@@ -58,8 +58,7 @@ T.test('Shrewd Joker JokerDisplay: shows +140 (Flush) with a Flush selected, +0 
     local d = T.joker_display('bplus_crafty_plus')
     T.eq(d.text, '+0')
     T.eq(d.reminder, '(Flush)')
-    G.hand:unhighlight_all()
-    for _, c in ipairs(G.hand.cards) do G.hand:add_to_highlighted(c, true) end
+    T.highlight({ 1, 2, 3, 4, 5 })
     T.eq(T.joker_display('bplus_crafty_plus').text, '+140')
     T.eq(T.joker_display('crafty').text, '+80')
     T.force_behavior('crafty', 'plus')

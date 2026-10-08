@@ -1,8 +1,7 @@
 local T = BPlus.test
 
 local function jd_select(specs)
-    G.hand:unhighlight_all()
-    for _, c in ipairs(T.hand_cards(specs)) do G.hand:add_to_highlighted(c, true) end
+    T.highlight(specs)
 end
 
 T.test('Hugging Face: 2 face cards -> +10 + 10 Mult (vanilla: +5 + 5)', function()

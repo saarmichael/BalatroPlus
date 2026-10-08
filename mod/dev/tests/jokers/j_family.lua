@@ -58,8 +58,7 @@ T.test('Jackson Joker JokerDisplay: shows X5 (Four of a Kind) with a Four of a K
     local d = T.joker_display('bplus_family_plus')
     T.eq(d.text, 'X1')
     T.eq(d.reminder, '(Four of a Kind)')
-    G.hand:unhighlight_all()
-    for _, c in ipairs(G.hand.cards) do G.hand:add_to_highlighted(c, true) end
+    T.highlight({ 1, 2, 3, 4 })
     T.eq(T.joker_display('bplus_family_plus').text, 'X5')
     T.eq(T.joker_display('family').text, 'X4')
     T.force_behavior('family', 'plus')

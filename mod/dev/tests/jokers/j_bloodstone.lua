@@ -43,7 +43,7 @@ T.test('Fire Opal: vanilla forced to "+" with Oops! All 6s hits every Heart', fu
 end)
 
 local function highlight(...)
-    for _, c in ipairs(T.hand_cards({ ... })) do G.hand:add_to_highlighted(c, true) end
+    T.highlight({ ... })
 end
 
 T.test('Fire Opal JokerDisplay: "+" shows 2xX1.5(Hearts); vanilla forced to "+" matches; "+" forced to base shows vanilla 2xX1.5', function()
@@ -68,5 +68,5 @@ T.test('Fire Opal JokerDisplay: "+" shows 2xX1.5(Hearts); vanilla forced to "+" 
     T.eq(d.text, '2xX1.5')
     T.eq(d.reminder, '(Hearts)')
     T.eq(d.extra, { '(1 in 2)' })
-    G.hand:unhighlight_all()
+    T.highlight({})
 end)

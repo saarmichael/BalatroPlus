@@ -41,8 +41,8 @@ T.test('Bigger Half Joker JokerDisplay: 4 cards selected -> +40; vanilla forced 
     T.set_hand({ '2S', '3H', '7C', '5D', '9D' })
     local function sel(n)
         local h = {}
-        for i = 1, n do h[i] = G.hand.cards[i] end
-        JokerDisplay.current_hand = h -- what JokerDisplay derives from the highlighted cards
+        for i = 1, n do h[i] = i end
+        T.highlight(h)
     end
     sel(4)
     T.eq(T.joker_display('bplus_half_plus').text, '+40')
@@ -53,4 +53,5 @@ T.test('Bigger Half Joker JokerDisplay: 4 cards selected -> +40; vanilla forced 
     T.eq(T.joker_display('bplus_half_plus').text, '+0')
     sel(3)
     T.eq(T.joker_display('bplus_half_plus').text, '+20')
+    T.highlight({})
 end)

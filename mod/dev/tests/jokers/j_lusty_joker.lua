@@ -42,7 +42,7 @@ T.test('Lascivious Joker: "+" forced to base gives +3 + 3 Mult', function()
 end)
 
 local function highlight(...)
-    for _, c in ipairs(T.hand_cards({ ... })) do G.hand:add_to_highlighted(c, true) end
+    T.highlight({ ... })
 end
 
 T.test('Lascivious Joker JokerDisplay: "+" shows +10(Hearts); vanilla forced to "+" matches; "+" forced to base shows vanilla +6', function()
@@ -64,5 +64,5 @@ T.test('Lascivious Joker JokerDisplay: "+" shows +10(Hearts); vanilla forced to 
     d = T.joker_display('bplus_lusty_joker_plus')
     T.eq(d.text, '+6')
     T.eq(d.reminder, '(Hearts)')
-    G.hand:unhighlight_all()
+    T.highlight({})
 end)

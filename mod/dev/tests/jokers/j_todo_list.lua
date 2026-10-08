@@ -71,7 +71,7 @@ T.test('Wishlist JokerDisplay: listed Pair, hand of Pair selected -> +$5 (Pair);
     T.set_hand({ 'KS', 'KH', '9D', '5C', '2D', '3C', '4C', '7C' })
     T.eq(T.joker_display('bplus_todo_list_plus').text, '+$0')
     T.eq(T.joker_display('bplus_todo_list_plus').reminder, '(Pair)')
-    for _, c in ipairs(T.hand_cards({ 'KS', 'KH' })) do G.hand:add_to_highlighted(c, true) end
+    T.highlight({ 'KS', 'KH' })
     T.eq(T.joker_display('bplus_todo_list_plus').text, '+$5')
     T.eq(T.joker_display('todo_list').text, '+$4')
     T.force_behavior('todo_list', 'plus')
@@ -79,5 +79,5 @@ T.test('Wishlist JokerDisplay: listed Pair, hand of Pair selected -> +$5 (Pair);
     T.eq(T.joker_display('todo_list').reminder, '(Pair)')
     T.force_behavior('bplus_todo_list_plus', 'base')
     T.eq(T.joker_display('bplus_todo_list_plus').text, '+$4')
-    G.hand:unhighlight_all()
+    T.highlight({})
 end)

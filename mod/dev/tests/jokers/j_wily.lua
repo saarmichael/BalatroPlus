@@ -58,8 +58,7 @@ T.test('Tricky Joker JokerDisplay: shows +150 (Three of a Kind) with a Three of 
     local d = T.joker_display('bplus_wily_plus')
     T.eq(d.text, '+0')
     T.eq(d.reminder, '(Three of a Kind)')
-    G.hand:unhighlight_all()
-    for _, c in ipairs(G.hand.cards) do G.hand:add_to_highlighted(c, true) end
+    T.highlight({ 1, 2, 3 })
     T.eq(T.joker_display('bplus_wily_plus').text, '+150')
     T.eq(T.joker_display('wily').text, '+100')
     T.force_behavior('wily', 'plus')

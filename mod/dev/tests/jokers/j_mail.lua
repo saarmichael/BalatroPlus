@@ -45,7 +45,7 @@ end)
 
 -- Only sets the UI selection (nothing is played); JokerDisplay reads G.hand.highlighted.
 local function highlight(specs)
-    for _, c in ipairs(T.hand_cards(specs)) do G.hand:add_to_highlighted(c, true) end
+    T.highlight(specs)
 end
 
 T.test('Cashback JokerDisplay: listed 7, two 7s selected -> +$12 (7); vanilla forced to "+" +$12; "+" forced to base +$10', function()

@@ -56,7 +56,7 @@ T.test('Smartboard: "+" forced to base needs every held card black', function()
 end)
 
 local function highlight(...)
-    for _, c in ipairs(T.hand_cards({ ... })) do G.hand:add_to_highlighted(c, true) end
+    T.highlight({ ... })
 end
 
 T.test('Smartboard JokerDisplay: "+" shows X4; vanilla forced to "+" matches; "+" forced to base shows vanilla X3', function()
@@ -78,5 +78,5 @@ T.test('Smartboard JokerDisplay: "+" shows X4; vanilla forced to "+" matches; "+
     d = T.joker_display('bplus_blackboard_plus')
     T.eq(d.text, 'X3')
     T.eq(d.reminder, '')
-    G.hand:unhighlight_all()
+    T.highlight({})
 end)

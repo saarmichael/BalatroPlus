@@ -42,8 +42,7 @@ T.test('Hypernova JokerDisplay: Pair played twice, Pair highlighted -> +2 * 3 = 
     T.select_blind()
     pair(); pair()
     T.set_hand({ '2S', '2H', '5D', '7C', '9S' })
-    G.hand:unhighlight_all()
-    for _, c in ipairs(T.hand_cards({ '2S', '2H' })) do G.hand:add_to_highlighted(c, true) end
+    T.highlight({ '2S', '2H' })
     T.eq(T.joker_display('bplus_supernova_plus').text, '+' .. (2 * (2 + 1)))
     T.eq(T.joker_display('supernova').text, '+' .. (2 + 1))
     T.force_behavior('supernova', 'plus')

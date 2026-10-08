@@ -58,8 +58,7 @@ T.test('Bee Gees Joker JokerDisplay: shows X4 (Three of a Kind) with a Three of 
     local d = T.joker_display('bplus_trio_plus')
     T.eq(d.text, 'X1')
     T.eq(d.reminder, '(Three of a Kind)')
-    G.hand:unhighlight_all()
-    for _, c in ipairs(G.hand.cards) do G.hand:add_to_highlighted(c, true) end
+    T.highlight({ 1, 2, 3 })
     T.eq(T.joker_display('bplus_trio_plus').text, 'X4')
     T.eq(T.joker_display('trio').text, 'X3')
     T.force_behavior('trio', 'plus')

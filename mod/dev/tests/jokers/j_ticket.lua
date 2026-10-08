@@ -35,7 +35,7 @@ T.test('Goldbars JokerDisplay: 2 Gold cards selected -> +$10 (Gold); vanilla for
     T.start_run({ jokers = { 'bplus_ticket_plus', 'ticket' }, ante = 3 })
     T.select_blind()
     T.set_hand({ { 'KH', enhancement = 'gold' }, { 'KS', enhancement = 'gold' }, '9D', '5C', '2D', '3C', '4C', '7C' })
-    for _, c in ipairs(T.hand_cards({ 'KH', 'KS' })) do G.hand:add_to_highlighted(c, true) end
+    T.highlight({ 'KH', 'KS' })
     local d = T.joker_display('bplus_ticket_plus')
     T.eq(d.text, '+$' .. (5 + 5))
     T.eq(d.reminder, '(Gold)')
@@ -44,5 +44,5 @@ T.test('Goldbars JokerDisplay: 2 Gold cards selected -> +$10 (Gold); vanilla for
     T.eq(T.joker_display('ticket').text, '+$' .. (5 + 5))
     T.force_behavior('bplus_ticket_plus', 'base')
     T.eq(T.joker_display('bplus_ticket_plus').text, '+$' .. (4 + 4))
-    G.hand:unhighlight_all()
+    T.highlight({})
 end)

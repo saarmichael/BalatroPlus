@@ -58,8 +58,7 @@ T.test('Livid Joker JokerDisplay: shows +24 (Two Pair) with a Two Pair selected,
     local d = T.joker_display('bplus_mad_plus')
     T.eq(d.text, '+0')
     T.eq(d.reminder, '(Two Pair)')
-    G.hand:unhighlight_all()
-    for _, c in ipairs(G.hand.cards) do G.hand:add_to_highlighted(c, true) end
+    T.highlight({ 1, 2, 3, 4 })
     T.eq(T.joker_display('bplus_mad_plus').text, '+24')
     T.eq(T.joker_display('mad').text, '+10')
     T.force_behavior('mad', 'plus')

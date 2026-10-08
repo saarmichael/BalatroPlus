@@ -58,8 +58,7 @@ T.test('Insidious Joker JokerDisplay: shows +200 (Straight) with a Straight sele
     local d = T.joker_display('bplus_devious_plus')
     T.eq(d.text, '+0')
     T.eq(d.reminder, '(Straight)')
-    G.hand:unhighlight_all()
-    for _, c in ipairs(G.hand.cards) do G.hand:add_to_highlighted(c, true) end
+    T.highlight({ 1, 2, 3, 4, 5 })
     T.eq(T.joker_display('bplus_devious_plus').text, '+200')
     T.eq(T.joker_display('devious').text, '+100')
     T.force_behavior('devious', 'plus')

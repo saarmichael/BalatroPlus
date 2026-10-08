@@ -58,8 +58,7 @@ T.test('Wry Joker JokerDisplay: shows +25 (Flush) with a Flush selected, +0 with
     local d = T.joker_display('bplus_droll_plus')
     T.eq(d.text, '+0')
     T.eq(d.reminder, '(Flush)')
-    G.hand:unhighlight_all()
-    for _, c in ipairs(G.hand.cards) do G.hand:add_to_highlighted(c, true) end
+    T.highlight({ 1, 2, 3, 4, 5 })
     T.eq(T.joker_display('bplus_droll_plus').text, '+25')
     T.eq(T.joker_display('droll').text, '+10')
     T.force_behavior('droll', 'plus')

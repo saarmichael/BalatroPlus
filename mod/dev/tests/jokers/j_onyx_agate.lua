@@ -25,7 +25,7 @@ T.test('Obsidian: vanilla forced to "+" gives +15 + 15 Mult', function()
 end)
 
 local function highlight(...)
-    for _, c in ipairs(T.hand_cards({ ... })) do G.hand:add_to_highlighted(c, true) end
+    T.highlight({ ... })
 end
 
 T.test('Obsidian JokerDisplay: "+" shows +30(Clubs); vanilla forced to "+" matches; "+" forced to base shows vanilla +14', function()
@@ -47,5 +47,5 @@ T.test('Obsidian JokerDisplay: "+" shows +30(Clubs); vanilla forced to "+" match
     d = T.joker_display('bplus_onyx_agate_plus')
     T.eq(d.text, '+14')
     T.eq(d.reminder, '(Clubs)')
-    G.hand:unhighlight_all()
+    T.highlight({})
 end)

@@ -58,8 +58,7 @@ T.test('The New Order JokerDisplay: shows X4 (Straight) with a Straight selected
     local d = T.joker_display('bplus_order_plus')
     T.eq(d.text, 'X1')
     T.eq(d.reminder, '(Straight)')
-    G.hand:unhighlight_all()
-    for _, c in ipairs(G.hand.cards) do G.hand:add_to_highlighted(c, true) end
+    T.highlight({ 1, 2, 3, 4, 5 })
     T.eq(T.joker_display('bplus_order_plus').text, 'X4')
     T.eq(T.joker_display('order').text, 'X3')
     T.force_behavior('order', 'plus')
