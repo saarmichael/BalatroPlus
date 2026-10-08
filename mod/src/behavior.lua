@@ -258,3 +258,16 @@ function Game:update(dt)
         for _, card in ipairs(G.jokers.cards) do BPlus.sync_behavior(card) end
     end
 end
+
+-- Deleting a run (new run, back to the menu) with cards still highlighted in hand crashes: removing a
+-- highlighted card runs CardArea:parse_highlighted -> update_hand_text, whose event touches the hand-text
+-- UI that delete_run is already tearing down (Handy's animation skip runs such events immediately).
+-- Clear the selection first, without any of the selection side effects.
+local delete_run_ref = Game.delete_run
+function Game:delete_run()
+    if G.hand and G.hand.highlighted then
+        for _, card in ipairs(G.hand.highlighted) do card.highlighted = false end
+        G.hand.highlighted = {}
+    end
+    return delete_run_ref(self)
+end

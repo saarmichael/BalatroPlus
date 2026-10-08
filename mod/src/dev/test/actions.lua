@@ -260,6 +260,20 @@ function T.play(selectors)
     }
 end
 
+-- Select hand cards (indices or specs) without playing them, like clicking them. Replaces the current
+-- selection; T.highlight({}) clears it. Returns the selected cards. JokerDisplay and other previews follow it.
+function T.highlight(selectors)
+    expect_state('SELECTING_HAND', 'highlight')
+    local cards = T.hand_cards(selectors or {})
+    if #cards > G.hand.config.highlighted_limit then
+        T.fail(('highlight needs at most %d cards, got %d'):format(G.hand.config.highlighted_limit, #cards))
+    end
+    G.hand:unhighlight_all()
+    for _, card in ipairs(cards) do G.hand:add_to_highlighted(card, true) end
+    T.wait_frames(2)
+    return cards
+end
+
 -- Discard hand cards (indices or specs) using a real discard (counts down, draws back up).
 function T.discard(selectors)
     expect_state('SELECTING_HAND', 'discard')

@@ -100,6 +100,7 @@ affordable, no slot...) and call `T.fail` with a clear message instead of doing 
 | `T.skip_blind()` | `BLIND_SELECT` (not Boss) | the new tag |
 | `T.play(cards)` | `SELECTING_HAND` | `{ hand, chips, mult, score, dollars, state }` (`dollars` = change during the hand) |
 | `T.discard(cards)` | `SELECTING_HAND` | — (spends a discard, draws back up) |
+| `T.highlight(cards)` | `SELECTING_HAND` | the selected cards. Selects hand cards without playing (replaces the selection; `T.highlight({})` clears). The only way tests select cards: JokerDisplay and previews follow it |
 | `T.win_blind()` | `SELECTING_HAND` → `ROUND_EVAL` | — shortcut; no hand is scored |
 | `T.cash_out()` | `ROUND_EVAL` → `SHOP` | money gained |
 | `T.to_shop()` | `BLIND_SELECT` → `SHOP` | select + win + cash out |
