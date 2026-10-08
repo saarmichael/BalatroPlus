@@ -20,6 +20,38 @@ BPlus.Joker({
         return { vars = { card.ability.extra.Xmult, localize(idol and idol.rank or 'Ace', 'ranks') } }
     end,
 
+    joker_display_def = function(JokerDisplay)
+        return {
+            text = {
+                {
+                    border_nodes = {
+                        { text = 'X' },
+                        { ref_table = 'card.joker_display_values', ref_value = 'x_mult', retrigger_type = 'exp' },
+                    },
+                },
+            },
+            reminder_text = {
+                { text = '(' },
+                { ref_table = 'card.joker_display_values', ref_value = 'idol_card', colour = G.C.FILTER },
+                { text = ')' },
+            },
+            calc_function = function(card)
+                local count = 0
+                local idol = G.GAME.current_round.idol_card
+                local text, _, scoring_hand = JokerDisplay.evaluate_hand()
+                if text ~= 'Unknown' and idol and idol.id then
+                    for _, sc in pairs(scoring_hand) do
+                        if sc:get_id() == idol.id then
+                            count = count + JokerDisplay.calculate_card_triggers(sc, scoring_hand)
+                        end
+                    end
+                end
+                card.joker_display_values.x_mult = card.ability.extra.Xmult ^ count
+                card.joker_display_values.idol_card = localize(idol and idol.rank or 'Ace', 'ranks')
+            end,
+        }
+    end,
+
     calculate = function(self, card, context)
         if context.individual and context.cardarea == G.play then
             local idol = G.GAME.current_round.idol_card
