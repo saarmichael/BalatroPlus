@@ -21,6 +21,19 @@ BPlus.Joker({
         return { vars = { card.ability.extra.mult_per, card.ability.extra.mult_per * tarots_used() } }
     end,
 
+    joker_display_def = function(JokerDisplay)
+        return {
+            text = {
+                { text = '+' },
+                { ref_table = 'card.joker_display_values', ref_value = 'mult', retrigger_type = 'mult' },
+            },
+            text_config = { colour = G.C.MULT },
+            calc_function = function(card)
+                card.joker_display_values.mult = card.ability.extra.mult_per * tarots_used()
+            end,
+        }
+    end,
+
     calculate = function(self, card, context)
         if context.using_consumeable and not context.blueprint and context.consumeable.ability.set == 'Tarot' then
             local per = card.ability.extra.mult_per
