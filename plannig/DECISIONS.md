@@ -137,6 +137,10 @@ Rust doesn't. Carpenter/Apprentice keep placeholder art and no overlay.
 joker displays its "+" numbers; under The Rust a "+" joker displays vanilla numbers. Implemented once in the shared
 code (JokerDisplay's per-card update runs under the behaviour swap), not per joker.
 
+**D21. JokerDisplay for Architect / Hive Mind shows one copy target** (the first compatible of the two),
+"(incompatible)" if neither. JokerDisplay's blueprint API returns a single card; showing both would need a custom
+display. Accepted (JD10).
+
 ## Questions from agents
 
 (none yet)
