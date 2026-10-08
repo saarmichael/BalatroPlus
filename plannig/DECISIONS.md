@@ -141,6 +141,36 @@ code (JokerDisplay's per-card update runs under the behaviour swap), not per jok
 "(incompatible)" if neither. JokerDisplay's blueprint API returns a single card; showing both would need a custom
 display. Accepted (JD10).
 
+## Redesign by the human (2026-10-08): Carpenter, Architect, Hive Mind
+
+**D22. Carpenter (M1) is now a sell effect, decided by the human.** Supersedes D12 and the brief's M1 row.
+New game state: the **last sold joker** (per run, saved in `G.GAME`), excluding Carpenter itself. Selling Carpenter
+adds the "+" version of the last sold joker to the jokers area. Details (human, 2026-10-08):
+- If the last sold joker is already a "+" joker, Carpenter gives it back as a fresh "+" joker.
+- Using Carpenter **consumes** the record: a second Carpenter does nothing until another joker is sold.
+- The created joker is **fresh**: starting "+" values, no edition, no stickers (like an upgraded shop joker).
+- Orchestrator calls: no last sold joker, or one without a "+" version -> message, nothing happens, record kept.
+  No room (e.g. Negative Carpenter, slots still full) -> message, nothing happens, record kept. Carpenter's
+  tooltip and JokerDisplay show what it would create. Carpenter is no longer a behaviour provider: no "+" badge,
+  no neighbour switching. Its price/rarity are unchanged (Uncommon, $8); blueprint_compat false (nothing to copy).
+
+**D23. Architect (Blueprint+) and Hive Mind (Brainstorm+) copy the UPGRADED ability of their target, decided by
+the human.** Supersedes the "copy two jokers" design (D17/D21 parts about two targets). Architect's target is the
+joker to its right, Hive Mind's the leftmost joker, as in vanilla. They copy that joker's "+" ability:
+- target is a "+" joker -> copy it as it is;
+- target is a vanilla joker whose "+" version can be run on it (`carpenter_compat = true`, now meaning "its '+'
+  ability can be run on the vanilla card") and is blueprint-compatible -> copy the "+" ability, using the target's
+  stored values (e.g. vanilla Ride the Bus at +5 copied as Express Bus shows +5);
+- otherwise incompatible: shrinking jokers like Popcorn (`carpenter_compat = false`), jokers whose "+" version is
+  not blueprint-compatible, and jokers with no "+" version (orchestrator: including Gros Michel / Cavendish, which
+  vanilla Blueprint can copy; rule = "they only ever copy '+' abilities").
+Under The Rust they act as vanilla Blueprint/Brainstorm (unchanged D13 behaviour).
+
+**D24. Consequences.** The Rust no longer interacts with Carpenter (D13's Carpenter clause is void). The behaviour
+"plus" view built for Carpenter is now used by Architect/Hive Mind to run a vanilla joker's "+" ability; the
+per-joker "vanilla forced to '+'" tests stay valid (they test exactly that view), only their "Carpenter" wording is
+outdated. D19/D20 (overlay / JokerDisplay follow behaviour) now only matter for The Rust.
+
 ## Questions from agents
 
 (none yet)
