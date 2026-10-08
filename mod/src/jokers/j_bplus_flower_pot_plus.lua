@@ -1,4 +1,6 @@
 -- Spec: plannig/specs/jokers/j_flower_pot.yaml
+BPlus.dict({ k_bplus_suits = 'Suits' })
+
 BPlus.Joker({
     key = 'flower_pot_plus',
     loc_txt = {
@@ -57,7 +59,7 @@ BPlus.Joker({
                 end
                 card.joker_display_values.x_mult = n >= card.ability.extra.suits and card.ability.extra.Xmult or 1
                 card.joker_display_values.localized_text = card.ability.extra.suits >= 4 and localize('jdis_all_suits')
-                    or (card.ability.extra.suits .. ' Suits')
+                    or (card.ability.extra.suits .. ' ' .. localize('k_bplus_suits'))
             end,
         }
     end,
